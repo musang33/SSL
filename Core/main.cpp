@@ -1,7 +1,5 @@
-
-
 #include "GameEntity.h"
-#include "State.h"
+#include "StateMiner.h"
 
 using namespace SSL;
 

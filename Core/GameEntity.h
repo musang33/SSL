@@ -3,31 +3,32 @@
 
 #include "CommonData.h"
 #include "BaseEntity.h"
-#include "State.h"
+#include "StateManager.h"
 
 namespace SSL
 {	
 	class Miner :public BaseEntity
 	{
-	private: 
-		State*		m_currentState;
-		LOCATION	m_currentLocation;
-		UINT32		m_nuggetSize;
-		UINT32		m_gold;
+	private: 		
+		StateManager<Miner>*	m_stateManager;
+		LOCATION				m_currentLocation;
+		UINT32					m_nuggetSize;
+		UINT32					m_gold;
 
 
 	public:
-		Miner(int id, LOCATION location, State* state);
+		Miner(int id, LOCATION location, State<Miner>* state);
 
-		void Update();
-		void ChangeState(State* newState);
-
+		void Update();	
+		
 		void GotoLocation(LOCATION location);
 		void MineGold();
 
 		bool IsCurrentLocation(LOCATION location);		
 		bool IsFullNugget();
 		void ChangeNuggetToGoldAndSave();		
+
+		StateManager<Miner>* GetStateManager() { return m_stateManager; }
 	};
 } // namespace SSL
 

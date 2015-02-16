@@ -1,6 +1,6 @@
 #include <iostream>
 #include "CommonData.h"
-#include "State.h"
+#include "StateMiner.h"
 #include "GameEntity.h"
 
 namespace SSL
@@ -21,7 +21,7 @@ namespace SSL
 		miner->MineGold();
 		if (miner->IsFullNugget())
 		{
-			miner->ChangeState(GotoBankAndDeposit::GetInstance());
+			miner->GetStateManager()->ChangeState(GotoBankAndDeposit::GetInstance());
 		}		
 	}
 
@@ -44,13 +44,11 @@ namespace SSL
 	{
 		std::cout << "[INFO][GotoBankAndDeposit][OnTick]" << std::endl;
 		miner->ChangeNuggetToGoldAndSave();
-		miner->ChangeState(EnterMineAndDigForNugget::GetInstance());
+		miner->GetStateManager()->ChangeState(EnterMineAndDigForNugget::GetInstance());
 	}
 
 	void GotoBankAndDeposit::Exit(Miner* miner)
 	{
 		std::cout << "[INFO][GotoBankAndDeposit][Exit]" << std::endl;
 	}
-
-
 }

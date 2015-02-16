@@ -82,12 +82,14 @@
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="StateMiner.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseEntity.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="State.cpp" />
+    <ClCompile Include="StateMiner.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
