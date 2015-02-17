@@ -1,5 +1,4 @@
-#ifndef SINGLETON_H
-#define SINGLETON_H
+#pragma once
 
 #include <memory>
 #include <mutex>
@@ -38,4 +37,3 @@ namespace SSL
 	std::unique_ptr<T> Singleton<T>::m_instance;
 }
 
-#endif // SINGLETON_H

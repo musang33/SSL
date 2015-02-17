@@ -1,5 +1,4 @@
-#ifndef NONCOPYABLE_H
-#define NONCOPYABLE_H
+#pragma once
 
 namespace SSL
 {
@@ -16,5 +15,5 @@ namespace SSL
 	};
 }
 
-#endif // NONCOPYABLE_H
+
 

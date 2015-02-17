@@ -1,29 +1,28 @@
-#include "GameEntity.h"
+#include "Miner.h"
+#include "HouseWife.h"
 #include "StateMiner.h"
+#include "StateHouseWife.h"
+#include "EntityManager.h"
+#include "MessageManager.h"
 
 using namespace SSL;
 
 int main()
 {	
-	Miner player(1, LOCATION::HOME, EnterMineAndDigForNugget::GetInstance());
+	Miner* miner = new Miner(ID_MINER, LOCATION::HOME, EnterMineAndDigForNugget::GetInstance());
+	HouseWife* houseWife = new HouseWife(ID_HOUSE_WIFE, LOCATION::HOME, LivingRoom::GetInstance());
 		
-	DWORD startTick = GetTickCount();
-
-	EnterMineAndDigForNugget test1;
-	EnterMineAndDigForNugget test2;
-
-	//test1 = test2;
-
+	EntityManager::GetInstance()->RegisterEntity(miner);
+	EntityManager::GetInstance()->RegisterEntity(houseWife);
+	
 	while ( 1 )
 	{
-		if ( GetTickCount() - startTick < 1000 )
-		{
-			continue;
-		}
+		miner->Update();
+		houseWife->Update();
 
-		startTick = GetTickCount();
+		MessageManager::GetInstance()->DispatchDelayedMessage();
 
-		player.Update();
+		Sleep(1000);
 	}
 
 	return 0;

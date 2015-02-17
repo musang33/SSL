@@ -10,6 +10,9 @@
     <Filter Include="Entity">
       <UniqueIdentifier>{d8b12f3b-461c-4c8b-be90-555db708839b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Message">
+      <UniqueIdentifier>{864795d3-b84f-4703-b41d-4e27d0c4a9f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -27,13 +30,25 @@
     <ClInclude Include="CommonData.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="GameEntity.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="BaseEntity.h">
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="StateManager.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Miner.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="HouseWife.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="StateHouseWife.h">
       <Filter>State</Filter>
     </ClInclude>
   </ItemGroup>
@@ -45,8 +60,20 @@
     <ClCompile Include="BaseEntity.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="GameEntity.cpp">
+    <ClCompile Include="EntityManager.cpp">
       <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageManager.cpp">
+      <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="Miner.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="HouseWife.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="StateHouseWife.cpp">
+      <Filter>State</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

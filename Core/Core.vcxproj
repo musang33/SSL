@@ -78,17 +78,25 @@
   <ItemGroup>
     <ClInclude Include="BaseEntity.h" />
     <ClInclude Include="CommonData.h" />
-    <ClInclude Include="GameEntity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="HouseWife.h" />
+    <ClInclude Include="Miner.h" />
+    <ClInclude Include="MessageManager.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StateHouseWife.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="StateMiner.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseEntity.cpp" />
-    <ClCompile Include="GameEntity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="HouseWife.cpp" />
+    <ClCompile Include="Miner.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MessageManager.cpp" />
+    <ClCompile Include="StateHouseWife.cpp" />
     <ClCompile Include="StateMiner.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

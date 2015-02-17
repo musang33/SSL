@@ -1,7 +1,7 @@
-#ifndef STATE_H
-#define STATE_H
+#pragma once
 
 #include "Singleton.h"
+#include "CommonData.h"
 
 namespace SSL
 {	
@@ -11,10 +11,10 @@ namespace SSL
 	public:
 		virtual ~State(){};
 
-		virtual void Enter(EntityType* ) = 0;
-		virtual void OnTick(EntityType* ) = 0;
-		virtual void Exit(EntityType* ) = 0;
+		virtual void Enter(EntityType*) = 0;
+		virtual void OnTick(EntityType*) = 0;
+		virtual void Exit(EntityType*) = 0;
+
+		virtual void OnMessage(EntityType*, const MessageInfo& messageInfo) const {};
 	};
 }
-
-#endif

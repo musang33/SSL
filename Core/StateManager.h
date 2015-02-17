@@ -1,5 +1,4 @@
-#ifndef STATE_MANAGER_H
-#define STATE_MANAGER_H
+#pragma once
 
 #include "State.h"
 
@@ -41,6 +40,19 @@ namespace SSL
 			}
 		}
 
+		void DealWithMessage(const MessageInfo& messageInfo) const
+		{
+			if ( m_GlobalState )
+			{
+				m_GlobalState->OnMessage(m_owner, messageInfo);
+			}
+
+			if ( m_currentState )
+			{
+				m_currentState->OnMessage(m_owner, messageInfo);
+			}
+		}
+
 		void ChangeState(State<T>* newState)
 		{
 			if ( m_currentState == newState )
@@ -71,4 +83,3 @@ namespace SSL
 	};
 }
 
-#endif

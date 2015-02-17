@@ -1,9 +1,9 @@
-#ifndef GAMEENTITY_H
-#define GAMEENTITY_H
+#pragma once
 
 #include "CommonData.h"
 #include "BaseEntity.h"
 #include "StateManager.h"
+#include "MessageManager.h"
 
 namespace SSL
 {	
@@ -19,17 +19,17 @@ namespace SSL
 	public:
 		Miner(int id, LOCATION location, State<Miner>* state);
 
-		void Update();	
+		virtual void Update();	
+		virtual void DealWithMessage(const MessageInfo& messageInfo) const;
 		
 		void GotoLocation(LOCATION location);
 		void MineGold();
 
-		bool IsCurrentLocation(LOCATION location);		
-		bool IsFullNugget();
+		bool IsCurrentLocation(LOCATION location) const;		
+		bool IsFullNugget() const;
 		void ChangeNuggetToGoldAndSave();		
 
 		StateManager<Miner>* GetStateManager() { return m_stateManager; }
 	};
 } // namespace SSL
 
-#endif

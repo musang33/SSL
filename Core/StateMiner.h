@@ -1,5 +1,4 @@
-#ifndef STATE_MINER_H
-#define STATE_MINER_H
+#pragma once
 
 #include "State.h"
 
@@ -18,6 +17,8 @@ namespace SSL
 		virtual void OnTick(Miner* miner);
 		
 		virtual void Exit(Miner* miner);
+
+		virtual void OnMessage(Miner* miner, const MessageInfo& messageInfo) const;
 	};
 	
 	class GotoBankAndDeposit final : public State<Miner>, public Singleton < GotoBankAndDeposit >
@@ -33,6 +34,19 @@ namespace SSL
 		virtual void Exit(Miner* miner);
 	};
 
-} // namespace SSL
+	class Hungry final : public State<Miner>, public Singleton < Hungry >
+	{
+	public:
+		Hungry() = default;
+		~Hungry(){};
 
-#endif // STATEMINER_H
+		virtual void Enter(Miner* miner);
+
+		virtual void OnTick(Miner* miner);
+
+		virtual void Exit(Miner* miner);
+
+		void OnMessage(Miner* miner, const MessageInfo& messageInfo) const;
+	};
+
+} // namespace SSL

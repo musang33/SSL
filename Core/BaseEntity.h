@@ -1,5 +1,4 @@
-#ifndef BASEENTITY_H
-#define BASEENTITY_H
+#pragma once
 
 #include "CommonData.h"
 
@@ -24,8 +23,8 @@ namespace SSL
 
 		virtual void Update() = 0;
 
+		virtual void DealWithMessage(const MessageInfo& messageInfo) const = 0;
+
 		int ID() const { return m_ID; };
 	};
 }
-
-#endif

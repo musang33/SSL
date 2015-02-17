@@ -1,5 +1,5 @@
 #include "CommonData.h"
-#include "GameEntity.h"
+#include "Miner.h"
 #include "State.h"
 
 namespace SSL
@@ -20,6 +20,11 @@ namespace SSL
 	{		
 		m_stateManager->Update();
 	}
+
+	void Miner::DealWithMessage(const MessageInfo& messageInfo) const
+	{
+		m_stateManager->DealWithMessage(messageInfo);
+	}
 	
 	void Miner::GotoLocation(LOCATION location)
 	{
@@ -33,7 +38,7 @@ namespace SSL
 		m_nuggetSize += (rand() % 30);
 	}
 
-	bool Miner::IsCurrentLocation(LOCATION location)
+	bool Miner::IsCurrentLocation(LOCATION location) const
 	{
 		if ( m_currentLocation == location )
 		{
@@ -43,7 +48,7 @@ namespace SSL
 		return false;
 	}
 
-	bool Miner::IsFullNugget()
+	bool Miner::IsFullNugget() const
 	{
 		if ( m_nuggetSize >= MAX_NUGGET_SIZE )
 		{
