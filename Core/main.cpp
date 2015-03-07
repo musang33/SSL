@@ -5,10 +5,20 @@
 #include "EntityManager.h"
 #include "MessageManager.h"
 
+#include <lua.hpp>
+
 using namespace SSL;
 
 int main()
 {	
+	lua_State *L = luaL_newstate();
+	luaL_openlibs(L);
+	
+	if ( L )
+	{
+		lua_close(L);
+	}
+
 	Miner* miner = new Miner(ID_MINER, LOCATION::HOME, EnterMineAndDigForNugget::GetInstance());
 	HouseWife* houseWife = new HouseWife(ID_HOUSE_WIFE, LOCATION::HOME, LivingRoom::GetInstance());
 		

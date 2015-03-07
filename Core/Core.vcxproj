@@ -41,6 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -52,10 +54,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\ExternalLibrary\lua-5.3.0\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,6 +83,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lapi.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lauxlib.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lcode.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lctype.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\ldebug.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\ldo.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lfunc.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lgc.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\llex.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\llimits.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lmem.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lobject.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lopcodes.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lparser.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lprefix.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lstate.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lstring.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\ltable.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\ltm.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lua.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lua.hpp" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\luaconf.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lualib.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lundump.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lvm.h" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lzio.h" />
     <ClInclude Include="BaseEntity.h" />
     <ClInclude Include="CommonData.h" />
     <ClInclude Include="EntityManager.h" />
@@ -90,6 +123,41 @@
     <ClInclude Include="StateMiner.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lapi.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lauxlib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lbaselib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lbitlib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lcode.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lcorolib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lctype.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\ldblib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\ldebug.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\ldo.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\ldump.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lfunc.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lgc.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\linit.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\liolib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\llex.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lmathlib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lmem.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\loadlib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lobject.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lopcodes.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\loslib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lparser.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lstate.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lstring.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lstrlib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\ltable.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\ltablib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\ltm.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lua.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\luac.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lundump.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lutf8lib.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lvm.c" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lzio.c" />
     <ClCompile Include="BaseEntity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="HouseWife.cpp" />
@@ -98,6 +166,9 @@
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="StateHouseWife.cpp" />
     <ClCompile Include="StateMiner.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ExternalLibrary\lua-5.3.0\src\Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
