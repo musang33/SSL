@@ -9,12 +9,18 @@ namespace SSL
 	class State 
 	{
 	public:
+		explicit State(UINT32 ID) : m_id(ID) {}
 		virtual ~State(){};
 
-		virtual void Enter(EntityType*) = 0;
-		virtual void OnTick(EntityType*) = 0;
-		virtual void Exit(EntityType*) = 0;
+		virtual void Enter(EntityType*){};
+		virtual void OnTick(EntityType*){};
+		virtual void Exit(EntityType*){};
 
 		virtual void OnMessage(EntityType*, const MessageInfo& messageInfo) const {};
+
+		UINT32 GetID() { return m_id; }
+
+	private:
+		UINT32 m_id;
 	};
 }

@@ -16,12 +16,18 @@
     <Filter Include="Lua5.3">
       <UniqueIdentifier>{7645a47e-2d74-4d7c-a192-14b7bbe24461}</UniqueIdentifier>
     </Filter>
+    <Filter Include="State\ConcreteStates">
+      <UniqueIdentifier>{3527e248-d0f8-4b78-bccf-542e9e74ea89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\FSM">
+      <UniqueIdentifier>{3256dead-f78a-4fa6-b6e3-d51f6a4625f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\HFSM">
+      <UniqueIdentifier>{591fed4b-53e0-4324-b6b1-a3e521e37cb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
-      <Filter>State</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMiner.h">
       <Filter>State</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
@@ -36,9 +42,6 @@
     <ClInclude Include="BaseEntity.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="StateManager.h">
-      <Filter>State</Filter>
-    </ClInclude>
     <ClInclude Include="MessageManager.h">
       <Filter>Message</Filter>
     </ClInclude>
@@ -50,9 +53,6 @@
     </ClInclude>
     <ClInclude Include="HouseWife.h">
       <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="StateHouseWife.h">
-      <Filter>State</Filter>
     </ClInclude>
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lapi.h">
       <Filter>Lua5.3</Filter>
@@ -132,11 +132,20 @@
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lzio.h">
       <Filter>Lua5.3</Filter>
     </ClInclude>
+    <ClInclude Include="HFSM.h">
+      <Filter>State\HFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>State\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="StateHouseWife.h">
+      <Filter>State\ConcreteStates</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMiner.h">
+      <Filter>State\ConcreteStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="StateMiner.cpp">
-      <Filter>State</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="BaseEntity.cpp">
       <Filter>Entity</Filter>
@@ -152,9 +161,6 @@
     </ClCompile>
     <ClCompile Include="HouseWife.cpp">
       <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="StateHouseWife.cpp">
-      <Filter>State</Filter>
     </ClCompile>
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lapi.c">
       <Filter>Lua5.3</Filter>
@@ -260,6 +266,12 @@
     </ClCompile>
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lzio.c">
       <Filter>Lua5.3</Filter>
+    </ClCompile>
+    <ClCompile Include="StateHouseWife.cpp">
+      <Filter>State\ConcreteStates</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMiner.cpp">
+      <Filter>State\ConcreteStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

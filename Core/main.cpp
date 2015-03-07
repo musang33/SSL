@@ -4,6 +4,7 @@
 #include "StateHouseWife.h"
 #include "EntityManager.h"
 #include "MessageManager.h"
+#include "HFSM.h"
 
 #include <lua.hpp>
 
@@ -21,6 +22,8 @@ int main()
 
 	Miner* miner = new Miner(ID_MINER, LOCATION::HOME, EnterMineAndDigForNugget::GetInstance());
 	HouseWife* houseWife = new HouseWife(ID_HOUSE_WIFE, LOCATION::HOME, LivingRoom::GetInstance());
+
+	HFSM<Miner> hfsmTest(miner);
 		
 	EntityManager::GetInstance()->RegisterEntity(miner);
 	EntityManager::GetInstance()->RegisterEntity(houseWife);

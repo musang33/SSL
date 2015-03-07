@@ -9,7 +9,7 @@ namespace SSL
 	class Cooking final : public State<HouseWife>, public Singleton < Cooking >
 	{
 	public:
-		Cooking() = default;
+		Cooking() :State<HouseWife>(ID){};
 		~Cooking(){};		
 
 		virtual void Enter(HouseWife* houseWife);
@@ -19,12 +19,15 @@ namespace SSL
 		virtual void Exit(HouseWife* houseWife);		
 
 		virtual void OnMessage(HouseWife* houseWife, const MessageInfo& messageInfo) const;
+
+	private:
+		static const UINT32 ID = STATE_HOUSEWIFE_COOKING;
 	};
 	
 	class BathRoom final : public State<HouseWife>, public Singleton < BathRoom >
 	{
 	public:
-		BathRoom() = default;
+		BathRoom() :State<HouseWife>(ID){};
 		~BathRoom(){};
 
 		virtual void Enter(HouseWife* houseWife);
@@ -34,12 +37,15 @@ namespace SSL
 		virtual void Exit(HouseWife* houseWife);
 
 		virtual void OnMessage(HouseWife* houseWife, const MessageInfo& messageInfo) const;
+
+	private:
+		static const UINT32 ID = STATE_HOUSEWIFE_BATHROOM;
 	};
 
 	class LivingRoom final : public State<HouseWife>, public Singleton < LivingRoom >
 	{
 	public:
-		LivingRoom() = default;
+		LivingRoom() :State<HouseWife>(ID){};
 		~LivingRoom(){};
 
 		virtual void Enter(HouseWife* houseWife);
@@ -49,6 +55,9 @@ namespace SSL
 		virtual void Exit(HouseWife* houseWife);		
 
 		virtual void OnMessage(HouseWife* houseWife, const MessageInfo& messageInfo) const;
+
+	private:
+		static const UINT32 ID = STATE_HOUSEWIFE_LIVINGROOM;
 	};
 
 } // namespace SSL

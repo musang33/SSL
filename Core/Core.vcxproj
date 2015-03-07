@@ -112,6 +112,7 @@
     <ClInclude Include="BaseEntity.h" />
     <ClInclude Include="CommonData.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="HFSM.h" />
     <ClInclude Include="HouseWife.h" />
     <ClInclude Include="Miner.h" />
     <ClInclude Include="MessageManager.h" />
