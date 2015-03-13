@@ -1,10 +1,9 @@
-#include "Miner.h"
-#include "HouseWife.h"
-#include "StateMiner.h"
-#include "StateHouseWife.h"
+#include "NPC.h"
+#include "Player.h"
+#include "StateNPC.h"
+#include "StatePlayer.h"
 #include "EntityManager.h"
 #include "MessageManager.h"
-#include "HFSM.h"
 
 #include <lua.hpp>
 
@@ -20,18 +19,16 @@ int main()
 		lua_close(L);
 	}
 
-	Miner* miner = new Miner(ID_MINER, LOCATION::HOME, EnterMineAndDigForNugget::GetInstance());
-	HouseWife* houseWife = new HouseWife(ID_HOUSE_WIFE, LOCATION::HOME, LivingRoom::GetInstance());
+	NPC* npc = new NPC(ID_NPC, LOCATION::BATTLEFIELD, NPCPatrol::GetInstance());
+	Player* player = new Player(ID_PLAYER, LOCATION::BATTLEFIELD, PlayerPatrol::GetInstance());
 
-	HFSM<Miner> hfsmTest(miner);
-		
-	EntityManager::GetInstance()->RegisterEntity(miner);
-	EntityManager::GetInstance()->RegisterEntity(houseWife);
+	EntityManager::GetInstance()->RegisterEntity(npc);
+	EntityManager::GetInstance()->RegisterEntity(player);
 	
 	while ( 1 )
 	{
-		miner->Update();
-		houseWife->Update();
+		npc->Update();
+		player->Update();
 
 		MessageManager::GetInstance()->DispatchDelayedMessage();
 

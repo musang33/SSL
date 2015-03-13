@@ -57,13 +57,13 @@ namespace SSL
 		{
 			if ( m_currentState == newState )
 			{
-				std::cout << "[ERROR][Miner][ChangeState][$$:newState is same with currentState]" << std::endl;
+				std::cout << "[ERROR][NPC][ChangeState][$$:newState is same with currentState]" << std::endl;
 				return;
 			}
 
 			if ( nullptr == newState )
 			{
-				std::cout << "[ERROR][Miner][ChangeState][$$:newState is nullptr]" << std::endl;
+				std::cout << "[ERROR][NPC][ChangeState][$$:newState is nullptr]" << std::endl;
 				return;
 			}
 

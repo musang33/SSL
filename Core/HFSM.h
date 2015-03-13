@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Windows.h>
-#include <vector>
+#include <list>
 #include <unordered_map>
 
 namespace SSL
@@ -14,15 +14,16 @@ namespace SSL
 	{		
 		UINT32	parentStateID;
 		UINT32	currentStateID;
-		State<EntityType>*	current;
 		State<EntityType>*	parent;
-		std::vector<State<EntityType>*> children;
+		State<EntityType>*	current;		
+		std::list<State<EntityType>*> children;
 
 		StateRelationInfo(UINT32 TparentId, 
 			UINT32 TcurrentId,
-			State<EntityType>*	Tcurrent,
-			State<EntityType>*	Tparent)
-			:parentStateID(Tid), current(Tcurrent), parent(Tparent)
+			State<EntityType>*	Tparent,
+			State<EntityType>*	Tcurrent)
+			:parentStateID(TparentId), currentStateID(TcurrentId),
+			parent(Tparent), current(Tcurrent)
 		{};
 	};
 
@@ -48,55 +49,123 @@ namespace SSL
 	class HFSM
 	{
 	public:
-		HFSM(EntityType* owner) :m_owner(owner){};
+		HFSM(EntityType* owner) :m_owner(owner), m_currentState(nullptr){};
 		~HFSM(){};
 
 	private:
 		EntityType* m_owner;
 		std::unordered_map<UINT32, StateRelationInfo<EntityType>> m_stateTree;	// < currentStateId, StateRelationInfo>
 		State<EntityType>*	m_currentState;
-		typedef std::vector<Node<EntityType>> PATH;
+		typedef std::list<Node<EntityType>> PATH;
 
 	private:
-		bool makePath(PATH& path, State<EntityType>* currentState, State<EntityType>* targetState)
+		void makePath(PATH& path, State<EntityType>* currentState, State<EntityType>* targetState)
 		{
-			// 현재 상태의 자식중에 target이나 target의 부모가 있는지 체크
-			// 없으면 exit 후 상위로 올라간다
-			// *>있으면 enter
-			// 현재 상태의 자식중에 target이나 target의 부모가 있는지 체크
-			// 없으면 exit 후 상위로 올라간다
-			// *>있으면 enter
+			// 계층 관계에 따라 순서대로 상태를 입력한다. 
+			// EXIT, ENTER, TARGET 으로 각 상태의 Action을 설정한다. 
 
 			if ( nullptr == currentState )
 			{
-				return false;
-			}
+				return;
+			}	
 
 			auto itCurrent = m_stateTree.find(currentState->GetID());
 			
-			State<EntityType>* matchState = GetMatchStateFromMetoChildren(itCurrent->second.parent, targetState);
+			State<EntityType>* matchState = GetMatchStateFromMeToChildren(path, currentState, targetState);
 			if ( nullptr == matchState )
 			{
-				path.emplace_back(Node::Action::EXIT, itCurrent->second.current);
-				makePath(path, itCurrent->second.parent, targetState);
+				path.emplace_back(Node<EntityType>::Action::EXIT, itCurrent->second.current);
+				return makePath(path, itCurrent->second.parent, targetState);
 			}
 			else
 			{
-				if ( matchState->GetID() == targetState->GetID() )
+				PATH temp;
+
+				if ( matchState->GetID() == currentState->GetID() )
 				{
-					path.emplace_back(Node::Action::TARGET, itCurrent->second.current);
+					path.emplace_back(Node<EntityType>::Action::TARGET, itCurrent->second.current);
 				}
 				else
 				{
-					makePath(path, matchState, targetState);
-					path.emplace_back(Node::Action::ENTER, itCurrent->second.current);
-				}
-			}
+					// Enter하는 첫 State는 temp에 안 넣는다.
+					// 왜냐하면 target이며 현재 상태면 모두 첫 State의 하위에 있기 때문이다.
+					temp.emplace_back(Node<EntityType>::Action::TARGET, matchState);
 
-			return true;
+					do
+					{	
+						auto itMatch = m_stateTree.find(matchState->GetID());
+						matchState = itMatch->second.parent;
+
+						if ( matchState->GetID() == currentState->GetID() )
+						{
+							break;
+						}
+
+						temp.emplace_back(Node<EntityType>::Action::ENTER, matchState);												
+
+					} while ( true );				
+				}				
+				
+				path.insert(path.end(), temp.rbegin(), temp.rend());
+			}		
 		}
 
 	public:
+		void Update()
+		{
+			auto itPrevious = m_stateTree.find(m_currentState->GetID());
+			if ( itPrevious == m_stateTree.end() )
+			{
+				return;
+			}
+
+			UINT32 previousParentID = itPrevious->second.parent->GetID();
+			m_currentState->OnTick(m_owner);	
+			
+			auto itCurrent = m_stateTree.find(m_currentState->GetID());
+			if ( itCurrent == m_stateTree.end() )
+			{
+				return;
+			}
+
+			if ( previousParentID != itCurrent->second.parent->GetID() )
+			{
+				auto processState = GetMatchStateFromMeToRoot(itPrevious->second.current, m_currentState);
+				if ( processState == nullptr )
+				{
+					return;
+				}
+
+				itCurrent = m_stateTree.find(processState->GetID());
+			}
+
+			while ( itCurrent->second.parent )
+			{
+				itCurrent->second.parent->OnTick(m_owner);
+				itCurrent = m_stateTree.find(itCurrent->second.parent->GetID());
+			}
+		}
+
+		void DealWithMessage(const MessageInfo& messageInfo) const
+		{			
+			if ( m_currentState )
+			{
+				auto itProcessState = m_stateTree.find(m_currentState->GetID());
+				while ( itProcessState != m_stateTree.end() &&
+					nullptr != itProcessState->second.current )
+				{
+					itProcessState->second.current->OnMessage(m_owner, messageInfo);
+
+					if ( nullptr == itProcessState->second.parent )
+					{
+						return;
+					}
+
+					itProcessState = m_stateTree.find(itProcessState->second.parent->GetID());
+				}				
+			}
+		}
+
 		BOOL RegisterState(State<EntityType>* parent, State<EntityType>* child)
 		{
 			if ( nullptr == child )
@@ -106,29 +175,40 @@ namespace SSL
 
 			if ( nullptr == parent )
 			{
-				m_stateTree.emplace(child->GetId(),
-					0, child->GetId(), parent, child);
+				m_stateTree.emplace(std::piecewise_construct, 
+					std::make_tuple(child->GetID()),
+					std::make_tuple(STATE_ID::STATE_NONE, child->GetID(), parent, child));
 
 				return true;
 			}
-
+			
 			// 먼저 상위 상태가 있는지 확인
 			auto itParent = m_stateTree.find(parent->GetID());
-			if ( itParent != m_stateTree.end() )
+			if ( itParent == m_stateTree.end() )
 			{
-				for ( auto &itChildren : itParent->children )
+				return false;
+			}
+
+			auto itChild = m_stateTree.find(child->GetID());
+			if ( itChild != m_stateTree.end() )
+			{
+				return false;
+			}				
+
+			for ( auto &itChildren : itParent->second.children )
+			{
+				if ( itChildren->GetID() == child->GetID() )
 				{
-					if ( itChildren->GetID() == child->GetID() )
-					{
-						return false;
-					}					
-				}
+					return false;
+				}					
+			}
 
-				itParent->children.push_back(child);
-				return true;
-			}			
+			m_stateTree.emplace(std::piecewise_construct,
+				std::make_tuple(child->GetID()),
+				std::make_tuple(STATE_ID::STATE_NONE, child->GetID(), parent, child));
 
-			return true;
+			itParent->second.children.push_back(child);
+			return true;		
 		}
 
 		bool IsHavingState(State<EntityType>* targetState)
@@ -142,23 +222,66 @@ namespace SSL
 			return false;
 		};
 
-		State<EntityType>* GetMatchStateFromMetoChildren(State<EntityType>* parentState, State<EntityType>* childState)
-		{
-			auto it = m_stateTree.find(targetState->GetID());
-			for ( auto & childIt : it->second.children )
-			{
-				if ( childIt->GetId() == childState->GetID() )
+		State<EntityType>* GetMatchStateFromMeToRoot(State<EntityType>* checkState, State<EntityType>* currentState)
+		{			
+			auto itCheck = m_stateTree.find(checkState->GetID());		
+			auto itCurrent = m_stateTree.find(currentState->GetID());
+
+			while ( itCheck != m_stateTree.end() && itCheck->second.current != nullptr )
+			{				
+				auto tempCurrent = itCurrent;
+
+				while ( tempCurrent != m_stateTree.end() && tempCurrent->second.current != nullptr )
 				{
-					return true;
+					if ( tempCurrent->second.current->GetID() == itCheck->second.current->GetID() )
+					{
+						return tempCurrent->second.current;
+					}
+
+					if ( nullptr == tempCurrent->second.parent )
+					{
+						return nullptr;
+					}
+
+					tempCurrent = m_stateTree.find(tempCurrent->second.parent->GetID());					
 				}
 
-				if ( IsHavingStateInChildren(childIt, childState) )
+				if ( nullptr == itCheck->second.parent )
 				{
-					return true;
+					return nullptr;
+				}
+				itCheck = m_stateTree.find(itCheck->second.parent->GetID());
+			}		
+
+			return nullptr;
+		};
+		
+		State<EntityType>* GetMatchStateFromMeToChildren(PATH& path, State<EntityType>* currentState, State<EntityType>* targetState)
+		{
+			auto it = m_stateTree.find(currentState->GetID());
+			for ( auto & itChild : it->second.children )
+			{
+				for ( auto &itPath : path )
+				{
+					if ( itPath.state->GetID() == itChild->GetID() )
+					{
+						continue;
+					}
+				}
+
+				if ( itChild->GetID() == targetState->GetID() )
+				{
+					return itChild;
+				}
+
+				State<EntityType>* matchState = GetMatchStateFromMeToChildren(path, itChild, targetState);
+				if ( nullptr != matchState )
+				{
+					return matchState;
 				}
 			}		
 
-			return false;
+			return nullptr;
 		};
 
 		bool ChangeState(State<EntityType>* targetState)
@@ -173,13 +296,14 @@ namespace SSL
 				return false;
 			}
 
-			if ( currentState->GetID() == targetState->GetID() )
+			if ( m_currentState->GetID() == targetState->GetID() )
 			{
 				return false;
 			}
 
 			PATH path;
-			if ( false == makePath->(path, m_currentState, targetState) )
+			makePath(path, m_currentState, targetState);
+			if ( path.empty() )
 			{
 				return false;
 			}
@@ -188,16 +312,16 @@ namespace SSL
 			{
 				switch ( itNode.action )
 				{
-				case Node::Action::ENTER:
-					itNode.state->Exit(m_owner);
+				case Node<EntityType>::Action::ENTER:
+					itNode.state->Enter(m_owner);
 					break;
 
-				case Node::Action::TARGET:
-					m_currentState = itNode.state;
-					itNode.state->Exit(m_owner);
+				case Node<EntityType>::Action::TARGET:
+					m_currentState = itNode.state;		
+					m_currentState->Enter(m_owner);
 					break;
 
-				case Node::Action::EXIT:
+				case Node<EntityType>::Action::EXIT:
 					itNode.state->Exit(m_owner);
 					break;
 
@@ -208,6 +332,11 @@ namespace SSL
 
 			return true;
 		};
+
+		void SetCurrentState(State<EntityType>* state)
+		{
+			m_currentState = state;
+		}
 	};
 
 } // namespace SSL

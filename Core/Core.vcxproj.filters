@@ -25,6 +25,9 @@
     <Filter Include="State\HFSM">
       <UniqueIdentifier>{591fed4b-53e0-4324-b6b1-a3e521e37cb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{a3559dff-d686-4572-94d0-28f3af0f27aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -46,12 +49,6 @@
       <Filter>Message</Filter>
     </ClInclude>
     <ClInclude Include="EntityManager.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Miner.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="HouseWife.h">
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lapi.h">
@@ -138,10 +135,16 @@
     <ClInclude Include="StateManager.h">
       <Filter>State\FSM</Filter>
     </ClInclude>
-    <ClInclude Include="StateHouseWife.h">
+    <ClInclude Include="NPC.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="StateNPC.h">
       <Filter>State\ConcreteStates</Filter>
     </ClInclude>
-    <ClInclude Include="StateMiner.h">
+    <ClInclude Include="StatePlayer.h">
       <Filter>State\ConcreteStates</Filter>
     </ClInclude>
   </ItemGroup>
@@ -155,12 +158,6 @@
     </ClCompile>
     <ClCompile Include="MessageManager.cpp">
       <Filter>Message</Filter>
-    </ClCompile>
-    <ClCompile Include="Miner.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="HouseWife.cpp">
-      <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lapi.c">
       <Filter>Lua5.3</Filter>
@@ -267,10 +264,16 @@
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lzio.c">
       <Filter>Lua5.3</Filter>
     </ClCompile>
-    <ClCompile Include="StateHouseWife.cpp">
+    <ClCompile Include="NPC.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="StateNPC.cpp">
       <Filter>State\ConcreteStates</Filter>
     </ClCompile>
-    <ClCompile Include="StateMiner.cpp">
+    <ClCompile Include="StatePlayer.cpp">
       <Filter>State\ConcreteStates</Filter>
     </ClCompile>
   </ItemGroup>

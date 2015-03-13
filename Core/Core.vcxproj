@@ -113,15 +113,15 @@
     <ClInclude Include="CommonData.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="HFSM.h" />
-    <ClInclude Include="HouseWife.h" />
-    <ClInclude Include="Miner.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="NPC.h" />
     <ClInclude Include="MessageManager.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="State.h" />
-    <ClInclude Include="StateHouseWife.h" />
+    <ClInclude Include="StatePlayer.h" />
     <ClInclude Include="StateManager.h" />
-    <ClInclude Include="StateMiner.h" />
+    <ClInclude Include="StateNPC.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lapi.c" />
@@ -161,12 +161,12 @@
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lzio.c" />
     <ClCompile Include="BaseEntity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
-    <ClCompile Include="HouseWife.cpp" />
-    <ClCompile Include="Miner.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="NPC.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MessageManager.cpp" />
-    <ClCompile Include="StateHouseWife.cpp" />
-    <ClCompile Include="StateMiner.cpp" />
+    <ClCompile Include="StatePlayer.cpp" />
+    <ClCompile Include="StateNPC.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ExternalLibrary\lua-5.3.0\src\Makefile" />
