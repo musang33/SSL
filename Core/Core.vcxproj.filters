@@ -28,6 +28,12 @@
     <Filter Include="Factory">
       <UniqueIdentifier>{a3559dff-d686-4572-94d0-28f3af0f27aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lua5.3\LuaTinker">
+      <UniqueIdentifier>{4f997e1d-7260-4ce3-b05f-dd45348e7384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaManager">
+      <UniqueIdentifier>{095eb44d-3a52-466d-889f-867f051da6c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -146,6 +152,15 @@
     </ClInclude>
     <ClInclude Include="StatePlayer.h">
       <Filter>State\ConcreteStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\lua_tinker.hpp">
+      <Filter>Lua5.3\LuaTinker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\ScriptBase.hpp">
+      <Filter>Lua5.3\LuaTinker</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaManager.h">
+      <Filter>LuaManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,6 +290,15 @@
     </ClCompile>
     <ClCompile Include="StatePlayer.cpp">
       <Filter>State\ConcreteStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\lua_tinker.cpp">
+      <Filter>Lua5.3\LuaTinker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\ScriptBase.cpp">
+      <Filter>Lua5.3\LuaTinker</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaManager.cpp">
+      <Filter>LuaManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

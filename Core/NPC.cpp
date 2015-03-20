@@ -125,7 +125,7 @@ namespace SSL
 	{
 		auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 		auto dice_rand = std::bind(std::uniform_int_distribution<int>(1, 100),
-			std::mt19937(seed));
+			std::mt19937_64(seed));
 
 		if ( dice_rand() < 30 )
 		{
@@ -139,7 +139,7 @@ namespace SSL
 	{
 		auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 		auto dice_rand = std::bind(std::uniform_int_distribution<int>(1, 100),
-			std::mt19937(seed));
+			std::mt19937_64(seed));
 
 		if ( dice_rand() < 50 )
 		{
@@ -153,7 +153,7 @@ namespace SSL
 	{
 		auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 		auto dice_rand = std::bind(std::uniform_int_distribution<int>(1, 100),
-			std::mt19937(seed));
+			std::mt19937_64(seed));
 
 		if ( dice_rand() < 50 )
 		{

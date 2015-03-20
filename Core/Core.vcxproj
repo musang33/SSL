@@ -83,6 +83,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\lua_tinker.hpp" />
+    <ClInclude Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\ScriptBase.hpp" />
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lapi.h" />
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lauxlib.h" />
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lcode.h" />
@@ -113,6 +115,7 @@
     <ClInclude Include="CommonData.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="HFSM.h" />
+    <ClInclude Include="LuaManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="MessageManager.h" />
@@ -124,6 +127,8 @@
     <ClInclude Include="StateNPC.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\lua_tinker.cpp" />
+    <ClCompile Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\ScriptBase.cpp" />
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lapi.c" />
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lauxlib.c" />
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lbaselib.c" />
@@ -161,6 +166,7 @@
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lzio.c" />
     <ClCompile Include="BaseEntity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="main.cpp" />

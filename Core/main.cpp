@@ -4,6 +4,7 @@
 #include "StatePlayer.h"
 #include "EntityManager.h"
 #include "MessageManager.h"
+#include "LuaManager.h"
 
 #include <lua.hpp>
 
@@ -11,13 +12,8 @@ using namespace SSL;
 
 int main()
 {	
-	lua_State *L = luaL_newstate();
-	luaL_openlibs(L);
-	
-	if ( L )
-	{
-		lua_close(L);
-	}
+	LuaManager luaManager;
+	luaManager.init(".\\lua_script\\test.lua");
 
 	NPC* npc = new NPC(ID_NPC, LOCATION::BATTLEFIELD, NPCPatrol::GetInstance());
 	Player* player = new Player(ID_PLAYER, LOCATION::BATTLEFIELD, PlayerPatrol::GetInstance());
