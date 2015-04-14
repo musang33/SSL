@@ -5,14 +5,38 @@
 
 namespace SSL
 {	
-	void NPCAlive::Enter(NPC* npc)
+	void NPCBaseState::OnEnter(NPC* npc)
 	{
-		std::cout << "[INFO][Alive][Enter]" << std::endl;		
+		std::cout << "[INFO][NPCBaseState][onEnter]" << std::endl;
+		npc->ScriptEnter( GetID() );
+
+		State<NPC>::onEnter(npc);
 	}
 
-	void NPCAlive::OnTick(NPC* npc)
+	void NPCBaseState::OnTick(NPC* npc)
 	{
-		std::cout << "[INFO][Alive][OnTick]" << std::endl;
+		std::cout << "[INFO][NPCBaseState][onTick]" << std::endl;
+		npc->ScriptOnTick( GetID() );
+
+		State<NPC>::onTick(npc);
+	}
+
+	void NPCBaseState::OnExit(NPC* npc)
+	{
+		std::cout << "[INFO][NPCBaseState][onExit]" << std::endl;
+		npc->ScriptExit( GetID() );
+
+		State<NPC>::onExit(npc);
+	}
+
+	void NPCAlive::onEnter(NPC* npc)
+	{
+		std::cout << "[INFO][Alive][onEnter]" << std::endl;		
+	}
+
+	void NPCAlive::onTick(NPC* npc)
+	{
+		std::cout << "[INFO][Alive][onTick]" << std::endl;
 		npc->AddHPByRate(50);
 		if ( npc->IsDead() )
 		{
@@ -20,9 +44,9 @@ namespace SSL
 		}		
 	}
 
-	void NPCAlive::Exit(NPC* npc)
+	void NPCAlive::onExit(NPC* npc)
 	{
-		std::cout << "[INFO][Alive][Exit]" << std::endl;
+		std::cout << "[INFO][Alive][onExit]" << std::endl;
 	}
 
 	void NPCAlive::OnMessage(NPC* npc, const MessageInfo& messageInfo) const
@@ -44,39 +68,39 @@ namespace SSL
 
 	// Dead
 	
-	void NPCDead::Enter(NPC* npc)
+	void NPCDead::onEnter(NPC* npc)
 	{
-		std::cout << "[INFO][NPCDead][Enter]" << std::endl;
+		std::cout << "[INFO][NPCDead][onEnter]" << std::endl;
 		
 	}
 
-	void NPCDead::OnTick(NPC* npc)
+	void NPCDead::onTick(NPC* npc)
 	{
-		std::cout << "[INFO][NPCDead][OnTick]" << std::endl;
+		std::cout << "[INFO][NPCDead][onTick]" << std::endl;
 		
 		// npc 메모리 해제
 	}
 
-	void NPCDead::Exit(NPC* npc)
+	void NPCDead::onExit(NPC* npc)
 	{
-		std::cout << "[INFO][NPCDead][Exit]" << std::endl;
+		std::cout << "[INFO][NPCDead][onExit]" << std::endl;
 	}
 
 	// Peace
 
-	void NPCPeace::Enter(NPC* npc)
+	void NPCPeace::onEnter(NPC* npc)
 	{
-		std::cout << "[INFO][NPCPeace][Enter]" << std::endl;		
+		std::cout << "[INFO][NPCPeace][onEnter]" << std::endl;		
 	}
 
-	void NPCPeace::OnTick(NPC* npc)
+	void NPCPeace::onTick(NPC* npc)
 	{
-		std::cout << "[INFO][NPCPeace][OnTick]" << std::endl;		
+		std::cout << "[INFO][NPCPeace][onTick]" << std::endl;		
 	}
 
-	void NPCPeace::Exit(NPC* npc)
+	void NPCPeace::onExit(NPC* npc)
 	{
-		std::cout << "[INFO][NPCPeace][Exit]" << std::endl;
+		std::cout << "[INFO][NPCPeace][onExit]" << std::endl;
 	}
 
 	void NPCPeace::OnMessage(NPC* npc, const MessageInfo& messageInfo) const
@@ -96,14 +120,14 @@ namespace SSL
 
 	// Engage
 
-	void NPCEngage::Enter(NPC* npc)
+	void NPCEngage::onEnter(NPC* npc)
 	{
-		std::cout << "[INFO][NPCEngage][Enter]" << std::endl;		
+		std::cout << "[INFO][NPCEngage][onEnter]" << std::endl;		
 	}
 
-	void NPCEngage::OnTick(NPC* npc)
+	void NPCEngage::onTick(NPC* npc)
 	{
-		std::cout << "[INFO][NPCEngage][OnTick]" << std::endl;
+		std::cout << "[INFO][NPCEngage][onTick]" << std::endl;
 
 		if ( false == npc->HasEnemyInAggroList() )
 		{
@@ -111,21 +135,21 @@ namespace SSL
 		}	
 	}
 
-	void NPCEngage::Exit(NPC* npc)
+	void NPCEngage::onExit(NPC* npc)
 	{
-		std::cout << "[INFO][NPCEngage][Exit]" << std::endl;
+		std::cout << "[INFO][NPCEngage][onExit]" << std::endl;
 	}	
 
 	// Patrol
 
-	void NPCPatrol::Enter(NPC* npc)
+	void NPCPatrol::onEnter(NPC* npc)
 	{
-		std::cout << "[INFO][NPCPatrol][Enter]" << std::endl;
+		std::cout << "[INFO][NPCPatrol][onEnter]" << std::endl;
 	}
 
-	void NPCPatrol::OnTick(NPC* npc)
+	void NPCPatrol::onTick(NPC* npc)
 	{
-		std::cout << "[INFO][NPCPatrol][OnTick]" << std::endl;	
+		std::cout << "[INFO][NPCPatrol][onTick]" << std::endl;	
 		if ( npc->HasFoundEnemy() )
 		{
 			npc->GetHFSM()->ChangeState(NPCThink::GetInstance());
@@ -133,21 +157,21 @@ namespace SSL
 		}
 	}
 
-	void NPCPatrol::Exit(NPC* npc)
+	void NPCPatrol::onExit(NPC* npc)
 	{
-		std::cout << "[INFO][NPCPatrol][Exit]" << std::endl;
+		std::cout << "[INFO][NPCPatrol][onExit]" << std::endl;
 	}
 
 	// Guard
 
-	void NPCGuard::Enter(NPC* npc)
+	void NPCGuard::onEnter(NPC* npc)
 	{
-		std::cout << "[INFO][NPCGuard][Enter]" << std::endl;
+		std::cout << "[INFO][NPCGuard][onEnter]" << std::endl;
 	}
 
-	void NPCGuard::OnTick(NPC* npc)
+	void NPCGuard::onTick(NPC* npc)
 	{
-		std::cout << "[INFO][NPCGuard][OnTick]" << std::endl;		
+		std::cout << "[INFO][NPCGuard][onTick]" << std::endl;		
 		if ( npc->HasFoundEnemy() )
 		{
 			npc->GetHFSM()->ChangeState(NPCThink::GetInstance());
@@ -155,21 +179,21 @@ namespace SSL
 		}
 	}
 
-	void NPCGuard::Exit(NPC* npc)
+	void NPCGuard::onExit(NPC* npc)
 	{
-		std::cout << "[INFO][NPCGuard][Exit]" << std::endl;
+		std::cout << "[INFO][NPCGuard][onExit]" << std::endl;
 	}
 
 	// Think
 
-	void NPCThink::Enter(NPC* npc)
+	void NPCThink::onEnter(NPC* npc)
 	{
-		std::cout << "[INFO][NPCThink][Enter]" << std::endl;
+		std::cout << "[INFO][NPCThink][onEnter]" << std::endl;
 	}
 
-	void NPCThink::OnTick(NPC* npc)
+	void NPCThink::onTick(NPC* npc)
 	{
-		std::cout << "[INFO][NPCThink][OnTick]" << std::endl;
+		std::cout << "[INFO][NPCThink][onTick]" << std::endl;
 
 		if ( npc->GetCurrentHPRate() < 3000 )
 		{
@@ -184,21 +208,21 @@ namespace SSL
 		}
 	}
 
-	void NPCThink::Exit(NPC* npc)
+	void NPCThink::onExit(NPC* npc)
 	{
-		std::cout << "[INFO][NPCThink][Exit]" << std::endl;
+		std::cout << "[INFO][NPCThink][onExit]" << std::endl;
 	}
 
 	// Attack
 
-	void NPCAttack::Enter(NPC* npc)
+	void NPCAttack::onEnter(NPC* npc)
 	{
-		std::cout << "[INFO][NPCAttack][Enter]" << std::endl;
+		std::cout << "[INFO][NPCAttack][onEnter]" << std::endl;
 	}
 
-	void NPCAttack::OnTick(NPC* npc)
+	void NPCAttack::onTick(NPC* npc)
 	{
-		std::cout << "[INFO][NPCAttack][OnTick]" << std::endl;
+		std::cout << "[INFO][NPCAttack][onTick]" << std::endl;
 
 		MessageInfo messageInfo;
 		messageInfo.senderID = EntityID::ID_NPC;
@@ -213,21 +237,21 @@ namespace SSL
 		return;
 	}
 
-	void NPCAttack::Exit(NPC* npc)
+	void NPCAttack::onExit(NPC* npc)
 	{
-		std::cout << "[INFO][NPCAttack][Exit]" << std::endl;
+		std::cout << "[INFO][NPCAttack][onExit]" << std::endl;
 	}
 
 	// Flee
 
-	void NPCFlee::Enter(NPC* npc)
+	void NPCFlee::onEnter(NPC* npc)
 	{		
-		std::cout << "[INFO][NPCFlee][Enter]" << std::endl;
+		std::cout << "[INFO][NPCFlee][onEnter]" << std::endl;
 	}
 
-	void NPCFlee::OnTick(NPC* npc)
+	void NPCFlee::onTick(NPC* npc)
 	{
-		std::cout << "[INFO][NPCFlee][OnTick]" << std::endl;
+		std::cout << "[INFO][NPCFlee][onTick]" << std::endl;
 
 		if ( npc->GetCurrentHPRate() > 3000 )
 		{
@@ -236,9 +260,9 @@ namespace SSL
 		}
 	}
 
-	void NPCFlee::Exit(NPC* npc)
+	void NPCFlee::onExit(NPC* npc)
 	{
-		std::cout << "[INFO][NPCFlee][Exit]" << std::endl;
+		std::cout << "[INFO][NPCFlee][onExit]" << std::endl;
 	}
 
 }

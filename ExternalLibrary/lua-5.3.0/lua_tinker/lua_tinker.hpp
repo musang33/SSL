@@ -1079,7 +1079,7 @@ struct class_name
   static const char* name(const char* name = NULL)
   {
     static char temp[256] = "";
-    if(name) strcpy(temp, name);
+    if(name) strcpy_s(temp, name);
     return temp;
   }
 };

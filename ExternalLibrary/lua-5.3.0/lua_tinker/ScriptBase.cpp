@@ -7,7 +7,7 @@ ScriptBase::~ScriptBase()
     _L = NULL;
 }
 
-bool ScriptBase::defaultInti( const char *path )
+bool ScriptBase::defaultInti()
 {
     _L = luaL_newstate();
     if (_L == NULL)
@@ -15,9 +15,7 @@ bool ScriptBase::defaultInti( const char *path )
     luaL_openlibs( _L );
 
     lua_tinker::init(_L); //support 64
-    _path = path;
-    dofile(path);
-
+   
     return true;
 }
 

@@ -23,7 +23,7 @@ public:
     virtual bool reload() {return true;}
 
    
-    bool defaultInti(const char *str);
+    bool defaultInti();
 
     void dofile(const char *filename)
     {

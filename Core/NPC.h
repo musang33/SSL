@@ -19,6 +19,11 @@ namespace SSL
 		INT32					m_maxHP;
 		INT32					m_currentHP;
 		UINT32					m_strikingPower;
+		
+		std::string				m_npcAIIndex;
+		std::string				m_npcInstanceIndex;
+
+		static UINT32			static_instance_id;
 
 	private:
 		void initState();
@@ -40,6 +45,15 @@ namespace SSL
 		bool HasFoundEnemy();
 		bool IsTargetInSkillDistance();
 		bool HasEnemyInAggroList();
+
+		void PrintLog(const char* msg);
+
+		void ScriptEnter( UINT32 stateID );
+		void ScriptOnTick( UINT32 stateID );
+		void ScriptExit( UINT32 stateID );
+
+		const char* GetAIIndex() { return m_npcAIIndex.c_str(); }
+		const char* GetInstanceIndex() { return m_npcInstanceIndex.c_str(); }
 
 		StateManager<NPC>* GetStateManager() { return m_stateManager; }
 		HFSM<NPC>* GetHFSM() { return m_hfsm; }

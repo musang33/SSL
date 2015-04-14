@@ -6,14 +6,11 @@
 #include "MessageManager.h"
 #include "LuaManager.h"
 
-#include <lua.hpp>
-
 using namespace SSL;
 
 int main()
-{	
-	LuaManager luaManager;
-	luaManager.init(".\\lua_script\\test.lua");
+{			
+	LuaManager::GetInstance()->init(".\\lua_script\\script_list.lua");
 
 	NPC* npc = new NPC(ID_NPC, LOCATION::BATTLEFIELD, NPCPatrol::GetInstance());
 	Player* player = new Player(ID_PLAYER, LOCATION::BATTLEFIELD, PlayerPatrol::GetInstance());

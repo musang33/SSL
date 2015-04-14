@@ -6,33 +6,46 @@ namespace SSL
 {
 	class NPC;	
 
-	class NPCRoot final : public State<NPC>, public Singleton < NPCRoot >
+	class NPCBaseState : public State<NPC>
 	{
 	public:
-		NPCRoot() :State<NPC>(ID){};
+		NPCBaseState(UINT32 ID) :State<NPC>(ID){};
+		~NPCBaseState(){};
+
+		virtual void OnEnter(NPC* npc);
+
+		virtual void OnTick(NPC* npc);
+
+		virtual void OnExit(NPC* npc);
+	};
+
+	class NPCRoot final : public NPCBaseState, public Singleton < NPCRoot >
+	{
+	public:
+		NPCRoot() :NPCBaseState(ID){};
 		~NPCRoot(){};
 
-		virtual void Enter(NPC* npc){};
+		virtual void onEnter(NPC* npc){};
 
-		virtual void OnTick(NPC* npc){};
+		virtual void onTick(NPC* npc){};
 
-		virtual void Exit(NPC* npc){};
+		virtual void onExit(NPC* npc){};
 
 	private:
 		static const UINT32 ID = STATE_NPC_ROOT;
 	};
 
-	class NPCAlive final : public State<NPC>, public Singleton < NPCAlive >
+	class NPCAlive final : public NPCBaseState, public Singleton < NPCAlive >
 	{
 	public:
-		NPCAlive() :State<NPC>(ID){};
+		NPCAlive() :NPCBaseState(ID){};
 		~NPCAlive(){};
 
-		virtual void Enter(NPC* npc);
+		virtual void onEnter(NPC* npc);
 		
-		virtual void OnTick(NPC* npc);
+		virtual void onTick(NPC* npc);
 		
-		virtual void Exit(NPC* npc);
+		virtual void onExit(NPC* npc);
 
 		virtual void OnMessage(NPC* npc, const MessageInfo& messageInfo) const;
 
@@ -40,33 +53,33 @@ namespace SSL
 		static const UINT32 ID = STATE_NPC_ALIVE;
 	};
 
-	class NPCDead final : public State<NPC>, public Singleton < NPCDead >
+	class NPCDead final : public NPCBaseState, public Singleton < NPCDead >
 	{
 	public:
-		NPCDead() :State<NPC>(ID){};
+		NPCDead() :NPCBaseState(ID){};
 		~NPCDead(){};
 
-		virtual void Enter(NPC* npc);
+		virtual void onEnter(NPC* npc);
 
-		virtual void OnTick(NPC* npc);
+		virtual void onTick(NPC* npc);
 
-		virtual void Exit(NPC* npc);		
+		virtual void onExit(NPC* npc);		
 
 	private:
 		static const UINT32 ID = STATE_NPC_DEAD;
 	};
 	
-	class NPCPeace final : public State<NPC>, public Singleton < NPCPeace >
+	class NPCPeace final : public NPCBaseState, public Singleton < NPCPeace >
 	{
 	public:
-		NPCPeace() :State<NPC>(ID){};
+		NPCPeace() :NPCBaseState(ID){};
 		~NPCPeace(){};
 
-		virtual void Enter(NPC* npc);
+		virtual void onEnter(NPC* npc);
 
-		virtual void OnTick(NPC* npc);
+		virtual void onTick(NPC* npc);
 
-		virtual void Exit(NPC* npc);
+		virtual void onExit(NPC* npc);
 
 		virtual void OnMessage(NPC* npc, const MessageInfo& messageInfo) const;
 
@@ -74,97 +87,97 @@ namespace SSL
 		static const UINT32 ID = STATE_NPC_PEACE;
 	};
 
-	class NPCEngage final : public State<NPC>, public Singleton < NPCEngage >
+	class NPCEngage final : public NPCBaseState, public Singleton < NPCEngage >
 	{
 	public:
-		NPCEngage() :State<NPC>(ID){};
+		NPCEngage() :NPCBaseState(ID){};
 		~NPCEngage(){};
 
-		virtual void Enter(NPC* npc);
+		virtual void onEnter(NPC* npc);
 
-		virtual void OnTick(NPC* npc);
+		virtual void onTick(NPC* npc);
 
-		virtual void Exit(NPC* npc);
+		virtual void onExit(NPC* npc);
 
 	private:
 		static const UINT32 ID = STATE_NPC_ENGAGE;
 	};
 
-	class NPCPatrol final : public State<NPC>, public Singleton < NPCPatrol >
+	class NPCPatrol final : public NPCBaseState, public Singleton < NPCPatrol >
 	{
 	public:
-		NPCPatrol() :State<NPC>(ID){};
+		NPCPatrol() :NPCBaseState(ID){};
 		~NPCPatrol(){};
 
-		virtual void Enter(NPC* npc);
+		virtual void onEnter(NPC* npc);
 
-		virtual void OnTick(NPC* npc);
+		virtual void onTick(NPC* npc);
 
-		virtual void Exit(NPC* npc);
+		virtual void onExit(NPC* npc);
 
 	private:
 		static const UINT32 ID = STATE_NPC_PATROL;
 	};
 
-	class NPCGuard final : public State<NPC>, public Singleton < NPCGuard >
+	class NPCGuard final : public NPCBaseState, public Singleton < NPCGuard >
 	{
 	public:
-		NPCGuard() :State<NPC>(ID){};
+		NPCGuard() :NPCBaseState(ID){};
 		~NPCGuard(){};
 
-		virtual void Enter(NPC* npc);
+		virtual void onEnter(NPC* npc);
 
-		virtual void OnTick(NPC* npc);
+		virtual void onTick(NPC* npc);
 
-		virtual void Exit(NPC* npc);
+		virtual void onExit(NPC* npc);
 
 	private:
 		static const UINT32 ID = STATE_NPC_GUARD;
 	};
 
-	class NPCThink final : public State<NPC>, public Singleton < NPCThink >
+	class NPCThink final : public NPCBaseState, public Singleton < NPCThink >
 	{
 	public:
-		NPCThink() :State<NPC>(ID){};
+		NPCThink() :NPCBaseState(ID){};
 		~NPCThink(){};
 
-		virtual void Enter(NPC* npc);
+		virtual void onEnter(NPC* npc);
 
-		virtual void OnTick(NPC* npc);
+		virtual void onTick(NPC* npc);
 
-		virtual void Exit(NPC* npc);
+		virtual void onExit(NPC* npc);
 
 	private:
 		static const UINT32 ID = STATE_NPC_THINK;
 	};
 
-	class NPCAttack final : public State<NPC>, public Singleton < NPCAttack >
+	class NPCAttack final : public NPCBaseState, public Singleton < NPCAttack >
 	{
 	public:
-		NPCAttack() :State<NPC>(ID){};
+		NPCAttack() :NPCBaseState(ID){};
 		~NPCAttack(){};
 
-		virtual void Enter(NPC* npc);
+		virtual void onEnter(NPC* npc);
 
-		virtual void OnTick(NPC* npc);
+		virtual void onTick(NPC* npc);
 
-		virtual void Exit(NPC* npc);
+		virtual void onExit(NPC* npc);
 
 	private:
 		static const UINT32 ID = STATE_NPC_ATTACK;
 	};
 
-	class NPCFlee final : public State<NPC>, public Singleton < NPCFlee >
+	class NPCFlee final : public NPCBaseState, public Singleton < NPCFlee >
 	{
 	public:
-		NPCFlee() :State<NPC>(ID){};
+		NPCFlee() :NPCBaseState(ID){};
 		~NPCFlee(){};
 
-		virtual void Enter(NPC* npc);
+		virtual void onEnter(NPC* npc);
 
-		virtual void OnTick(NPC* npc);
+		virtual void onTick(NPC* npc);
 
-		virtual void Exit(NPC* npc);
+		virtual void onExit(NPC* npc);
 
 	private:
 		static const UINT32 ID = STATE_NPC_FLEE;

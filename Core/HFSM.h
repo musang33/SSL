@@ -313,16 +313,16 @@ namespace SSL
 				switch ( itNode.action )
 				{
 				case Node<EntityType>::Action::ENTER:
-					itNode.state->Enter(m_owner);
+					itNode.state->OnEnter(m_owner);
 					break;
 
 				case Node<EntityType>::Action::TARGET:
 					m_currentState = itNode.state;		
-					m_currentState->Enter(m_owner);
+					m_currentState->OnEnter(m_owner);
 					break;
 
 				case Node<EntityType>::Action::EXIT:
-					itNode.state->Exit(m_owner);
+					itNode.state->OnExit(m_owner);
 					break;
 
 				default:
@@ -336,7 +336,7 @@ namespace SSL
 		void SetCurrentState(State<EntityType>* state)
 		{
 			m_currentState = state;
-		}
+		}		
 	};
 
 } // namespace SSL

@@ -1,6 +1,7 @@
 #include "CommonData.h"
 #include "NPC.h"
 #include "StateNpc.h"
+#include "LuaManager.h"
 
 #include <random>
 #include <chrono>
@@ -8,12 +9,16 @@
 
 namespace SSL
 {
+	UINT32 NPC::static_instance_id = 0;
+
 	NPC::NPC(int id, LOCATION location, State<NPC>* state)
 		:BaseEntity(id)
 		, m_currentLocation(location)		
 		, m_maxHP(1000)
 		, m_currentHP(1000)
 		, m_strikingPower(0)
+		, m_npcAIIndex()
+		, m_npcInstanceIndex()
 	{
 		if ( USE_HSM )
 		{
@@ -26,6 +31,16 @@ namespace SSL
 			m_stateManager = new StateManager < NPC >(this);
 			m_stateManager->SetCurrentState(state);
 		}	
+
+		char tempAIIndex[128] = {};
+		sprintf_s(tempAIIndex, sizeof(tempAIIndex), "AI_%d", id);
+		m_npcAIIndex.assign(tempAIIndex);
+
+		char tempInstanceId[128] = {};
+		sprintf_s(tempInstanceId, sizeof(tempInstanceId), "%d", static_instance_id++);
+		m_npcInstanceIndex.assign(tempInstanceId);
+
+		LuaManager::GetInstance()->setglobal(tempInstanceId, this);
 
 		std::cout << "[INFO][NPC][$$:create new NPC]" << std::endl;
 	}
@@ -161,6 +176,31 @@ namespace SSL
 		}
 
 		return true;
+	}
+
+	void NPC::PrintLog(const char* msg)
+	{
+		if ( nullptr == msg || 0 == strlen(msg) )
+		{
+			return;
+		}
+
+		std::cout << msg << std::endl;
+	}
+
+	void NPC::ScriptEnter(UINT32 stateID)
+	{
+		LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Enter" );
+	}
+
+	void NPC::ScriptOnTick( UINT32 stateID )
+	{
+		LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Decide" );
+	}
+
+	void NPC::ScriptExit( UINT32 stateID )
+	{
+		LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Exit" );
 	}
 
 }
