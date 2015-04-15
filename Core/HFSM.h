@@ -71,7 +71,7 @@ namespace SSL
 
 			auto itCurrent = m_stateTree.find(currentState->GetID());
 			
-			State<EntityType>* matchState = GetMatchStateFromMeToChildren(path, currentState, targetState);
+			State<EntityType>* matchState = getMatchStateFromMeToChildren(path, currentState, targetState);
 			if ( nullptr == matchState )
 			{
 				path.emplace_back(Node<EntityType>::Action::EXIT, itCurrent->second.current);
@@ -110,6 +110,68 @@ namespace SSL
 			}		
 		}
 
+		State<EntityType>* getMatchStateFromMeToRoot( State<EntityType>* checkState, State<EntityType>* currentState )
+		{
+			auto itCheck = m_stateTree.find( checkState->GetID() );
+			auto itCurrent = m_stateTree.find( currentState->GetID() );
+
+			while ( itCheck != m_stateTree.end() && itCheck->second.current != nullptr )
+			{
+				auto tempCurrent = itCurrent;
+
+				while ( tempCurrent != m_stateTree.end() && tempCurrent->second.current != nullptr )
+				{
+					if ( tempCurrent->second.current->GetID() == itCheck->second.current->GetID() )
+					{
+						return tempCurrent->second.current;
+					}
+
+					if ( nullptr == tempCurrent->second.parent )
+					{
+						return nullptr;
+					}
+
+					tempCurrent = m_stateTree.find( tempCurrent->second.parent->GetID() );
+				}
+
+				if ( nullptr == itCheck->second.parent )
+				{
+					return nullptr;
+				}
+				itCheck = m_stateTree.find( itCheck->second.parent->GetID() );
+			}
+
+			return nullptr;
+		};
+
+		State<EntityType>* getMatchStateFromMeToChildren( PATH& path, State<EntityType>* currentState, State<EntityType>* targetState )
+		{
+			auto it = m_stateTree.find( currentState->GetID() );
+			for ( auto & itChild : it->second.children )
+			{
+				for ( auto &itPath : path )
+				{
+					if ( itPath.state->GetID() == itChild->GetID() )
+					{
+						continue;
+					}
+				}
+
+				if ( itChild->GetID() == targetState->GetID() )
+				{
+					return itChild;
+				}
+
+				State<EntityType>* matchState = getMatchStateFromMeToChildren( path, itChild, targetState );
+				if ( nullptr != matchState )
+				{
+					return matchState;
+				}
+			}
+
+			return nullptr;
+		};
+
 	public:
 		void Update()
 		{
@@ -130,7 +192,7 @@ namespace SSL
 
 			if ( previousParentID != itCurrent->second.parent->GetID() )
 			{
-				auto processState = GetMatchStateFromMeToRoot(itPrevious->second.current, m_currentState);
+				auto processState = getMatchStateFromMeToRoot(itPrevious->second.current, m_currentState);
 				if ( processState == nullptr )
 				{
 					return;
@@ -220,69 +282,7 @@ namespace SSL
 			}
 
 			return false;
-		};
-
-		State<EntityType>* GetMatchStateFromMeToRoot(State<EntityType>* checkState, State<EntityType>* currentState)
-		{			
-			auto itCheck = m_stateTree.find(checkState->GetID());		
-			auto itCurrent = m_stateTree.find(currentState->GetID());
-
-			while ( itCheck != m_stateTree.end() && itCheck->second.current != nullptr )
-			{				
-				auto tempCurrent = itCurrent;
-
-				while ( tempCurrent != m_stateTree.end() && tempCurrent->second.current != nullptr )
-				{
-					if ( tempCurrent->second.current->GetID() == itCheck->second.current->GetID() )
-					{
-						return tempCurrent->second.current;
-					}
-
-					if ( nullptr == tempCurrent->second.parent )
-					{
-						return nullptr;
-					}
-
-					tempCurrent = m_stateTree.find(tempCurrent->second.parent->GetID());					
-				}
-
-				if ( nullptr == itCheck->second.parent )
-				{
-					return nullptr;
-				}
-				itCheck = m_stateTree.find(itCheck->second.parent->GetID());
-			}		
-
-			return nullptr;
-		};
-		
-		State<EntityType>* GetMatchStateFromMeToChildren(PATH& path, State<EntityType>* currentState, State<EntityType>* targetState)
-		{
-			auto it = m_stateTree.find(currentState->GetID());
-			for ( auto & itChild : it->second.children )
-			{
-				for ( auto &itPath : path )
-				{
-					if ( itPath.state->GetID() == itChild->GetID() )
-					{
-						continue;
-					}
-				}
-
-				if ( itChild->GetID() == targetState->GetID() )
-				{
-					return itChild;
-				}
-
-				State<EntityType>* matchState = GetMatchStateFromMeToChildren(path, itChild, targetState);
-				if ( nullptr != matchState )
-				{
-					return matchState;
-				}
-			}		
-
-			return nullptr;
-		};
+		};		
 
 		bool ChangeState(State<EntityType>* targetState)
 		{

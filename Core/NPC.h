@@ -2,7 +2,7 @@
 
 #include "CommonData.h"
 #include "BaseEntity.h"
-#include "StateManager.h"
+#include "FSM.h"
 #include "MessageManager.h"
 #include "HFSM.h"
 
@@ -11,7 +11,7 @@ namespace SSL
 	class NPC :public BaseEntity
 	{
 	private: 		
-		StateManager<NPC>*		m_stateManager;
+		FSM<NPC>*				m_fsm;
 		HFSM<NPC>*				m_hfsm;
 
 		LOCATION				m_currentLocation;
@@ -55,7 +55,7 @@ namespace SSL
 		const char* GetAIIndex() { return m_npcAIIndex.c_str(); }
 		const char* GetInstanceIndex() { return m_npcInstanceIndex.c_str(); }
 
-		StateManager<NPC>* GetStateManager() { return m_stateManager; }
+		FSM<NPC>* GetStateManager() { return m_fsm; }
 		HFSM<NPC>* GetHFSM() { return m_hfsm; }
 	};
 } // namespace SSL

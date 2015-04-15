@@ -22,8 +22,8 @@ namespace SSL {
 		}
 		else
 		{
-			m_stateManager = new StateManager < Player >(this);
-			m_stateManager->SetCurrentState(state);
+			m_fsm = new FSM < Player >( this );
+			m_fsm->SetCurrentState( state );
 		}	
 
 		std::cout << "[INFO][Player][$$:create new Player]" << std::endl;
@@ -65,7 +65,7 @@ namespace SSL {
 		}
 		else
 		{
-			m_stateManager->Update();
+			m_fsm->Update();
 		}		
 	}
 
@@ -77,7 +77,7 @@ namespace SSL {
 		}
 		else
 		{
-			m_stateManager->DealWithMessage(messageInfo);
+			m_fsm->DealWithMessage(messageInfo);
 		}
 	}
 
@@ -124,7 +124,7 @@ namespace SSL {
 	{
 		auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 		auto dice_rand = std::bind(std::uniform_int_distribution<int>(1, 100),
-			std::mt19937(seed));
+			std::mt19937_64(seed));
 
 		if ( dice_rand() < 50 )
 		{
@@ -138,7 +138,7 @@ namespace SSL {
 	{
 		auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 		auto dice_rand = std::bind(std::uniform_int_distribution<int>(1, 100),
-			std::mt19937(seed));
+			std::mt19937_64(seed));
 
 		if ( dice_rand() < 50 )
 		{

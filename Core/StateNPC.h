@@ -17,6 +17,8 @@ namespace SSL
 		virtual void OnTick(NPC* npc);
 
 		virtual void OnExit(NPC* npc);
+
+		virtual void OnMessage( NPC* npc, const MessageInfo& messageInfo );
 	};
 
 	class NPCRoot final : public NPCBaseState, public Singleton < NPCRoot >
@@ -47,7 +49,7 @@ namespace SSL
 		
 		virtual void onExit(NPC* npc);
 
-		virtual void OnMessage(NPC* npc, const MessageInfo& messageInfo) const;
+		virtual void onMessage(NPC* npc, const MessageInfo& messageInfo) const;
 
 	private:
 		static const UINT32 ID = STATE_NPC_ALIVE;
@@ -81,7 +83,7 @@ namespace SSL
 
 		virtual void onExit(NPC* npc);
 
-		virtual void OnMessage(NPC* npc, const MessageInfo& messageInfo) const;
+		virtual void onMessage(NPC* npc, const MessageInfo& messageInfo) const;
 
 	private:
 		static const UINT32 ID = STATE_NPC_PEACE;

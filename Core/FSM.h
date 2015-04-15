@@ -5,7 +5,7 @@
 namespace SSL
 {
 	template <typename T>
-	class StateManager
+	class FSM
 	{
 	private:
 		T*				m_owner;
@@ -14,7 +14,7 @@ namespace SSL
 		State<T>*		m_previousState;
 
 	public:
-		StateManager(T* owner)
+		FSM(T* owner)
 			: m_owner(owner)
 			, m_currentState(nullptr)
 			, m_GlobalState(nullptr)

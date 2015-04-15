@@ -123,7 +123,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StatePlayer.h" />
-    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="FSM.h" />
     <ClInclude Include="StateNPC.h" />
   </ItemGroup>
   <ItemGroup>

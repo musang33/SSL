@@ -28,8 +28,8 @@ namespace SSL
 		}
 		else
 		{
-			m_stateManager = new StateManager < NPC >(this);
-			m_stateManager->SetCurrentState(state);
+			m_fsm = new FSM < NPC >( this );
+			m_fsm->SetCurrentState( state );
 		}	
 
 		char tempAIIndex[128] = {};
@@ -71,7 +71,7 @@ namespace SSL
 		}
 		else
 		{
-			m_stateManager->Update();
+			m_fsm->Update();
 		}		
 	}
 
@@ -83,7 +83,7 @@ namespace SSL
 		}
 		else
 		{
-			m_stateManager->DealWithMessage(messageInfo);
+			m_fsm->DealWithMessage(messageInfo);
 		}		
 	}
 	

@@ -2,7 +2,7 @@
 
 #include "CommonData.h"
 #include "BaseEntity.h"
-#include "StateManager.h"
+#include "FSM.h"
 #include "MessageManager.h"
 #include "HFSM.h"
 
@@ -11,7 +11,7 @@ namespace SSL
 	class Player : public BaseEntity
 	{
 	private:
-		StateManager<Player>*	m_stateManager;
+		FSM<Player>*			m_fsm;
 		HFSM<Player>*			m_hfsm;
 
 		LOCATION				m_currentLocation;
@@ -40,7 +40,7 @@ namespace SSL
 		bool IsTargetInSkillDistance();
 		bool HasEnemyInAggroList();
 
-		StateManager<Player>* GetStateManager() { return m_stateManager; }
+		FSM<Player>* GetStateManager() { return m_fsm; }
 		HFSM<Player>* GetHFSM() { return m_hfsm; }
 	};
 } // namespace SSL

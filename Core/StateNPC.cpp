@@ -10,7 +10,7 @@ namespace SSL
 		std::cout << "[INFO][NPCBaseState][onEnter]" << std::endl;
 		npc->ScriptEnter( GetID() );
 
-		State<NPC>::onEnter(npc);
+		State<NPC>::OnEnter(npc);
 	}
 
 	void NPCBaseState::OnTick(NPC* npc)
@@ -18,7 +18,7 @@ namespace SSL
 		std::cout << "[INFO][NPCBaseState][onTick]" << std::endl;
 		npc->ScriptOnTick( GetID() );
 
-		State<NPC>::onTick(npc);
+		State<NPC>::OnTick(npc);
 	}
 
 	void NPCBaseState::OnExit(NPC* npc)
@@ -26,7 +26,15 @@ namespace SSL
 		std::cout << "[INFO][NPCBaseState][onExit]" << std::endl;
 		npc->ScriptExit( GetID() );
 
-		State<NPC>::onExit(npc);
+		State<NPC>::OnExit(npc);
+	}
+
+	void NPCBaseState::OnMessage( NPC* npc, const MessageInfo& messageInfo )
+	{
+		std::cout << "[INFO][NPCBaseState][OnMessage]" << std::endl;
+		npc->ScriptExit( GetID() );
+
+		State<NPC>::OnMessage( npc, messageInfo );
 	}
 
 	void NPCAlive::onEnter(NPC* npc)
@@ -49,9 +57,9 @@ namespace SSL
 		std::cout << "[INFO][Alive][onExit]" << std::endl;
 	}
 
-	void NPCAlive::OnMessage(NPC* npc, const MessageInfo& messageInfo) const
+	void NPCAlive::onMessage(NPC* npc, const MessageInfo& messageInfo) const
 	{
-		std::cout << "[INFO][Alive][OnMessage]" << std::endl;
+		std::cout << "[INFO][Alive][onMessage]" << std::endl;
 
 		switch ( messageInfo.messageType )
 		{
@@ -103,9 +111,9 @@ namespace SSL
 		std::cout << "[INFO][NPCPeace][onExit]" << std::endl;
 	}
 
-	void NPCPeace::OnMessage(NPC* npc, const MessageInfo& messageInfo) const
+	void NPCPeace::onMessage(NPC* npc, const MessageInfo& messageInfo) const
 	{
-		std::cout << "[INFO][NPCPeace][OnMessage]" << std::endl;
+		std::cout << "[INFO][NPCPeace][onMessage]" << std::endl;
 
 		switch ( messageInfo.messageType )
 		{

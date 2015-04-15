@@ -85,12 +85,12 @@ namespace SSL
 
 		switch ( messageInfo.messageType )
 		{
-		case MESSAGE_TYPE::MSG_FIND_ENEMY:
-		{
-			player->GetHFSM()->ChangeState(PlayerThink::GetInstance());
+			case MESSAGE_TYPE::MSG_FIND_ENEMY:
+			{
+				player->GetHFSM()->ChangeState(PlayerThink::GetInstance());
 
-			break;
-		}
+				break;
+			}
 		}
 	}
 
@@ -126,6 +126,11 @@ namespace SSL
 	void PlayerPatrol::OnTick(Player* player)
 	{
 		std::cout << "[INFO][PlayerPatrol][OnTick]" << std::endl;
+		if ( player->HasEnemyInAggroList() )
+		{
+			player->GetHFSM()->ChangeState( PlayerThink::GetInstance() );
+			return;
+		}
 	}
 
 	void PlayerPatrol::Exit(Player* player)
@@ -143,6 +148,11 @@ namespace SSL
 	void PlayerGuard::OnTick(Player* player)
 	{
 		std::cout << "[INFO][PlayerGuard][OnTick]" << std::endl;
+		if ( player->HasEnemyInAggroList() )
+		{
+			player->GetHFSM()->ChangeState( PlayerThink::GetInstance() );
+			return;
+		}
 	}
 
 	void PlayerGuard::Exit(Player* player)

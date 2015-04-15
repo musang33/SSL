@@ -14,19 +14,21 @@ namespace SSL
 
 		// 스크립트에서 호출
 		// NPCBaseState 과 같은 각 State의 부모 State에서만 호출
-		virtual void OnEnter(EntityType*){};
-		virtual void OnTick(EntityType*){};
-		virtual void OnExit(EntityType*){};
+		virtual void OnEnter( EntityType* entity ){ onEnter( entity ); };
+		virtual void OnTick( EntityType* entity ){ onTick( entity ); };
+		virtual void OnExit( EntityType* entity ){ onExit( entity ); };
 
-		virtual void OnMessage(EntityType*, const MessageInfo& messageInfo) const {};
+		virtual void OnMessage( EntityType* entity, const MessageInfo& messageInfo ) { onMessage( entity, messageInfo ); };
 
 		UINT32 GetID() { return m_id; }
 
 	protected:
 		
-		virtual void onEnter( EntityType* entity ){ onEnter( entity ); };
-		virtual void onTick( EntityType* entity ){ onTick( entity ); };
-		virtual void onExit( EntityType* entity ){ onExit( entity ); };
+		virtual void onEnter( EntityType* ){ };
+		virtual void onTick( EntityType* ){ };
+		virtual void onExit( EntityType* ){ };
+
+		virtual void onMessage( EntityType* , const MessageInfo&  ) const { };
 
 	private:
 		UINT32 m_id;

@@ -138,9 +138,6 @@
     <ClInclude Include="HFSM.h">
       <Filter>State\HFSM</Filter>
     </ClInclude>
-    <ClInclude Include="StateManager.h">
-      <Filter>State\FSM</Filter>
-    </ClInclude>
     <ClInclude Include="NPC.h">
       <Filter>Entity</Filter>
     </ClInclude>
@@ -161,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="LuaManager.h">
       <Filter>LuaManager</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM.h">
+      <Filter>State\FSM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
