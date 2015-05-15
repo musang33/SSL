@@ -1,0 +1,10 @@
+out of process 덤프 방식 조쿤여... 
+https://code.google.com/p/google-breakpad/wiki/ClientDesign
+
+Behavior Tree
+http://lab.gamecodi.com/board/zboard.php?id=GAMECODILAB_Lecture&no=429
+
+키워드
+c++ functional programming
+
+https://www.youtube.com/watch?v=n4aREFb3SsU
