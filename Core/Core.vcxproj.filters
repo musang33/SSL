@@ -34,6 +34,9 @@
     <Filter Include="LuaManager">
       <UniqueIdentifier>{095eb44d-3a52-466d-889f-867f051da6c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="State\BehaviorTree">
+      <UniqueIdentifier>{12f2084e-013c-444f-a72d-737976aadb6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -161,6 +164,12 @@
     </ClInclude>
     <ClInclude Include="FSM.h">
       <Filter>State\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="BehaviorTree.h">
+      <Filter>State\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BehaviorTreeComponent.h">
+      <Filter>State\BehaviorTree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,13 @@
+function bt_type_1( npc )
+	npc:add_select()
+		npc:add_sequence()
+			npc:add_condition(condition_is_not_enemy_near)
+			npc:add_action(action_random_move)
+		npc:add_sequence()
+			npc:add_sequence()
+				npc:add_condition(condition_bigger_random)
+				npc:add_action(action_attack)
+			npc:add_sequence()
+				npc:add_condition(condition_hp_lower)
+				npc:add_action(action_flee)
+end

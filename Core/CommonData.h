@@ -69,6 +69,15 @@ namespace SSL
 		STATE_PLAYER_FLEE,
 	};
 
+	enum BEHAVIOR_STATE
+	{
+		BH_INVALID,
+		BH_SUCCESS,
+		BH_FAILURE,
+		BH_RUNNING,
+		BH_SUSPENED
+	};
+
 	class BaseEntity;
 	struct MessageInfo
 	{
