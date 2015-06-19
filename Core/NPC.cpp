@@ -20,11 +20,15 @@ namespace SSL
 		, m_npcAIIndex()
 		, m_npcInstanceIndex()
 	{
-		if ( USE_HSM )
+		if ( enAIType::HFSM == AIType )
 		{
 			m_hfsm = new HFSM<NPC>(this);
 			initState();
 			m_hfsm->SetCurrentState(state);
+		}
+		else if ( enAIType::BT == AIType )
+		{
+			m_behaviorTree = new BehaviorTreeManager<NPC>( this );
 		}
 		else
 		{
@@ -65,9 +69,13 @@ namespace SSL
 
 	void NPC::Update()
 	{	
-		if ( USE_HSM )
+		if ( enAIType::HFSM == AIType )
 		{
 			m_hfsm->Update();
+		}
+		else if ( enAIType::BT == AIType )
+		{
+			m_behaviorTree->Update();
 		}
 		else
 		{
@@ -77,9 +85,13 @@ namespace SSL
 
 	void NPC::DealWithMessage(const MessageInfo& messageInfo) const
 	{
-		if ( USE_HSM )
+		if ( enAIType::HFSM == AIType )
 		{
 			m_hfsm->DealWithMessage(messageInfo);
+		}
+		else if ( enAIType::BT == AIType )
+		{
+
 		}
 		else
 		{
@@ -134,6 +146,17 @@ namespace SSL
 		}
 
 		return false;
+	}
+
+	void NPC::RandomMove()
+	{
+		int move_x = rand() % 3 - 1;
+		int move_y = rand() % 3 - 1;
+
+		Location curLocation = GetCurLocation();
+		curLocation.x += move_x;
+		curLocation.y += move_y;
+		SetCurLocation( curLocation.x, curLocation.y );
 	}
 
 	bool NPC::HasFoundEnemy()

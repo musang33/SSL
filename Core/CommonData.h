@@ -8,7 +8,14 @@ namespace SSL
 	const static int MAX_VALID_ENTITY_ID = 100000;
 	const static int MAX_NUGGET_SIZE = 100;
 
-	const static int USE_HSM = 1;
+	const static int AIType = 2;
+	
+	enum enAIType
+	{
+		FSM,
+		HFSM,
+		BT
+	};
 
 	enum EntityID
 	{
@@ -94,6 +101,13 @@ namespace SSL
 			, delayTime(0)
 			, extraInfo(nullptr)
 		{}
+	};
+
+	struct Location
+	{
+		int x;
+		int y;
+		Location() :x( 0 ), y( 0 ) {}
 	};
 }
 

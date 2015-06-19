@@ -5,6 +5,7 @@
 #include "FSM.h"
 #include "MessageManager.h"
 #include "HFSM.h"
+#include "BehaviorTreeManager.h"
 
 namespace SSL
 {	
@@ -13,6 +14,7 @@ namespace SSL
 	private:
 		FSM<Player>*			m_fsm;
 		HFSM<Player>*			m_hfsm;
+		BehaviorTreeManager<Player>*	m_behaviorTree;
 
 		LOCATION				m_currentLocation;
 

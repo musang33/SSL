@@ -5,14 +5,16 @@
 #include "FSM.h"
 #include "MessageManager.h"
 #include "HFSM.h"
+#include "BehaviorTreeManager.h"
 
 namespace SSL
 {	
 	class NPC :public BaseEntity
 	{
 	private: 		
-		FSM<NPC>*				m_fsm;
-		HFSM<NPC>*				m_hfsm;
+		FSM<NPC>*					m_fsm;
+		HFSM<NPC>*					m_hfsm;
+		BehaviorTreeManager<NPC>*	m_behaviorTree;
 
 		LOCATION				m_currentLocation;
 		
@@ -42,6 +44,7 @@ namespace SSL
 
 		bool IsDead();
 
+		void RandomMove();
 		bool HasFoundEnemy();
 		bool IsTargetInSkillDistance();
 		bool HasEnemyInAggroList();

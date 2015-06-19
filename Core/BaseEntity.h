@@ -8,10 +8,11 @@ namespace SSL
 	{
 	private:
 		int m_ID;
+		Location currentLocation;
 
 		static int m_iNextValidID;
 
-		void SetID(int val);
+		void SetID(int val);			
 
 	public:
 		BaseEntity(int id)
@@ -26,5 +27,12 @@ namespace SSL
 		virtual void DealWithMessage(const MessageInfo& messageInfo) const = 0;
 
 		int ID() const { return m_ID; };
+
+		Location GetCurLocation() { return currentLocation; };
+		void SetCurLocation( int _x, int _y ) 
+		{ 
+			currentLocation.x = _x; 
+			currentLocation.y = _y;
+		}
 	};
 }

@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Core.vcxproj", "{8DB492C4-9F1B-44BA-9119-8FC45E2E4431}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VisualTool", "..\VisualTool\VisualTool.vcxproj", "{811455CB-2283-4F15-BF46-D5720F8CFD4E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VisualTool", "VisualTool.vcxproj", "{811455CB-2283-4F15-BF46-D5720F8CFD4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8DB492C4-9F1B-44BA-9119-8FC45E2E4431}.Debug|Win32.ActiveCfg = Debug|Win32
-		{8DB492C4-9F1B-44BA-9119-8FC45E2E4431}.Debug|Win32.Build.0 = Debug|Win32
-		{8DB492C4-9F1B-44BA-9119-8FC45E2E4431}.Release|Win32.ActiveCfg = Release|Win32
-		{8DB492C4-9F1B-44BA-9119-8FC45E2E4431}.Release|Win32.Build.0 = Release|Win32
 		{811455CB-2283-4F15-BF46-D5720F8CFD4E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{811455CB-2283-4F15-BF46-D5720F8CFD4E}.Debug|Win32.Build.0 = Debug|Win32
 		{811455CB-2283-4F15-BF46-D5720F8CFD4E}.Release|Win32.ActiveCfg = Release|Win32
