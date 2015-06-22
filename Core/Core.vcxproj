@@ -112,7 +112,6 @@
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lvm.h" />
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lzio.h" />
     <ClInclude Include="BaseEntity.h" />
-    <ClInclude Include="BehaviorMPC.h" />
     <ClInclude Include="BehaviorTree.h" />
     <ClInclude Include="BehaviorTreeManager.h" />
     <ClInclude Include="CommonData.h" />

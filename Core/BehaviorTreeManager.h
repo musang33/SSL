@@ -23,7 +23,7 @@ namespace SSL
 			}
 		}
 
-		Status Update()
+		BEHAVIOR_STATE Update()
 		{
 			root->onInitialize();
 			return root->update( owner );

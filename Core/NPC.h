@@ -8,10 +8,10 @@
 #include "BehaviorTreeManager.h"
 
 namespace SSL
-{	
+{
 	class NPC :public BaseEntity
 	{
-	private: 		
+	private:
 		FSM<NPC>*					m_fsm;
 		HFSM<NPC>*					m_hfsm;
 		BehaviorTreeManager<NPC>*	m_behaviorTree;

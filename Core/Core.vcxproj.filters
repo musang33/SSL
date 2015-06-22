@@ -168,9 +168,6 @@
     <ClInclude Include="BehaviorTree.h">
       <Filter>State\BehaviorTree</Filter>
     </ClInclude>
-    <ClInclude Include="BehaviorMPC.h">
-      <Filter>State\BehaviorTree</Filter>
-    </ClInclude>
     <ClInclude Include="BehaviorTreeManager.h">
       <Filter>State\BehaviorTree</Filter>
     </ClInclude>

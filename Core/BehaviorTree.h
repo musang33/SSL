@@ -11,7 +11,6 @@
 
 namespace SSL
 {
-
 	// ============================================================================
 
 	struct Perception
@@ -227,6 +226,7 @@ namespace SSL
 		void clearChildren();
 	protected:
 		typedef std::vector<Behavior<EntityType>*> Behaviors;
+		
 		Behaviors m_Children;
 	};
 
@@ -269,7 +269,8 @@ namespace SSL
 			reset();
 		}
 
-		Behaviors<EntityType>::iterator m_CurrentChild;
+		typename Behaviors::iterator m_CurrentChild;
+		
 	};
 
 	// ============================================================================
@@ -312,7 +313,7 @@ namespace SSL
 			reset();
 		}
 
-		Behaviors<EntityType>::iterator m_Current;
+		typename Behaviors::iterator m_Current;
 	};
 
 	template <typename EntityType>
