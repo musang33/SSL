@@ -14,15 +14,23 @@ namespace SSL {
 		, m_currentHP(1000)
 		, m_strikingPower(0)
 	{
-		if ( enAIType::HFSM == AIType )
+		if ( enAIType::AITYPE_HFSM == AIType )
 		{
 			m_hfsm = new HFSM<Player>(this);
 			initState();
 			m_hfsm->SetCurrentState(state);
 		}
-		else if ( enAIType::BT == AIType )
+		else if ( enAIType::AITYPE_BT == AIType )
 		{
 			m_behaviorTree = new BehaviorTreeManager<Player>( this );
+			if ( nullptr != m_behaviorTree )
+			{
+				m_behaviorTree->SetBehaviorTree();
+			}
+			else
+			{
+				exit( 0 );
+			}
 		}
 		else
 		{
@@ -63,11 +71,11 @@ namespace SSL {
 
 	void Player::Update()
 	{
-		if ( enAIType::HFSM == AIType )
+		if ( enAIType::AITYPE_HFSM == AIType )
 		{
 			m_hfsm->Update();
 		}
-		else if ( enAIType::BT == AIType )
+		else if ( enAIType::AITYPE_BT == AIType )
 		{
 			m_behaviorTree->Update();
 		}
@@ -79,11 +87,11 @@ namespace SSL {
 
 	void Player::DealWithMessage(const MessageInfo& messageInfo) const
 	{
-		if ( enAIType::HFSM == AIType )
+		if ( enAIType::AITYPE_HFSM == AIType )
 		{
 			m_hfsm->DealWithMessage(messageInfo);
 		}
-		else if ( enAIType::BT == AIType )
+		else if ( enAIType::AITYPE_BT == AIType )
 		{
 
 		}

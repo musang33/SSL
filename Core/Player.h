@@ -42,6 +42,10 @@ namespace SSL
 		bool IsTargetInSkillDistance();
 		bool HasEnemyInAggroList();
 
+		BEHAVIOR_STATE FindEnemy() { return BH_SUCCESS; }
+		BEHAVIOR_STATE AttackEnemy() { return BH_SUCCESS; }
+		BEHAVIOR_STATE Move() { return BH_SUCCESS; }
+
 		FSM<Player>* GetStateManager() { return m_fsm; }
 		HFSM<Player>* GetHFSM() { return m_hfsm; }
 	};

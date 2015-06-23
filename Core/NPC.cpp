@@ -20,15 +20,23 @@ namespace SSL
 		, m_npcAIIndex()
 		, m_npcInstanceIndex()
 	{
-		if ( enAIType::HFSM == AIType )
+		if ( enAIType::AITYPE_HFSM == AIType )
 		{
 			m_hfsm = new HFSM<NPC>(this);
 			initState();
 			m_hfsm->SetCurrentState(state);
 		}
-		else if ( enAIType::BT == AIType )
+		else if ( enAIType::AITYPE_BT == AIType )
 		{
 			m_behaviorTree = new BehaviorTreeManager<NPC>( this );
+			if ( nullptr != m_behaviorTree )
+			{
+				m_behaviorTree->SetBehaviorTree();
+			}
+			else
+			{
+				exit( 0 );
+			}
 		}
 		else
 		{
@@ -69,11 +77,11 @@ namespace SSL
 
 	void NPC::Update()
 	{	
-		if ( enAIType::HFSM == AIType )
+		if ( enAIType::AITYPE_HFSM == AIType )
 		{
 			m_hfsm->Update();
 		}
-		else if ( enAIType::BT == AIType )
+		else if ( enAIType::AITYPE_BT == AIType )
 		{
 			m_behaviorTree->Update();
 		}
@@ -85,11 +93,11 @@ namespace SSL
 
 	void NPC::DealWithMessage(const MessageInfo& messageInfo) const
 	{
-		if ( enAIType::HFSM == AIType )
+		if ( enAIType::AITYPE_HFSM == AIType )
 		{
 			m_hfsm->DealWithMessage(messageInfo);
 		}
-		else if ( enAIType::BT == AIType )
+		else if ( enAIType::AITYPE_BT == AIType )
 		{
 
 		}

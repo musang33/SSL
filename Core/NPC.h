@@ -8,7 +8,7 @@
 #include "BehaviorTreeManager.h"
 
 namespace SSL
-{
+{	
 	class NPC :public BaseEntity
 	{
 	private:
@@ -55,11 +55,17 @@ namespace SSL
 		void ScriptOnTick( UINT32 stateID );
 		void ScriptExit( UINT32 stateID );
 
+		BEHAVIOR_STATE FindEnemy() { return BH_SUCCESS; }
+		BEHAVIOR_STATE AttackEnemy() { return BH_SUCCESS; }
+		BEHAVIOR_STATE Move() { return BH_SUCCESS; }
+
 		const char* GetAIIndex() { return m_npcAIIndex.c_str(); }
 		const char* GetInstanceIndex() { return m_npcInstanceIndex.c_str(); }
 
 		FSM<NPC>* GetStateManager() { return m_fsm; }
 		HFSM<NPC>* GetHFSM() { return m_hfsm; }
+
+		
 	};
 } // namespace SSL
 

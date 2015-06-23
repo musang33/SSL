@@ -1,3 +1,5 @@
+#pragma once
+
 #include "BehaviorTree.h"
 
 namespace SSL
@@ -7,7 +9,7 @@ namespace SSL
 	class BehaviorTreeManager
 	{
 	private:
-		Behavior<EntityType>* root;
+		Composite<EntityType>* root;
 		EntityType* m_owner;
 
 	public:
@@ -25,8 +27,13 @@ namespace SSL
 
 		BEHAVIOR_STATE Update()
 		{
+			if ( nullptr == root )
+			{
+				return BH_INVALID;
+			}
+
 			root->onInitialize();
-			return root->update( owner );
+			return root->update( m_owner );
 		}
 	
 		void SetBehaviorTree()
@@ -42,9 +49,8 @@ namespace SSL
 
 			ActionFreeWalk<EntityType> actionFreeWalk;
 
-			root.addChild( &freeWalk );
-			root.addChild( &actionFreeWalk );
+			root->addChild( &freeWalk );
+			root->addChild( &actionFreeWalk );
 		}
 	};
-
 }

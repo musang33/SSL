@@ -12,9 +12,9 @@ namespace SSL
 	
 	enum enAIType
 	{
-		FSM,
-		HFSM,
-		BT
+		AITYPE_FSM = 0,
+		AITYPE_HFSM,
+		AITYPE_BT,
 	};
 
 	enum EntityID
@@ -84,8 +84,7 @@ namespace SSL
 		BH_RUNNING,
 		BH_SUSPENED
 	};
-
-	class BaseEntity;
+		
 	struct MessageInfo
 	{
 		INT32 senderID;

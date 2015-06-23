@@ -5,6 +5,7 @@
 *
 * Credits:         Alex J. Champandard
 *****************************************************************************/
+#pragma once
 
 #include <vector>
 #include <iostream>
