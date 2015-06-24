@@ -54,6 +54,8 @@ namespace SSL
 
 		LuaManager::GetInstance()->setglobal(tempInstanceId, this);
 
+		SetCurLocation( rand() % 15, rand() % 15 );
+
 		std::cout << "[INFO][NPC][$$:create new NPC]" << std::endl;
 	}
 
@@ -234,4 +236,32 @@ namespace SSL
 		LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Exit" );
 	}
 
+	BEHAVIOR_STATE NPC::Move() 
+	{ 
+		SSL::Location curLocation = GetCurLocation();
+		curLocation.x += rand() % 3 - 1;
+		curLocation.y += rand() % 3 - 1;
+		
+		if ( curLocation.x < 0 )
+		{
+			curLocation.x = 0;
+		}
+		else if ( curLocation.x > 14 )
+		{
+			curLocation.x = 14;
+		}
+
+		if ( curLocation.y < 0 )
+		{
+			curLocation.y = 0;
+		}
+		else if ( curLocation.y > 14 )
+		{
+			curLocation.y = 14;
+		}
+		
+		SetCurLocation( curLocation.x, curLocation.y );
+
+		return BH_SUCCESS; 
+	}
 }

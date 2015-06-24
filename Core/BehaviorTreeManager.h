@@ -39,18 +39,18 @@ namespace SSL
 		void SetBehaviorTree()
 		{
 			root = new Selector<EntityType>;
-			Sequence<EntityType> freeWalk;
+			Sequence<EntityType>* freeWalk = new Sequence<EntityType>;
 
-			ConditionFindEnemy<EntityType> conditionFindEnemy;
-			ActionFight<EntityType> actionFight;
+			Behavior<EntityType>* conditionFindEnemy = new ConditionFindEnemy<EntityType>;
+			Behavior<EntityType>* actionFight = new ActionFight<EntityType>;
+						
+			freeWalk->addChild( conditionFindEnemy );
+			freeWalk->addChild( actionFight );
 
-			freeWalk.addChild( &conditionFindEnemy );
-			freeWalk.addChild( &actionFight );
+			Behavior<EntityType>* actionFreeWalk = new ActionFreeWalk<EntityType>;			
 
-			ActionFreeWalk<EntityType> actionFreeWalk;
-
-			root->addChild( &freeWalk );
-			root->addChild( &actionFreeWalk );
+			root->addChild( freeWalk );
+			root->addChild( actionFreeWalk );
 		}
 	};
 }

@@ -23,7 +23,8 @@ BOOL				InitInstance( HINSTANCE, int );
 BOOL				InitEntities();
 LRESULT CALLBACK	WndProc( HWND, UINT, WPARAM, LPARAM );
 INT_PTR CALLBACK	About( HWND, UINT, WPARAM, LPARAM );
-
+void				DrawEntity();
+void				DrawCell();
 //==============================================================
 
 const static INT TIMER_ENTITY = 10000;
@@ -40,7 +41,7 @@ const static INT xCellCount = 15;
 const static INT yCellCount = 15;
 const static INT cellSize = 15;
 
-SSL::NPC *monster;
+std::vector<SSL::NPC*> monsters;
 SSL::Player *player;
 
 //==============================================================
@@ -123,8 +124,14 @@ VOID CALLBACK MyTimerProc(
 	UINT idTimer,     // timer identifier 
 	DWORD dwTime )     // current system time 
 {
-	player->Update();
-	monster->Update();	
+	//player->Update();
+	for ( auto && it : monsters )
+	{		
+		it->Update();
+	}
+	
+	DrawCell();
+	DrawEntity();
 }
 
 //
@@ -161,10 +168,14 @@ BOOL InitEntities()
 {
 	SSL::LuaManager::GetInstance()->init( "..\\.\\lua_script\\script_list.lua" );
 
-	monster = new SSL::NPC( SSL::ID_NPC, SSL::LOCATION::BATTLEFIELD, SSL::NPCPatrol::GetInstance() );
+	for ( int i = 0; i < 10; i++ )
+	{
+		SSL::NPC* monster = new SSL::NPC( SSL::ID_NPC + i, SSL::LOCATION::BATTLEFIELD, SSL::NPCPatrol::GetInstance() );
+		monsters.push_back( monster );
+	}	
+	
 	player = new SSL::Player( SSL::ID_PLAYER, SSL::LOCATION::BATTLEFIELD, SSL::PlayerPatrol::GetInstance() );
-
-	monster->SetCurLocation( 3, 5 );
+	
 	player->SetCurLocation( 7, 10 );
 
 	return TRUE;
@@ -214,16 +225,19 @@ void DrawCell( INT x, INT y )
 
 void DrawEntity()
 {
-	if ( nullptr == player || nullptr == monster )
+	if ( nullptr == player || monsters.empty() )
 	{
 		return;
 	}
 
 	SSL::Location playerCurLocation = player->GetCurLocation();
-	SSL::Location monsterCurLocation = monster->GetCurLocation();
-
 	DrawBitmap( mostLeftX + playerCurLocation.x * cellSize, mostLeftY + playerCurLocation.y * cellSize, IDB_USER );
-	DrawBitmap( mostLeftX + monsterCurLocation.x * cellSize, mostLeftY + monsterCurLocation.y * cellSize, IDB_MONSTER );
+
+	for ( auto && it : monsters )
+	{
+		SSL::Location monsterCurLocation = it->GetCurLocation();
+		DrawBitmap( mostLeftX + monsterCurLocation.x * cellSize, mostLeftY + monsterCurLocation.y * cellSize, IDB_MONSTER );
+	}	
 }
 
 
@@ -319,9 +333,7 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			DrawCell();
 			DrawEntity();
 			EndPaint( hWnd, &ps );
-			break;
-		case WM_TIMER:
-
+			break;		
 		case WM_DESTROY:
 			PostQuitMessage( 0 );
 			break;

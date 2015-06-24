@@ -21,7 +21,7 @@ namespace SSL
 	{
 		ID_NONE,
 		ID_NPC = 1,
-		ID_PLAYER,
+		ID_PLAYER = 1000,
 	};
 
 	enum LOCATION
