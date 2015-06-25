@@ -37,6 +37,9 @@
     <Filter Include="State\BehaviorTree">
       <UniqueIdentifier>{12f2084e-013c-444f-a72d-737976aadb6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{3266cb9b-df92-4b27-b4b3-3763ab02f5b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -170,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="BehaviorTreeManager.h">
       <Filter>State\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldManager.h">
+      <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

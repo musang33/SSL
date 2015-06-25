@@ -55,7 +55,7 @@ namespace SSL
 		void ScriptOnTick( UINT32 stateID );
 		void ScriptExit( UINT32 stateID );
 
-		BEHAVIOR_STATE FindEnemy() { return BH_FAILURE; }
+		BEHAVIOR_STATE FindEnemy();
 		BEHAVIOR_STATE AttackEnemy() { return BH_SUCCESS; }
 		BEHAVIOR_STATE Move();
 

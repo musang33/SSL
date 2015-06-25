@@ -2,6 +2,7 @@
 #include "NPC.h"
 #include "StateNpc.h"
 #include "LuaManager.h"
+#include "WorldManager.h"
 
 #include <random>
 #include <chrono>
@@ -234,6 +235,26 @@ namespace SSL
 	void NPC::ScriptExit( UINT32 stateID )
 	{
 		LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Exit" );
+	}
+
+	BEHAVIOR_STATE NPC::FindEnemy()
+	{
+		SSL::Location myLocation = GetCurLocation();
+
+		const WorldManager::ENTITY_MAP& entityMap = WorldManager::GetInstance()->GetWorldEntityMap();
+		for ( auto &it : entityMap )
+		{
+			if ( it.first != BaseEntity::ID() && it.first >= EntityID::ID_PLAYER )
+			{
+				SSL::Location playerLocation = it.second->GetCurLocation();
+				if ( WorldManager::GetInstance()->IsNear( myLocation.x, myLocation.y, playerLocation.x, playerLocation.y ) )
+				{
+					return BH_SUCCESS;
+				}
+			}
+		}
+
+		return BH_FAILURE;
 	}
 
 	BEHAVIOR_STATE NPC::Move() 

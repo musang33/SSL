@@ -9,6 +9,7 @@
 #include "..\Core\StateNPC.h"
 #include "..\Core\StatePlayer.h"
 #include "..\Core\LuaManager.h"
+#include "..\Core\WorldManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -39,9 +40,10 @@ const static INT mostLeftY = 8;
 
 const static INT xCellCount = 15;
 const static INT yCellCount = 15;
-const static INT cellSize = 15;
+const static INT cellSize = 25;
+const static INT spaceBetweenEdgeAndEntity = 5;
 
-std::vector<SSL::NPC*> monsters;
+std::vector<SSL::BaseEntity*> monsters;
 SSL::Player *player;
 
 //==============================================================
@@ -172,10 +174,12 @@ BOOL InitEntities()
 	{
 		SSL::NPC* monster = new SSL::NPC( SSL::ID_NPC + i, SSL::LOCATION::BATTLEFIELD, SSL::NPCPatrol::GetInstance() );
 		monsters.push_back( monster );
+		SSL::WorldManager::GetInstance()->AddEntity( monster );
 	}	
 	
 	player = new SSL::Player( SSL::ID_PLAYER, SSL::LOCATION::BATTLEFIELD, SSL::PlayerPatrol::GetInstance() );
-	
+	SSL::WorldManager::GetInstance()->AddEntity( player );
+
 	player->SetCurLocation( 7, 10 );
 
 	return TRUE;
@@ -198,7 +202,8 @@ void DrawBitmap( int x, int y, UINT32 bitMapId )
 	bx = bit.bmWidth;
 	by = bit.bmHeight;
 
-	BitBlt( hdc, x + 1, y + 1, 13, 13, MemDC, 0, 0, SRCCOPY );
+	BitBlt( hdc, x + spaceBetweenEdgeAndEntity, y + spaceBetweenEdgeAndEntity,
+			cellSize - ( spaceBetweenEdgeAndEntity * 2 ), cellSize - (spaceBetweenEdgeAndEntity * 2), MemDC, 0, 0, SRCCOPY );
 
 	SelectObject( MemDC, OldBitmap );
 	DeleteDC( MemDC );

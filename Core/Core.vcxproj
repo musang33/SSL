@@ -127,6 +127,7 @@
     <ClInclude Include="StatePlayer.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="StateNPC.h" />
+    <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\lua_tinker.cpp" />
