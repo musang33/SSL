@@ -40,6 +40,9 @@
     <Filter Include="World">
       <UniqueIdentifier>{3266cb9b-df92-4b27-b4b3-3763ab02f5b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TimerWorker">
+      <UniqueIdentifier>{16f27022-a990-4a69-9271-bb1aa52ce3fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="WorldManager.h">
       <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerWorker.h">
+      <Filter>TimerWorker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="LuaManager.cpp">
       <Filter>LuaManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerWorker.cpp">
+      <Filter>TimerWorker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

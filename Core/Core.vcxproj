@@ -127,6 +127,7 @@
     <ClInclude Include="StatePlayer.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="StateNPC.h" />
+    <ClInclude Include="TimerWorker.h" />
     <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +177,7 @@
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="StatePlayer.cpp" />
     <ClCompile Include="StateNPC.cpp" />
+    <ClCompile Include="TimerWorker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ExternalLibrary\lua-5.3.0\src\Makefile" />

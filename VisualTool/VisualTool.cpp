@@ -10,6 +10,7 @@
 #include "..\Core\StatePlayer.h"
 #include "..\Core\LuaManager.h"
 #include "..\Core\WorldManager.h"
+#include "..\Core\TimerWorker.h"
 
 #define MAX_LOADSTRING 100
 
