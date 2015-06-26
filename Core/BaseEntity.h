@@ -8,7 +8,8 @@ namespace SSL
 	{
 	private:
 		int m_ID;
-		Location currentLocation;
+		Location m_currentLocation;
+		ENTITY_DIRECTION m_direction;
 
 		static int m_iNextValidID;
 
@@ -28,11 +29,20 @@ namespace SSL
 
 		int ID() const { return m_ID; };
 
-		Location GetCurLocation() { return currentLocation; };
+		Location GetCurLocation() { return m_currentLocation; };
 		void SetCurLocation( int _x, int _y ) 
 		{ 
-			currentLocation.x = _x; 
-			currentLocation.y = _y;
+			m_currentLocation.x = _x;
+			m_currentLocation.y = _y;
 		}
+
+		void SetDirection( ENTITY_DIRECTION direction )
+		{
+			m_direction = direction;
+		}
+		ENTITY_DIRECTION GetDirection() { return m_direction; }
+
+		virtual STATE_ID GetCurrentStateID() = 0;		
+		virtual void SetCurrentStateIDInBehaviorTree( STATE_ID stateId ) = 0;
 	};
 }

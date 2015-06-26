@@ -54,6 +54,27 @@
     <Image Include="Monster.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Monster_Attack.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Monster_Freewalk.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="User_down.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="User_left.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="User_right.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="User_up.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
     <Image Include="User.bmp">
       <Filter>리소스 파일</Filter>
     </Image>

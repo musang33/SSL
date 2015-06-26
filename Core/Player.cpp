@@ -101,6 +101,29 @@ namespace SSL {
 		}
 	}
 
+	STATE_ID Player::GetCurrentStateID()
+	{
+		if ( enAIType::AITYPE_HFSM == AIType )
+		{
+			return m_hfsm->GetCurrentState();
+		}
+		else if ( enAIType::AITYPE_BT == AIType )
+		{
+			return m_behaviorTree->GetCurrentState();
+		}
+		else
+		{
+			return m_fsm->GetCurrentState();
+		}
+
+		return STATE_ID::STATE_NONE;
+	}
+
+	void Player::SetCurrentStateIDInBehaviorTree( STATE_ID stateId )
+	{
+		m_behaviorTree->SetCurrentStateID( stateId );
+	}
+
 	void Player::GotoLocation(LOCATION location)
 	{
 		m_currentLocation = location;

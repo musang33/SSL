@@ -457,7 +457,7 @@ namespace SSL
 
 		virtual BEHAVIOR_STATE update( EntityType* agent )
 		{
-			return agent->Move();
+			return agent->Patrol();
 		}
 
 		virtual void onTerminate( BEHAVIOR_STATE )

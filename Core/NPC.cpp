@@ -102,12 +102,35 @@ namespace SSL
 		}
 		else if ( enAIType::AITYPE_BT == AIType )
 		{
-
+			;
 		}
 		else
 		{
 			m_fsm->DealWithMessage(messageInfo);
 		}		
+	}
+		
+	STATE_ID NPC::GetCurrentStateID()
+	{
+		if ( enAIType::AITYPE_HFSM == AIType )
+		{
+			return m_hfsm->GetCurrentState();
+		}
+		else if ( enAIType::AITYPE_BT == AIType )
+		{
+			return m_behaviorTree->GetCurrentState();
+		}
+		else
+		{
+			return m_fsm->GetCurrentState();
+		}
+
+		return STATE_ID::STATE_NONE;
+	}
+
+	void NPC::SetCurrentStateIDInBehaviorTree( STATE_ID stateId )
+	{
+		m_behaviorTree->SetCurrentStateID( stateId );
 	}
 	
 	void NPC::GotoLocation(LOCATION location)
@@ -257,11 +280,49 @@ namespace SSL
 		return BH_FAILURE;
 	}
 
-	BEHAVIOR_STATE NPC::Move() 
+	bool NPC::IsEntityAt( int x, int y )
+	{
+		const WorldManager::ENTITY_MAP& entityMap = WorldManager::GetInstance()->GetWorldEntityMap();
+		for ( auto &it : entityMap )
+		{
+			if ( it.first != BaseEntity::ID() )
+			{
+				SSL::Location location = it.second->GetCurLocation();
+				if ( location.x == x && location.y == y )
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	BEHAVIOR_STATE NPC::AttackEnemy()
+	{ 
+		SetCurrentStateIDInBehaviorTree( STATE_ID::STATE_NPC_ATTACK );
+		return BH_SUCCESS; 
+	}
+
+	BEHAVIOR_STATE NPC::Patrol() 
 	{ 
 		SSL::Location curLocation = GetCurLocation();
-		curLocation.x += rand() % 3 - 1;
-		curLocation.y += rand() % 3 - 1;
+		int loopCount = 0;
+		bool result = true;
+		SSL::Location tempLocation;
+		while ( result )
+		{
+			tempLocation = curLocation;
+			tempLocation.x += rand() % 3 - 1;
+			tempLocation.y += rand() % 3 - 1;
+			result = IsEntityAt( tempLocation.x, tempLocation.y );
+			if ( loopCount++ > 10 )
+			{
+				return BH_SUCCESS;
+			}
+		}
+
+		curLocation = tempLocation;
 		
 		if ( curLocation.x < 0 )
 		{
@@ -282,6 +343,8 @@ namespace SSL
 		}
 		
 		SetCurLocation( curLocation.x, curLocation.y );
+
+		SetCurrentStateIDInBehaviorTree( STATE_ID::STATE_NPC_PATROL );
 
 		return BH_SUCCESS; 
 	}

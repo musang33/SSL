@@ -21,6 +21,8 @@ namespace SSL
 			, m_previousState(nullptr)
 		{}
 		
+
+		STATE_ID GetCurrentState() { return static_cast<STATE_ID>(m_currentState->GetID()); }
 		void SetCurrentState(State<T>* state) {	m_currentState = state; }
 		void SetGlobalState(State<T>* state) { m_GlobalState = state; }
 		void SetPreviousState(State<T>* state) { m_previousState = state; }

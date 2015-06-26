@@ -173,6 +173,7 @@ namespace SSL
 		};
 
 	public:
+		STATE_ID GetCurrentState() { return static_cast<STATE_ID>(m_currentState->GetID()); }
 		void Update()
 		{
 			auto itPrevious = m_stateTree.find(m_currentState->GetID());

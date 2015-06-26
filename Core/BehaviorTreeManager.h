@@ -11,10 +11,11 @@ namespace SSL
 	private:
 		Composite<EntityType>* root;
 		EntityType* m_owner;
+		STATE_ID m_currentState;
 
 	public:
 		BehaviorTreeManager( EntityType* owner )
-			:root(nullptr), m_owner(owner)
+			:root( nullptr ), m_owner( owner ), m_currentState( STATE_ID::STATE_NONE )
 		{}
 
 		~BehaviorTreeManager()
@@ -24,6 +25,9 @@ namespace SSL
 				delete root;
 			}
 		}
+
+		STATE_ID GetCurrentState() { return m_currentState; }
+		void SetCurrentStateID( STATE_ID stateId ) { m_currentState = stateId; }
 
 		BEHAVIOR_STATE Update()
 		{

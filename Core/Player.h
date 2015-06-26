@@ -30,6 +30,8 @@ namespace SSL
 
 		virtual void Update();
 		virtual void DealWithMessage(const MessageInfo& messageInfo) const;
+		virtual STATE_ID GetCurrentStateID();
+		virtual void SetCurrentStateIDInBehaviorTree( STATE_ID stateId );
 
 		void GotoLocation(LOCATION location);
 		bool IsCurrentLocation(LOCATION location) const;
@@ -44,7 +46,7 @@ namespace SSL
 
 		BEHAVIOR_STATE FindEnemy() { return BH_SUCCESS; }
 		BEHAVIOR_STATE AttackEnemy() { return BH_SUCCESS; }
-		BEHAVIOR_STATE Move() { return BH_SUCCESS; }
+		BEHAVIOR_STATE Patrol() { return BH_SUCCESS; }
 
 		FSM<Player>* GetStateManager() { return m_fsm; }
 		HFSM<Player>* GetHFSM() { return m_hfsm; }

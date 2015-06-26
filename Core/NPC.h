@@ -35,7 +35,9 @@ namespace SSL
 
 		virtual void Update();	
 		virtual void DealWithMessage(const MessageInfo& messageInfo) const;
-		
+		virtual STATE_ID GetCurrentStateID();
+		virtual void SetCurrentStateIDInBehaviorTree( STATE_ID stateId );
+
 		void GotoLocation(LOCATION location);
 		bool IsCurrentLocation(LOCATION location) const;
 
@@ -55,9 +57,11 @@ namespace SSL
 		void ScriptOnTick( UINT32 stateID );
 		void ScriptExit( UINT32 stateID );
 
+		bool IsEntityAt( int x, int y );
+
 		BEHAVIOR_STATE FindEnemy();
-		BEHAVIOR_STATE AttackEnemy() { return BH_SUCCESS; }
-		BEHAVIOR_STATE Move();
+		BEHAVIOR_STATE AttackEnemy();
+		BEHAVIOR_STATE Patrol();
 
 		const char* GetAIIndex() { return m_npcAIIndex.c_str(); }
 		const char* GetInstanceIndex() { return m_npcInstanceIndex.c_str(); }

@@ -96,9 +96,16 @@
     <ResourceCompile Include="VisualTool.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="bitmap1.bmp" />
     <Image Include="Monster.bmp" />
+    <Image Include="Monster_Attack.bmp" />
+    <Image Include="Monster_Freewalk.bmp" />
     <Image Include="small.ico" />
     <Image Include="User.bmp" />
+    <Image Include="User_down.bmp" />
+    <Image Include="User_left.bmp" />
+    <Image Include="User_right.bmp" />
+    <Image Include="User_up.bmp" />
     <Image Include="VisualTool.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

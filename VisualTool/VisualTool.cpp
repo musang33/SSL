@@ -34,7 +34,6 @@ const static INT TIMER_ENTITY = 10000;
 //==============================================================
 
 HWND hWnd;
-HBITMAP bitMapUser, bitMapMonster;
 
 const static INT mostLeftX = 8;
 const static INT mostLeftY = 8;
@@ -42,7 +41,7 @@ const static INT mostLeftY = 8;
 const static INT xCellCount = 15;
 const static INT yCellCount = 15;
 const static INT cellSize = 25;
-const static INT spaceBetweenEdgeAndEntity = 5;
+const static INT spaceBetweenEdgeAndEntity = 2;
 
 std::vector<SSL::BaseEntity*> monsters;
 SSL::Player *player;
@@ -204,7 +203,7 @@ void DrawBitmap( int x, int y, UINT32 bitMapId )
 	by = bit.bmHeight;
 
 	BitBlt( hdc, x + spaceBetweenEdgeAndEntity, y + spaceBetweenEdgeAndEntity,
-			cellSize - ( spaceBetweenEdgeAndEntity * 2 ), cellSize - (spaceBetweenEdgeAndEntity * 2), MemDC, 0, 0, SRCCOPY );
+			cellSize, cellSize, MemDC, 0, 0, SRCCOPY );
 
 	SelectObject( MemDC, OldBitmap );
 	DeleteDC( MemDC );
@@ -237,12 +236,43 @@ void DrawEntity()
 	}
 
 	SSL::Location playerCurLocation = player->GetCurLocation();
-	DrawBitmap( mostLeftX + playerCurLocation.x * cellSize, mostLeftY + playerCurLocation.y * cellSize, IDB_USER );
+	INT bitUserMapIndex = IDB_PC_UP;
+	SSL::ENTITY_DIRECTION playerCurDirection = player->GetDirection();
+	
+	switch ( playerCurDirection )
+	{
+		case SSL::ENTITY_DIRECTION::DIRECTION_DOWN:
+			bitUserMapIndex = IDB_PC_DOWN;
+			break;
+		case SSL::ENTITY_DIRECTION::DIRECTION_UP:
+			bitUserMapIndex = IDB_PC_UP;
+			break;
+		case SSL::ENTITY_DIRECTION::DIRECTION_LEFT:
+			bitUserMapIndex = IDB_PC_LEFT;
+			break;
+		case SSL::ENTITY_DIRECTION::DIRECTION_RIGHT:
+			bitUserMapIndex = IDB_PC_RIGHT;
+			break;
+		default:
+			bitUserMapIndex = IDB_PC_UP;
+	}
+
+	DrawBitmap( mostLeftX + playerCurLocation.x * cellSize, mostLeftY + playerCurLocation.y * cellSize, bitUserMapIndex );
 
 	for ( auto && it : monsters )
 	{
 		SSL::Location monsterCurLocation = it->GetCurLocation();
-		DrawBitmap( mostLeftX + monsterCurLocation.x * cellSize, mostLeftY + monsterCurLocation.y * cellSize, IDB_MONSTER );
+		INT bitMapIndex = IDB_MONSTER;
+		if ( SSL::STATE_ID::STATE_NPC_ATTACK == it->GetCurrentStateID() )
+		{
+			bitMapIndex = IDB_MONSTER_ATTACK;
+		}
+		else if ( SSL::STATE_ID::STATE_NPC_PATROL == it->GetCurrentStateID() )
+		{
+			bitMapIndex = IDB_MONSTER_FREEWALK;
+		}
+
+		DrawBitmap( mostLeftX + monsterCurLocation.x * cellSize, mostLeftY + monsterCurLocation.y * cellSize, bitMapIndex );
 	}	
 }
 
@@ -251,10 +281,18 @@ void Move( INT keyType )
 {
 	SSL::Location playerCurLocation = player->GetCurLocation();
 	DrawCell( playerCurLocation.x, playerCurLocation.y );
+	SSL::ENTITY_DIRECTION playerCurDirection = player->GetDirection();
+
+	if ( keyType != playerCurDirection )
+	{
+		player->SetDirection( static_cast<SSL::ENTITY_DIRECTION>(keyType) );
+		DrawEntity();
+		return;
+	}
 
 	switch ( keyType )
 	{
-		case VK_LEFT:
+		case VK_LEFT:			
 			if ( playerCurLocation.x != 0 )
 			{
 				playerCurLocation.x--;
