@@ -3,8 +3,7 @@
 #include "CommonData.h"
 #include "BaseEntity.h"
 #include "Singleton.h"
-
-#include <map>
+#include "EntityManager.h"
 
 namespace SSL
 {
@@ -16,16 +15,8 @@ namespace SSL
 			, m_yLength( 0 )
 		{};
 		~WorldManager(){};
-
-	public:
-		typedef std::map<INT32, BaseEntity*> ENTITY_MAP;
 		
-	public:
-		void AddEntity( BaseEntity* entity ) 
-		{ 
-			m_entityMap.insert( ENTITY_MAP::value_type( entity->ID(), entity ) );
-		};
-
+	public:		
 		BOOL IsNear( int myX, int myY, int oppositeX, int oppositeY )
 		{
 			if ( oppositeX - myX == -1 || oppositeX - myX == 0 || oppositeX - myX == 1 )
@@ -39,10 +30,22 @@ namespace SSL
 			return false;
 		}
 
-		const ENTITY_MAP& GetWorldEntityMap() { return m_entityMap; };
+		INT32 IsEntityAt( int x, int y ) const
+		{			
+			const EntityManager::ENTITY_MAP& entityMap = EntityManager::GetInstance()->GetEntityMap();
+			for ( const auto &it : entityMap )
+			{								
+				const ST_COORDINATE location = it.second->GetCurLocation();
+				if ( location.x == x && location.y == y )
+				{
+					return it.first;
+				}			
+			}
 
-	private:
-		ENTITY_MAP		m_entityMap;
+			return 0;
+		}
+
+	private:		
 		UINT32			m_xLength;
 		UINT32			m_yLength;
 	};

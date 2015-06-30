@@ -32,9 +32,9 @@ namespace SSL
 	/*class Agent
 	{
 	public:
-		virtual BEHAVIOR_STATE FindEnemy(){ return BH_SUCCESS; }
-		virtual BEHAVIOR_STATE AttackEnemy(){ return BH_SUCCESS; }
-		virtual BEHAVIOR_STATE Move() = 0;
+		virtual EN_BEHAVIOR_STATE FindEnemy(){ return BH_SUCCESS; }
+		virtual EN_BEHAVIOR_STATE AttackEnemy(){ return BH_SUCCESS; }
+		virtual EN_BEHAVIOR_STATE Move() = 0;
 	};
 
 	class Monster : public Agent
@@ -43,7 +43,7 @@ namespace SSL
 		Perception preception;
 
 	public:
-		virtual BEHAVIOR_STATE FindEnemy()
+		virtual EN_BEHAVIOR_STATE FindEnemy()
 		{
 			int randValue = rand() % 2;
 
@@ -59,7 +59,7 @@ namespace SSL
 			}
 		}
 
-		virtual BEHAVIOR_STATE Move()
+		virtual EN_BEHAVIOR_STATE Move()
 		{
 			int randValue = rand() % 3;
 
@@ -80,7 +80,7 @@ namespace SSL
 			}
 		}
 
-		virtual BEHAVIOR_STATE AttackEnemy()
+		virtual EN_BEHAVIOR_STATE AttackEnemy()
 		{
 			int randValue = rand() % 3;
 
@@ -108,10 +108,10 @@ namespace SSL
 		*/
 	{
 	public:
-		virtual BEHAVIOR_STATE update( EntityType* agent ) = 0;
+		virtual EN_BEHAVIOR_STATE update( EntityType* agent ) = 0;
 
 		virtual void onInitialize()			{}
-		virtual void onTerminate( BEHAVIOR_STATE )	{}
+		virtual void onTerminate( EN_BEHAVIOR_STATE )	{}
 
 		Behavior()
 			: m_eStatus( BH_INVALID )
@@ -122,7 +122,7 @@ namespace SSL
 		{
 		}
 
-		BEHAVIOR_STATE tick( EntityType* agent )
+		EN_BEHAVIOR_STATE tick( EntityType* agent )
 		{
 			if ( m_eStatus == BH_INVALID )
 			{
@@ -130,7 +130,7 @@ namespace SSL
 			}
 
 			m_eStatus = update( agent );
-			BEHAVIOR_STATE tempStatus = m_eStatus;
+			EN_BEHAVIOR_STATE tempStatus = m_eStatus;
 
 			if ( m_eStatus != BH_RUNNING )
 			{
@@ -160,13 +160,13 @@ namespace SSL
 			return m_eStatus == BH_RUNNING;
 		}
 
-		BEHAVIOR_STATE getStatus() const
+		EN_BEHAVIOR_STATE getStatus() const
 		{
 			return m_eStatus;
 		}
 
 	private:
-		BEHAVIOR_STATE m_eStatus;
+		EN_BEHAVIOR_STATE m_eStatus;
 	};
 
 	// ============================================================================
@@ -199,7 +199,7 @@ namespace SSL
 			m_iCounter = 0;
 		}
 
-		BEHAVIOR_STATE update( EntityType* agent )
+		EN_BEHAVIOR_STATE update( EntityType* agent )
 		{
 			for ( ;; )
 			{
@@ -244,12 +244,12 @@ namespace SSL
 			m_CurrentChild = m_Children.begin();
 		}
 
-		virtual BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
 		{
 			// Keep going until a child behavior says it's running.
 			for ( ;; )
 			{
-				BEHAVIOR_STATE s = ( *m_CurrentChild )->tick( agent );
+				EN_BEHAVIOR_STATE s = ( *m_CurrentChild )->tick( agent );
 
 				// If the child fails, or keeps running, do the same.
 				if ( s != BH_SUCCESS )
@@ -265,7 +265,7 @@ namespace SSL
 			}
 		}
 
-		virtual void onTerminate( BEHAVIOR_STATE )
+		virtual void onTerminate( EN_BEHAVIOR_STATE )
 		{
 			reset();
 		}
@@ -288,12 +288,12 @@ namespace SSL
 			m_Current = m_Children.begin();
 		}
 
-		virtual BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
 		{
 			// Keep going until a child behavior says its running.
 			for ( ;; )
 			{
-				BEHAVIOR_STATE s = ( *m_Current )->tick( agent );
+				EN_BEHAVIOR_STATE s = ( *m_Current )->tick( agent );
 
 				// If the child succeeds, or keeps running, do the same.
 				if ( s != BH_FAILURE )
@@ -309,7 +309,7 @@ namespace SSL
 			}
 		}
 
-		virtual void onTerminate( BEHAVIOR_STATE )
+		virtual void onTerminate( EN_BEHAVIOR_STATE )
 		{
 			reset();
 		}
@@ -339,7 +339,7 @@ namespace SSL
 		Policy m_eSuccessPolicy;
 		Policy m_eFailurePolicy;
 
-		virtual BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
 		{
 			size_t iSuccessCount = 0, iFailureCount = 0;
 
@@ -383,7 +383,7 @@ namespace SSL
 			return BH_RUNNING;
 		}
 
-		virtual void onTerminate( BEHAVIOR_STATE )
+		virtual void onTerminate( EN_BEHAVIOR_STATE )
 		{
 			for ( Behaviors::iterator it = m_Children.begin(); it != m_Children.end(); ++it )
 			{
@@ -428,12 +428,12 @@ namespace SSL
 			m_Current = m_Children.end();
 		}
 
-		virtual BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
 		{
 			Behaviors::iterator previous = m_Current;
 
 			Selector::onInitialize();
-			BEHAVIOR_STATE result = Selector::update( agent );
+			EN_BEHAVIOR_STATE result = Selector::update( agent );
 
 			if ( previous != m_Children.end() && m_Current != previous )
 			{
@@ -455,12 +455,12 @@ namespace SSL
 			std::cout << "[ActionFreeWalk][onInitialize]" << std::endl;
 		}
 
-		virtual BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
 		{
 			return agent->Patrol();
 		}
 
-		virtual void onTerminate( BEHAVIOR_STATE )
+		virtual void onTerminate( EN_BEHAVIOR_STATE )
 		{
 			reset();
 		}
@@ -477,12 +477,34 @@ namespace SSL
 			std::cout << "[ActionFight][onInitialize]" << std::endl;
 		}
 
-		virtual BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
 		{
 			return agent->AttackEnemy();
 		}
 
-		virtual void onTerminate( BEHAVIOR_STATE )
+		virtual void onTerminate( EN_BEHAVIOR_STATE )
+		{
+			reset();
+		}
+	};
+
+	template <typename EntityType>
+	class ConditionCheckHP : public Behavior<EntityType>
+	{
+	public:
+		virtual ~ConditionCheckHP() {}
+
+		virtual void onInitialize()
+		{
+			std::cout << "[ConditionCheckHP][onInitialize]" << std::endl;
+		}
+
+		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
+		{
+			return agent->CheckHP();
+		}
+
+		virtual void onTerminate( EN_BEHAVIOR_STATE )
 		{
 			reset();
 		}
@@ -499,12 +521,12 @@ namespace SSL
 			std::cout << "[ConditionFindEnemy][onInitialize]" << std::endl;
 		}
 
-		virtual BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
 		{
 			return agent->FindEnemy();
 		}
 
-		virtual void onTerminate( BEHAVIOR_STATE )
+		virtual void onTerminate( EN_BEHAVIOR_STATE )
 		{
 			reset();
 		}

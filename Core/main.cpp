@@ -12,8 +12,8 @@ using namespace SSL;
 //{			
 //	LuaManager::GetInstance()->init(".\\lua_script\\script_list.lua");
 //
-//	NPC* npc = new NPC(ID_NPC, LOCATION::BATTLEFIELD, NPCPatrol::GetInstance());
-//	Player* player = new Player(ID_PLAYER, LOCATION::BATTLEFIELD, PlayerPatrol::GetInstance());
+//	NPC* npc = new NPC(ID_RANGE_NPC, NPCPatrol::GetInstance());
+//	Player* player = new Player(ID_RANGE_PLAYER, PlayerPatrol::GetInstance());
 //
 //	EntityManager::GetInstance()->RegisterEntity(npc);
 //	EntityManager::GetInstance()->RegisterEntity(player);

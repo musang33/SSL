@@ -7,20 +7,18 @@
 
 namespace SSL {
 
-	Player::Player(int id, LOCATION location, State<Player>* state)
-		:BaseEntity(id)
-		, m_currentLocation(location)		
+	Player::Player(int id, State<Player>* state)
+		:BaseEntity(id)		
 		, m_maxHP(1000)
-		, m_currentHP(1000)
-		, m_strikingPower(0)
+		, m_currentHP(1000)		
 	{
-		if ( enAIType::AITYPE_HFSM == AIType )
+		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			m_hfsm = new HFSM<Player>(this);
-			initState();
+			initHFSMState();
 			m_hfsm->SetCurrentState(state);
 		}
-		else if ( enAIType::AITYPE_BT == AIType )
+		else if ( EN_AI_TYPE::AI_TYPE_BT == AIType )
 		{
 			m_behaviorTree = new BehaviorTreeManager<Player>( this );
 			if ( nullptr != m_behaviorTree )
@@ -41,7 +39,7 @@ namespace SSL {
 		std::cout << "[INFO][Player][$$:create new Player]" << std::endl;
 	}
 
-	void Player::initState()
+	void Player::initHFSMState()
 	{
 		m_hfsm->RegisterState(nullptr, PlayerRoot::GetInstance());
 
@@ -59,23 +57,13 @@ namespace SSL {
 		m_hfsm->RegisterState(PlayerEngage::GetInstance(), PlayerFlee::GetInstance());
 	}
 
-	bool Player::IsCurrentLocation(LOCATION location) const
-	{
-		if ( m_currentLocation == location )
-		{
-			return true;
-		}
-
-		return false;
-	}
-
 	void Player::Update()
 	{
-		if ( enAIType::AITYPE_HFSM == AIType )
+		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			m_hfsm->Update();
 		}
-		else if ( enAIType::AITYPE_BT == AIType )
+		else if ( EN_AI_TYPE::AI_TYPE_BT == AIType )
 		{
 			m_behaviorTree->Update();
 		}
@@ -85,13 +73,13 @@ namespace SSL {
 		}		
 	}
 
-	void Player::DealWithMessage(const MessageInfo& messageInfo) const
+	void Player::DealWithMessage(const ST_MESSAGE_INFO& messageInfo) const
 	{
-		if ( enAIType::AITYPE_HFSM == AIType )
+		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			m_hfsm->DealWithMessage(messageInfo);
 		}
-		else if ( enAIType::AITYPE_BT == AIType )
+		else if ( EN_AI_TYPE::AI_TYPE_BT == AIType )
 		{
 
 		}
@@ -101,13 +89,13 @@ namespace SSL {
 		}
 	}
 
-	STATE_ID Player::GetCurrentStateID()
+	EN_STATE_ID Player::GetCurrentStateID()
 	{
-		if ( enAIType::AITYPE_HFSM == AIType )
+		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			return m_hfsm->GetCurrentState();
 		}
-		else if ( enAIType::AITYPE_BT == AIType )
+		else if ( EN_AI_TYPE::AI_TYPE_BT == AIType )
 		{
 			return m_behaviorTree->GetCurrentState();
 		}
@@ -116,20 +104,14 @@ namespace SSL {
 			return m_fsm->GetCurrentState();
 		}
 
-		return STATE_ID::STATE_NONE;
+		return EN_STATE_ID::STATE_NONE;
 	}
 
-	void Player::SetCurrentStateIDInBehaviorTree( STATE_ID stateId )
+	void Player::SetCurrentStateIDInBehaviorTree( EN_STATE_ID stateId )
 	{
 		m_behaviorTree->SetCurrentStateID( stateId );
 	}
 
-	void Player::GotoLocation(LOCATION location)
-	{
-		m_currentLocation = location;
-		std::cout << "[INFO][Player][$$:Goto : " << location << "]" << std::endl;
-	}
-	
 	void Player::AddHPByRate(INT32 addHPRate)
 	{
 		std::cout << "[INFO][Player][AddHP]" << std::endl;		
@@ -189,6 +171,30 @@ namespace SSL {
 		}
 
 		return true;
+	}
+
+	EN_BEHAVIOR_STATE Player::CheckHP()
+	{
+		if ( GetCurrentHP() < 1 )
+		{
+			SetEntityState( EN_ENTITY_STATE::STATE_DEAD );
+			return BH_INVALID;
+		}
+
+		return BH_SUCCESS;
+	}
+
+	void Player::AddHP( INT32 addHP )
+	{
+		m_currentHP += addHP;
+		if ( m_currentHP > m_maxHP )
+		{
+			m_currentHP = m_maxHP;
+		}
+		else if ( m_currentHP < 0 )
+		{
+			m_currentHP = 0;
+		}
 	}
 
 }

@@ -22,7 +22,7 @@ namespace SSL
 		{}
 		
 
-		STATE_ID GetCurrentState() { return static_cast<STATE_ID>(m_currentState->GetID()); }
+		EN_STATE_ID GetCurrentState() { return static_cast<EN_STATE_ID>(m_currentState->GetID()); }
 		void SetCurrentState(State<T>* state) {	m_currentState = state; }
 		void SetGlobalState(State<T>* state) { m_GlobalState = state; }
 		void SetPreviousState(State<T>* state) { m_previousState = state; }
@@ -42,7 +42,7 @@ namespace SSL
 			}
 		}
 
-		void DealWithMessage(const MessageInfo& messageInfo) const
+		void DealWithMessage(const ST_MESSAGE_INFO& messageInfo) const
 		{
 			if ( m_GlobalState )
 			{

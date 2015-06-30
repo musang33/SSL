@@ -34,7 +34,7 @@ namespace SSL
 
 		virtual void Exit(Player* player);
 
-		virtual void OnMessage(Player* player, const MessageInfo& messageInfo) const;
+		virtual void OnMessage(Player* player, const ST_MESSAGE_INFO& messageInfo) const;
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_ALIVE;
@@ -68,7 +68,7 @@ namespace SSL
 
 		virtual void Exit(Player* player);
 
-		virtual void OnMessage(Player* player, const MessageInfo& messageInfo) const;
+		virtual void OnMessage(Player* player, const ST_MESSAGE_INFO& messageInfo) const;
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_PEACE;

@@ -12,10 +12,10 @@ namespace SSL
 	class MessageManager : public Singleton<MessageManager>
 	{
 	private:
-		std::list<MessageInfo>		m_delayedMessageList;
+		std::list<ST_MESSAGE_INFO>		m_delayedMessageList;
 
 	public:
-		bool Dispatch(MessageInfo& messageInfo);
+		bool Dispatch(ST_MESSAGE_INFO& messageInfo);
 		void DispatchDelayedMessage();
 	};
 } // SSL

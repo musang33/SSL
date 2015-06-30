@@ -4,7 +4,7 @@
 
 namespace SSL
 {
-	bool EntityManager::RegisterEntity(const BaseEntity* entity)
+	bool EntityManager::RegisterEntity( BaseEntity* entity )
 	{
 		if ( nullptr == entity )
 		{
@@ -16,7 +16,7 @@ namespace SSL
 			return false;
 		}
 
-		m_entityMap.insert(std::make_pair(entity->ID(), entity));
+		m_entityMap.insert( ENTITY_MAP::value_type( entity->ID(), entity ) );
 
 		return true;
 	}

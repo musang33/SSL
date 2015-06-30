@@ -18,7 +18,7 @@ namespace SSL
 		virtual void OnTick( EntityType* entity ){ onTick( entity ); };
 		virtual void OnExit( EntityType* entity ){ onExit( entity ); };
 
-		virtual void OnMessage( EntityType* entity, const MessageInfo& messageInfo ) { onMessage( entity, messageInfo ); };
+		virtual void OnMessage( EntityType* entity, const ST_MESSAGE_INFO& messageInfo ) { onMessage( entity, messageInfo ); };
 
 		UINT32 GetID() { return m_id; }
 
@@ -28,7 +28,7 @@ namespace SSL
 		virtual void onTick( EntityType* ){ };
 		virtual void onExit( EntityType* ){ };
 
-		virtual void onMessage( EntityType* , const MessageInfo&  ) const { };
+		virtual void onMessage( EntityType* , const ST_MESSAGE_INFO&  ) const { };
 
 	private:
 		UINT32 m_id;

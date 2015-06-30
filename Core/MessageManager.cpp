@@ -4,7 +4,7 @@
 
 namespace SSL
 {
-	bool MessageManager::Dispatch(MessageInfo& messageInfo)
+	bool MessageManager::Dispatch(ST_MESSAGE_INFO& messageInfo)
 	{		
 		const BaseEntity* sender = EntityManager::GetInstance()->GetEntity(messageInfo.senderID);
 		const BaseEntity* receiver = EntityManager::GetInstance()->GetEntity(messageInfo.receiverID);

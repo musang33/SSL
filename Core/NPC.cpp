@@ -10,24 +10,20 @@
 
 namespace SSL
 {
-	UINT32 NPC::static_instance_id = 0;
-
-	NPC::NPC(int id, LOCATION location, State<NPC>* state)
+	NPC::NPC(int id, State<NPC>* state)
 		:BaseEntity(id)
-		, m_currentLocation(location)		
-		, m_maxHP(1000)
-		, m_currentHP(1000)
-		, m_strikingPower(0)
+		, m_maxHP(5)
+		, m_currentHP(5)		
 		, m_npcAIIndex()
 		, m_npcInstanceIndex()
 	{
-		if ( enAIType::AITYPE_HFSM == AIType )
+		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			m_hfsm = new HFSM<NPC>(this);
-			initState();
+			initHFSMState();
 			m_hfsm->SetCurrentState(state);
 		}
-		else if ( enAIType::AITYPE_BT == AIType )
+		else if ( EN_AI_TYPE::AI_TYPE_BT == AIType )
 		{
 			m_behaviorTree = new BehaviorTreeManager<NPC>( this );
 			if ( nullptr != m_behaviorTree )
@@ -50,17 +46,17 @@ namespace SSL
 		m_npcAIIndex.assign(tempAIIndex);
 
 		char tempInstanceId[128] = {};
-		sprintf_s(tempInstanceId, sizeof(tempInstanceId), "%d", static_instance_id++);
+		sprintf_s( tempInstanceId, sizeof( tempInstanceId ), "Instance_%d", id );
 		m_npcInstanceIndex.assign(tempInstanceId);
 
-		LuaManager::GetInstance()->setglobal(tempInstanceId, this);
+		LuaManager::GetInstance()->setglobal( m_npcInstanceIndex.c_str(), this );
 
 		SetCurLocation( rand() % 15, rand() % 15 );
 
 		std::cout << "[INFO][NPC][$$:create new NPC]" << std::endl;
 	}
 
-	void NPC::initState()
+	void NPC::initHFSMState()
 	{
 		m_hfsm->RegisterState(nullptr, NPCRoot::GetInstance());
 
@@ -80,11 +76,11 @@ namespace SSL
 
 	void NPC::Update()
 	{	
-		if ( enAIType::AITYPE_HFSM == AIType )
+		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			m_hfsm->Update();
 		}
-		else if ( enAIType::AITYPE_BT == AIType )
+		else if ( EN_AI_TYPE::AI_TYPE_BT == AIType )
 		{
 			m_behaviorTree->Update();
 		}
@@ -94,15 +90,15 @@ namespace SSL
 		}		
 	}
 
-	void NPC::DealWithMessage(const MessageInfo& messageInfo) const
+	void NPC::DealWithMessage(const ST_MESSAGE_INFO& messageInfo) const
 	{
-		if ( enAIType::AITYPE_HFSM == AIType )
+		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			m_hfsm->DealWithMessage(messageInfo);
 		}
-		else if ( enAIType::AITYPE_BT == AIType )
+		else if ( EN_AI_TYPE::AI_TYPE_BT == AIType )
 		{
-			;
+			m_behaviorTree->DealWithMessage(messageInfo);
 		}
 		else
 		{
@@ -110,13 +106,13 @@ namespace SSL
 		}		
 	}
 		
-	STATE_ID NPC::GetCurrentStateID()
+	EN_STATE_ID NPC::GetCurrentStateID()
 	{
-		if ( enAIType::AITYPE_HFSM == AIType )
+		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			return m_hfsm->GetCurrentState();
 		}
-		else if ( enAIType::AITYPE_BT == AIType )
+		else if ( EN_AI_TYPE::AI_TYPE_BT == AIType )
 		{
 			return m_behaviorTree->GetCurrentState();
 		}
@@ -125,23 +121,31 @@ namespace SSL
 			return m_fsm->GetCurrentState();
 		}
 
-		return STATE_ID::STATE_NONE;
+		return EN_STATE_ID::STATE_NONE;
 	}
 
-	void NPC::SetCurrentStateIDInBehaviorTree( STATE_ID stateId )
+	void NPC::SetCurrentStateIDInBehaviorTree( EN_STATE_ID stateId )
 	{
 		m_behaviorTree->SetCurrentStateID( stateId );
 	}
-	
-	void NPC::GotoLocation(LOCATION location)
+
+	// ===================================================================================
+
+	UINT32 NPC::GetCurrentHPRate()
 	{
-		m_currentLocation = location;
-		std::cout << "[INFO][NPC][$$:Goto : " << location << "]" << std::endl;
+		if ( m_maxHP == 0 )
+		{
+			return 0;
+		}
+
+		return m_currentHP * 10000 / m_maxHP;
 	}
 
-	bool NPC::IsCurrentLocation(LOCATION location) const
+	// ===================================================================================
+
+	bool NPC::IsDead()
 	{
-		if ( m_currentLocation == location )
+		if ( 0 > m_currentHP )
 		{
 			return true;
 		}
@@ -149,6 +153,8 @@ namespace SSL
 		return false;
 	}
 
+	// ===================================================================================
+	
 	void NPC::AddHPByRate(INT32 addHPRate)
 	{
 		std::cout << "[INFO][NPC][AddHP]" << std::endl;		
@@ -162,24 +168,17 @@ namespace SSL
 		}
 	}
 
-	UINT32 NPC::GetCurrentHPRate()
+	void NPC::AddHP( INT32 addHP )
 	{
-		if ( m_maxHP == 0 )
+		m_currentHP += addHP;
+		if ( m_currentHP > m_maxHP )
 		{
-			return 0;
+			m_currentHP = m_maxHP;
 		}
-			 
-		return m_currentHP * 10000 / m_maxHP;
-	}
-
-	bool NPC::IsDead()
-	{
-		if ( 0 > m_currentHP )
+		else if ( m_currentHP < 0 )
 		{
-			return true;
+			m_currentHP = 0;
 		}
-
-		return false;
 	}
 
 	void NPC::RandomMove()
@@ -187,11 +186,11 @@ namespace SSL
 		int move_x = rand() % 3 - 1;
 		int move_y = rand() % 3 - 1;
 
-		Location curLocation = GetCurLocation();
+		ST_COORDINATE curLocation = GetCurLocation();
 		curLocation.x += move_x;
 		curLocation.y += move_y;
 		SetCurLocation( curLocation.x, curLocation.y );
-	}
+	}	
 
 	bool NPC::HasFoundEnemy()
 	{
@@ -260,16 +259,16 @@ namespace SSL
 		LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Exit" );
 	}
 
-	BEHAVIOR_STATE NPC::FindEnemy()
+	EN_BEHAVIOR_STATE NPC::FindEnemy()
 	{
-		SSL::Location myLocation = GetCurLocation();
+		SSL::ST_COORDINATE myLocation = GetCurLocation();
 
-		const WorldManager::ENTITY_MAP& entityMap = WorldManager::GetInstance()->GetWorldEntityMap();
+		const EntityManager::ENTITY_MAP& entityMap = EntityManager::GetInstance()->GetEntityMap();
 		for ( auto &it : entityMap )
 		{
-			if ( it.first != BaseEntity::ID() && it.first >= EntityID::ID_PLAYER )
+			if ( it.first != BaseEntity::ID() && it.first >= EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER )
 			{
-				SSL::Location playerLocation = it.second->GetCurLocation();
+				SSL::ST_COORDINATE playerLocation = it.second->GetCurLocation();
 				if ( WorldManager::GetInstance()->IsNear( myLocation.x, myLocation.y, playerLocation.x, playerLocation.y ) )
 				{
 					return BH_SUCCESS;
@@ -282,12 +281,12 @@ namespace SSL
 
 	bool NPC::IsEntityAt( int x, int y )
 	{
-		const WorldManager::ENTITY_MAP& entityMap = WorldManager::GetInstance()->GetWorldEntityMap();
+		const EntityManager::ENTITY_MAP& entityMap = EntityManager::GetInstance()->GetEntityMap();
 		for ( auto &it : entityMap )
 		{
 			if ( it.first != BaseEntity::ID() )
 			{
-				SSL::Location location = it.second->GetCurLocation();
+				SSL::ST_COORDINATE location = it.second->GetCurLocation();
 				if ( location.x == x && location.y == y )
 				{
 					return true;
@@ -298,24 +297,24 @@ namespace SSL
 		return false;
 	}
 
-	BEHAVIOR_STATE NPC::AttackEnemy()
+	EN_BEHAVIOR_STATE NPC::AttackEnemy()
 	{ 
-		SetCurrentStateIDInBehaviorTree( STATE_ID::STATE_NPC_ATTACK );
+		SetCurrentStateIDInBehaviorTree( EN_STATE_ID::STATE_NPC_ATTACK );
 		return BH_SUCCESS; 
 	}
 
-	BEHAVIOR_STATE NPC::Patrol() 
+	EN_BEHAVIOR_STATE NPC::Patrol() 
 	{ 
-		SSL::Location curLocation = GetCurLocation();
+		SSL::ST_COORDINATE curLocation = GetCurLocation();
 		int loopCount = 0;
-		bool result = true;
-		SSL::Location tempLocation;
+		INT32 result = 1;
+		SSL::ST_COORDINATE tempLocation;
 		while ( result )
 		{
 			tempLocation = curLocation;
 			tempLocation.x += rand() % 3 - 1;
 			tempLocation.y += rand() % 3 - 1;
-			result = IsEntityAt( tempLocation.x, tempLocation.y );
+			result = WorldManager::GetInstance()->IsEntityAt( tempLocation.x, tempLocation.y );
 			if ( loopCount++ > 10 )
 			{
 				return BH_SUCCESS;
@@ -344,8 +343,20 @@ namespace SSL
 		
 		SetCurLocation( curLocation.x, curLocation.y );
 
-		SetCurrentStateIDInBehaviorTree( STATE_ID::STATE_NPC_PATROL );
+		SetCurrentStateIDInBehaviorTree( EN_STATE_ID::STATE_NPC_PATROL );
 
 		return BH_SUCCESS; 
 	}
+
+	EN_BEHAVIOR_STATE NPC::CheckHP()
+	{
+		if ( GetCurrentHP() < 1 )
+		{
+			SetEntityState( EN_ENTITY_STATE::STATE_DEAD );
+			return BH_INVALID;
+		}
+
+		return BH_SUCCESS;
+	}
+
 }

@@ -173,7 +173,7 @@ namespace SSL
 		};
 
 	public:
-		STATE_ID GetCurrentState() { return static_cast<STATE_ID>(m_currentState->GetID()); }
+		EN_STATE_ID GetCurrentState() { return static_cast<EN_STATE_ID>(m_currentState->GetID()); }
 		void Update()
 		{
 			auto itPrevious = m_stateTree.find(m_currentState->GetID());
@@ -209,7 +209,7 @@ namespace SSL
 			}
 		}
 
-		void DealWithMessage(const MessageInfo& messageInfo) const
+		void DealWithMessage(const ST_MESSAGE_INFO& messageInfo) const
 		{			
 			if ( m_currentState )
 			{
@@ -240,7 +240,7 @@ namespace SSL
 			{
 				m_stateTree.emplace(std::piecewise_construct, 
 					std::make_tuple(child->GetID()),
-					std::make_tuple(STATE_ID::STATE_NONE, child->GetID(), parent, child));
+					std::make_tuple(EN_STATE_ID::STATE_NONE, child->GetID(), parent, child));
 
 				return true;
 			}
@@ -268,7 +268,7 @@ namespace SSL
 
 			m_stateTree.emplace(std::piecewise_construct,
 				std::make_tuple(child->GetID()),
-				std::make_tuple(STATE_ID::STATE_NONE, child->GetID(), parent, child));
+				std::make_tuple(EN_STATE_ID::STATE_NONE, child->GetID(), parent, child));
 
 			itParent->second.children.push_back(child);
 			return true;		

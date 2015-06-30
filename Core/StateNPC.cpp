@@ -29,7 +29,7 @@ namespace SSL
 		State<NPC>::OnExit(npc);
 	}
 
-	void NPCBaseState::OnMessage( NPC* npc, const MessageInfo& messageInfo )
+	void NPCBaseState::OnMessage( NPC* npc, const ST_MESSAGE_INFO& messageInfo )
 	{
 		std::cout << "[INFO][NPCBaseState][OnMessage]" << std::endl;
 		npc->ScriptExit( GetID() );
@@ -57,13 +57,13 @@ namespace SSL
 		std::cout << "[INFO][Alive][onExit]" << std::endl;
 	}
 
-	void NPCAlive::onMessage(NPC* npc, const MessageInfo& messageInfo) const
+	void NPCAlive::onMessage(NPC* npc, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][Alive][onMessage]" << std::endl;
 
 		switch ( messageInfo.messageType )
 		{
-			case MESSAGE_TYPE::MSG_SUBTRACTION_HP:
+			case EN_MESSAGE_TYPE::MSG_SUBTRACTION_HP:
 			{		
 				INT32 subHP = reinterpret_cast<INT32>(messageInfo.extraInfo);
 
@@ -111,13 +111,13 @@ namespace SSL
 		std::cout << "[INFO][NPCPeace][onExit]" << std::endl;
 	}
 
-	void NPCPeace::onMessage(NPC* npc, const MessageInfo& messageInfo) const
+	void NPCPeace::onMessage(NPC* npc, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][NPCPeace][onMessage]" << std::endl;
 
 		switch ( messageInfo.messageType )
 		{
-			case MESSAGE_TYPE::MSG_FIND_ENEMY:
+			case EN_MESSAGE_TYPE::MSG_FIND_ENEMY:
 			{
 				npc->GetHFSM()->ChangeState(NPCThink::GetInstance());
 
@@ -232,11 +232,11 @@ namespace SSL
 	{
 		std::cout << "[INFO][NPCAttack][onTick]" << std::endl;
 
-		MessageInfo messageInfo;
-		messageInfo.senderID = EntityID::ID_NPC;
-		messageInfo.receiverID = EntityID::ID_PLAYER;
+		ST_MESSAGE_INFO messageInfo;
+		messageInfo.senderID = EN_ENTITY_ID_RANGE::ID_RANGE_NPC;
+		messageInfo.receiverID = EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER;
 		messageInfo.delayTime = 0;
-		messageInfo.messageType = MESSAGE_TYPE::MSG_SUBTRACTION_HP;
+		messageInfo.messageType = EN_MESSAGE_TYPE::MSG_SUBTRACTION_HP;
 		messageInfo.extraInfo = reinterpret_cast<void*>(-5000);
 
 		MessageManager::GetInstance()->Dispatch(messageInfo);

@@ -25,13 +25,13 @@ namespace SSL
 		std::cout << "[INFO][Alive][Exit]" << std::endl;
 	}
 
-	void PlayerAlive::OnMessage(Player* player, const MessageInfo& messageInfo) const
+	void PlayerAlive::OnMessage(Player* player, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][Alive][OnMessage]" << std::endl;
 
 		switch ( messageInfo.messageType )
 		{
-		case MESSAGE_TYPE::MSG_SUBTRACTION_HP:
+		case EN_MESSAGE_TYPE::MSG_SUBTRACTION_HP:
 		{
 			INT32 subHP = reinterpret_cast<INT32>(messageInfo.extraInfo);
 
@@ -79,13 +79,13 @@ namespace SSL
 		std::cout << "[INFO][PlayerPeace][Exit]" << std::endl;
 	}
 
-	void PlayerPeace::OnMessage(Player* player, const MessageInfo& messageInfo) const
+	void PlayerPeace::OnMessage(Player* player, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][PlayerPeace][OnMessage]" << std::endl;
 
 		switch ( messageInfo.messageType )
 		{
-			case MESSAGE_TYPE::MSG_FIND_ENEMY:
+			case EN_MESSAGE_TYPE::MSG_FIND_ENEMY:
 			{
 				player->GetHFSM()->ChangeState(PlayerThink::GetInstance());
 
@@ -200,11 +200,11 @@ namespace SSL
 	{
 		std::cout << "[INFO][PlayerAttack][OnTick]" << std::endl;
 
-		MessageInfo messageInfo;
-		messageInfo.senderID = EntityID::ID_PLAYER;
-		messageInfo.receiverID = EntityID::ID_NPC;
+		ST_MESSAGE_INFO messageInfo;
+		messageInfo.senderID = EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER;
+		messageInfo.receiverID = EN_ENTITY_ID_RANGE::ID_RANGE_NPC;
 		messageInfo.delayTime = 0;
-		messageInfo.messageType = MESSAGE_TYPE::MSG_SUBTRACTION_HP;
+		messageInfo.messageType = EN_MESSAGE_TYPE::MSG_SUBTRACTION_HP;
 		messageInfo.extraInfo = reinterpret_cast<void*>(-5000);
 
 		MessageManager::GetInstance()->Dispatch(messageInfo);

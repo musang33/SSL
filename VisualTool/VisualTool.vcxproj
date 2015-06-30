@@ -99,6 +99,7 @@
     <Image Include="bitmap1.bmp" />
     <Image Include="Monster.bmp" />
     <Image Include="Monster_Attack.bmp" />
+    <Image Include="Monster_dead.bmp" />
     <Image Include="Monster_Freewalk.bmp" />
     <Image Include="small.ico" />
     <Image Include="User.bmp" />

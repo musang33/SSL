@@ -2,8 +2,8 @@
 
 #include "CommonData.h"
 #include "BaseEntity.h"
-#include "FSM.h"
 #include "MessageManager.h"
+#include "FSM.h"
 #include "HFSM.h"
 #include "BehaviorTreeManager.h"
 
@@ -12,44 +12,48 @@ namespace SSL
 	class Player : public BaseEntity
 	{
 	private:
-		FSM<Player>*			m_fsm;
-		HFSM<Player>*			m_hfsm;
+		FSM<Player>*					m_fsm;
+		HFSM<Player>*					m_hfsm;
 		BehaviorTreeManager<Player>*	m_behaviorTree;
 
-		LOCATION				m_currentLocation;
-
-		INT32					m_maxHP;
-		INT32					m_currentHP;
-		UINT32					m_strikingPower;
+		INT32							m_maxHP;
+		INT32							m_currentHP;		
 
 	private:
-		void initState();
+		void initHFSMState();
 
 	public:
-		Player(int id, LOCATION location, State<Player>* state);
+		Player(int id, State<Player>* state);
 
+	public:
+		// virtual function
 		virtual void Update();
-		virtual void DealWithMessage(const MessageInfo& messageInfo) const;
-		virtual STATE_ID GetCurrentStateID();
-		virtual void SetCurrentStateIDInBehaviorTree( STATE_ID stateId );
+		virtual void DealWithMessage(const ST_MESSAGE_INFO& messageInfo) const;
+		virtual EN_STATE_ID GetCurrentStateID();
+		virtual void SetCurrentStateIDInBehaviorTree( EN_STATE_ID stateId );
 
-		void GotoLocation(LOCATION location);
-		bool IsCurrentLocation(LOCATION location) const;
-
-		void AddHPByRate(INT32 addHPRate);
+		// Get function		
 		UINT32 GetCurrentHPRate();
 
-		bool IsDead();
+		// inline function
+		inline FSM<Player>* GetStateManager() { return m_fsm; }
+		inline HFSM<Player>* GetHFSM() { return m_hfsm; }
+		inline INT32 GetCurrentHP() { return m_currentHP; }
 
+		// Is function
+		bool IsDead();
 		bool IsTargetInSkillDistance();
 		bool HasEnemyInAggroList();
+					
+		// control function
+		void AddHPByRate( INT32 addHPRate );
+		void AddHP( INT32 addHP );
 
-		BEHAVIOR_STATE FindEnemy() { return BH_SUCCESS; }
-		BEHAVIOR_STATE AttackEnemy() { return BH_SUCCESS; }
-		BEHAVIOR_STATE Patrol() { return BH_SUCCESS; }
-
-		FSM<Player>* GetStateManager() { return m_fsm; }
-		HFSM<Player>* GetHFSM() { return m_hfsm; }
+		// Behavior Tree function
+		EN_BEHAVIOR_STATE FindEnemy() { return BH_SUCCESS; }
+		EN_BEHAVIOR_STATE AttackEnemy() { return BH_SUCCESS; }
+		EN_BEHAVIOR_STATE Patrol() { return BH_SUCCESS; }
+		EN_BEHAVIOR_STATE CheckHP();	
 	};
 } // namespace SSL
 

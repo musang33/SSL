@@ -9,29 +9,28 @@ namespace SSL
 	const static int MAX_NUGGET_SIZE = 100;
 
 	const static int AIType = 2;
+
+	enum EN_ENTITY_STATE
+	{
+		STATE_DEAD = 0,
+		STATE_ALIVE	
+	};
 	
-	enum enAIType
+	enum EN_AI_TYPE
 	{
-		AITYPE_FSM = 0,
-		AITYPE_HFSM,
-		AITYPE_BT,
+		AI_TYPE_FSM = 0,
+		AI_TYPE_HFSM,
+		AI_TYPE_BT,
 	};
 
-	enum EntityID
+	enum EN_ENTITY_ID_RANGE
 	{
-		ID_NONE,
-		ID_NPC = 1,
-		ID_PLAYER = 1000,
-	};
+		ID_RANGE_NONE,
+		ID_RANGE_NPC = 1,
+		ID_RANGE_PLAYER = 1000,
+	};	
 
-	enum LOCATION
-	{
-		NONE = 0,
-		SAFTY_ZONE,
-		BATTLEFIELD,
-	};
-
-	enum ENTITY_DIRECTION
+	enum EN_ENTITY_DIRECTION
 	{
 		// VK_LEFT, VK_RIGHT, VK_UP, VK_DOWN °°À½
 		DIRECTION_UP = 0x26,
@@ -40,7 +39,7 @@ namespace SSL
 		DIRECTION_LEFT = 0x25
 	};
 
-	enum MESSAGE_TYPE
+	enum EN_MESSAGE_TYPE
 	{
 		MSG_NONE = 0,
 		
@@ -49,7 +48,7 @@ namespace SSL
 		MSG_FIND_ENEMY,			
 	};
 
-	enum STATE_ID
+	enum EN_STATE_ID
 	{
 		STATE_NONE = 0,
 		STATE_NPC_ROOT = 1,
@@ -85,7 +84,7 @@ namespace SSL
 		STATE_PLAYER_FLEE,
 	};
 
-	enum BEHAVIOR_STATE
+	enum EN_BEHAVIOR_STATE
 	{
 		BH_INVALID,
 		BH_SUCCESS,
@@ -94,28 +93,28 @@ namespace SSL
 		BH_SUSPENED
 	};
 		
-	struct MessageInfo
+	struct ST_MESSAGE_INFO
 	{
 		INT32 senderID;
 		INT32 receiverID;
-		MESSAGE_TYPE messageType;
+		EN_MESSAGE_TYPE messageType;
 		double delayTime;
 		void* extraInfo;
 
-		MessageInfo()
+		ST_MESSAGE_INFO()
 			: senderID(0)
 			, receiverID(0)
-			, messageType(MESSAGE_TYPE::MSG_NONE)
+			, messageType(EN_MESSAGE_TYPE::MSG_NONE)
 			, delayTime(0)
 			, extraInfo(nullptr)
 		{}
 	};
 
-	struct Location
+	struct ST_COORDINATE
 	{
 		int x;
 		int y;
-		Location() :x( 0 ), y( 0 ) {}
+		ST_COORDINATE() :x( 0 ), y( 0 ) {}
 	};
 }
 

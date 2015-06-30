@@ -12,13 +12,17 @@ namespace SSL
 
 	class EntityManager : public Singleton<EntityManager>
 	{
+	public:
+		//typedef std::map<INT32, const BaseEntity*> ENTITY_MAP;
+		typedef std::map<INT32, BaseEntity*> ENTITY_MAP;
 	private:
-		std::map<INT32, const BaseEntity*> m_entityMap;
+		ENTITY_MAP m_entityMap;
 
 	public:
-		bool RegisterEntity(const BaseEntity* entity);		
+		bool RegisterEntity( BaseEntity* entity);		
 		bool RemoveEntity(INT32 id);
 		const BaseEntity* GetEntity(INT32 id);
+		const ENTITY_MAP& GetEntityMap() { return m_entityMap; };
 	};
 }
 
