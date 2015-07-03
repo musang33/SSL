@@ -27,7 +27,7 @@ namespace SSL
 			});
 
 			return m_instance.get();
-		}	
+		}
 	};
 
 	template<typename T>

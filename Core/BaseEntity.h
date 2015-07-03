@@ -1,17 +1,19 @@
 #pragma once
 
 #include "CommonData.h"
+#include <concurrent_queue.h>
+#include "EventQueue.h"
 
 namespace SSL
-{	
-	class BaseEntity
+{		
+	class BaseEntity : public EventQueue
 	{
 	private:
-		INT32							m_ID;
-		ST_COORDINATE					m_currentLocation;
-		EN_ENTITY_DIRECTION				m_direction;
-		EN_ENTITY_STATE					m_entityState;
-		static INT32					m_iNextValidID;		
+		INT32													m_ID;
+		ST_COORDINATE											m_currentLocation;
+		EN_ENTITY_DIRECTION										m_direction;
+		EN_ENTITY_STATE											m_entityState;
+		static INT32											m_iNextValidID;			
 
 	public:
 		BaseEntity(INT32 id)

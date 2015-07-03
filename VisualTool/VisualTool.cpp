@@ -13,6 +13,8 @@
 #include "..\Core\TimerWorker.h"
 #include "..\Core\MessageManager.h"
 #include "..\Core\EntityManager.h"
+#include "..\Core\ThreadPool.h"
+#include "..\Core\NPC.h"
 
 #define MAX_LOADSTRING 100
 
@@ -63,7 +65,10 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	LoadString( hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING );
 	LoadString( hInstance, IDC_VISUALTOOL, szWindowClass, MAX_LOADSTRING );
 	MyRegisterClass( hInstance );
-
+		
+	// Thread initialize
+	SSL::ThreadPool::GetInstance()->Init( 20 );
+	
 	// User와 NPC 설정
 	if ( !InitEntities() )
 	{
@@ -125,12 +130,13 @@ VOID CALLBACK MyTimerProc(
 	UINT idTimer,     // timer identifier 
 	DWORD dwTime )     // current system time 
 {	
+	// Update 함수를 작업 큐에 집어 넣는다. 맞는 방법인가?
 	const SSL::EntityManager::ENTITY_MAP& entityMap = SSL::EntityManager::GetInstance()->GetEntityMap();
 	for ( const auto& it : entityMap )
 	{		
 		if ( it.second->GetEntityState() == SSL::EN_ENTITY_STATE::STATE_ALIVE )
 		{
-			it.second->Update();
+			SSL::ThreadPool::GetInstance()->enqueue( std::bind( &SSL::BaseEntity::Update, it.second ) );
 		}		
 	}
 	
@@ -345,6 +351,13 @@ void Attack( INT keyType )
 	if ( 0 != attackedMonsterId )
 	{
 		auto& it = entityMap.find( attackedMonsterId );
+
+		for ( int i = 0; i < 5; i++ )
+		{			
+			it->second->PushEvent( std::bind( &SSL::NPC::AddHP, static_cast< SSL::NPC* >( it->second ), -1 ) );			
+		}
+		
+		/*auto& it = entityMap.find( attackedMonsterId );
 		if ( it != entityMap.end() )
 		{
 			SSL::ST_MESSAGE_INFO messageInfo;
@@ -355,7 +368,7 @@ void Attack( INT keyType )
 			messageInfo.extraInfo = reinterpret_cast<void*>( -1 );
 
 			SSL::MessageManager::GetInstance()->Dispatch( messageInfo );
-		}
+		}*/
 	}	
 }
 

@@ -60,6 +60,16 @@ namespace SSL
 
 		void DealWithMessage( const ST_MESSAGE_INFO& messageInfo ) const
 		{
+
+			/*if ( m_eventQ.empty() )
+			{
+				Dispathc(msg);
+			}
+			else
+			{
+				m_eventQ.push)back( msg );
+			}*/
+
 			switch ( messageInfo.messageType )
 			{
 				case EN_MESSAGE_TYPE::MSG_SUBTRACTION_HP:

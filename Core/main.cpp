@@ -1,4 +1,4 @@
-#include "NPC.h"
+//#include "NPC.h"
 #include "Player.h"
 #include "StateNPC.h"
 #include "StatePlayer.h"

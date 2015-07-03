@@ -3,6 +3,7 @@
 #include "StateNpc.h"
 #include "LuaManager.h"
 #include "WorldManager.h"
+#include "EventQueue.h"
 
 #include <random>
 #include <chrono>
@@ -51,7 +52,7 @@ namespace SSL
 
 		LuaManager::GetInstance()->setglobal( m_npcInstanceIndex.c_str(), this );
 
-		SetCurLocation( rand() % 15, rand() % 15 );
+		SetCurLocation( rand() % 15, rand() % 15 );		
 
 		std::cout << "[INFO][NPC][$$:create new NPC]" << std::endl;
 	}
@@ -75,7 +76,9 @@ namespace SSL
 	}
 
 	void NPC::Update()
-	{	
+	{			
+		UpdateQueue();
+
 		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			m_hfsm->Update();
@@ -89,6 +92,29 @@ namespace SSL
 			m_fsm->Update();
 		}		
 	}
+
+	//entity
+	//	worldjob->notify( EntityMangeer::Add, entity );
+	//WorldJob::Notify()
+	//{
+	//	for ( auto& thread : threads )
+	//	{
+	//		thread->Notify();
+	//		stD::ppl::aplqueue.push();
+	//		pop()
+
+
+	//void NPC::dispatch()
+	//{
+	//	for ( auto& event : m_eventQ )
+	//	{
+	//		if ( !ai->Dispatch( event ) )
+	//		{
+	//			process(event);
+	//		}
+	//	}
+	//}
+
 
 	void NPC::DealWithMessage(const ST_MESSAGE_INFO& messageInfo) const
 	{
