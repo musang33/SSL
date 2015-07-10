@@ -6,8 +6,8 @@ namespace SSL
 {
 	bool MessageManager::Dispatch(ST_MESSAGE_INFO& messageInfo)
 	{		
-		const BaseEntity* sender = EntityManager::GetInstance()->GetEntity(messageInfo.senderID);
-		const BaseEntity* receiver = EntityManager::GetInstance()->GetEntity(messageInfo.receiverID);
+		const BaseEntity::BaseEntityPtr sender = EntityManager::GetInstance()->GetEntity( messageInfo.senderID );
+		const BaseEntity::BaseEntityPtr receiver = EntityManager::GetInstance()->GetEntity( messageInfo.receiverID );
 
 		if ( nullptr == sender || nullptr == receiver )
 		{
@@ -42,7 +42,7 @@ namespace SSL
 		{
 			if ( it->delayTime < currentTickCount )
 			{
-				const BaseEntity* receiver = EntityManager::GetInstance()->GetEntity(it->receiverID);
+				const BaseEntity::BaseEntityPtr receiver = EntityManager::GetInstance()->GetEntity( it->receiverID );
 				receiver->DealWithMessage(*it);
 				it = m_delayedMessageList.erase(it);
 			}

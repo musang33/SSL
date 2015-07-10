@@ -77,8 +77,6 @@ namespace SSL
 
 	void NPC::Update()
 	{			
-		UpdateQueue();
-
 		if ( EN_AI_TYPE::AI_TYPE_HFSM == AIType )
 		{
 			m_hfsm->Update();

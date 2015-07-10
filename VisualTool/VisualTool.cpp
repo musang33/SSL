@@ -130,15 +130,8 @@ VOID CALLBACK MyTimerProc(
 	UINT idTimer,     // timer identifier 
 	DWORD dwTime )     // current system time 
 {	
-	// Update 함수를 작업 큐에 집어 넣는다. 맞는 방법인가?
-	const SSL::EntityManager::ENTITY_MAP& entityMap = SSL::EntityManager::GetInstance()->GetEntityMap();
-	for ( const auto& it : entityMap )
-	{		
-		if ( it.second->GetEntityState() == SSL::EN_ENTITY_STATE::STATE_ALIVE )
-		{
-			SSL::ThreadPool::GetInstance()->enqueue( std::bind( &SSL::BaseEntity::Update, it.second ) );
-		}		
-	}
+	// WorldManager를 통해 Entity 들의 Update 함수를 돌린다.	
+	SSL::ThreadPool::GetInstance()->enqueue( &SSL::EntityManager::UpdateEntities, SSL::EntityManager::GetInstance() );
 	
 	DrawCell();
 	DrawEntity();
@@ -179,15 +172,15 @@ BOOL InitEntities()
 	SSL::LuaManager::GetInstance()->init( "..\\.\\lua_script\\script_list.lua" );
 
 	for ( int i = 0; i < 10; i++ )
-	{
-		SSL::NPC* monster = new SSL::NPC( SSL::ID_RANGE_NPC + i, SSL::NPCPatrol::GetInstance() );		
-		SSL::EntityManager::GetInstance()->RegisterEntity( monster );
+	{		
+		SSL::BaseEntity::BaseEntityPtr ptr = SSL::NPC::CreateNPC( SSL::ID_RANGE_NPC + i, SSL::NPCPatrol::GetInstance() );
+		SSL::EntityManager::GetInstance()->RegisterEntity( ptr );
 	}	
 	
-	SSL::Player* player = new SSL::Player( SSL::ID_RANGE_PLAYER, SSL::PlayerPatrol::GetInstance() );
-	SSL::EntityManager::GetInstance()->RegisterEntity( player );
-
-	player->SetCurLocation( 7, 10 );
+	//SSL::Player* player = new SSL::Player( SSL::ID_RANGE_PLAYER, SSL::PlayerPatrol::GetInstance() );
+	SSL::BaseEntity::BaseEntityPtr playerPtr = SSL::Player::CreatePlayer( SSL::ID_RANGE_PLAYER, SSL::PlayerPatrol::GetInstance() );
+	SSL::EntityManager::GetInstance()->RegisterEntity( playerPtr );
+	playerPtr->SetCurLocation( 7, 10 );
 
 	return TRUE;
 }
@@ -302,12 +295,12 @@ void Attack( INT keyType )
 		return;
 	}
 
-	SSL::Player* player = nullptr;
+	SSL::BaseEntity::BaseEntityPtr player = nullptr;
 	for ( const auto& it : entityMap )
 	{
 		if ( it.second->ID() >= SSL::EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER )
 		{
-			player = static_cast<SSL::Player*>( it.second );
+			player = static_cast<SSL::BaseEntity::BaseEntityPtr>( it.second );
 			break;
 		}
 	}
@@ -354,7 +347,7 @@ void Attack( INT keyType )
 
 		for ( int i = 0; i < 5; i++ )
 		{			
-			it->second->PushEvent( std::bind( &SSL::NPC::AddHP, static_cast< SSL::NPC* >( it->second ), -1 ) );			
+			//it->second->PushEvent( std::bind( &SSL::NPC::AddHP, static_cast< SSL::NPC* >( it->second ), -1 ) );			
 		}
 		
 		/*auto& it = entityMap.find( attackedMonsterId );
@@ -380,12 +373,12 @@ void Move( INT keyType )
 		return;
 	}
 
-	SSL::Player* player = nullptr;
+	SSL::BaseEntity::BaseEntityPtr player = nullptr;
 	for ( const auto& it : entityMap )
 	{
 		if ( it.second->ID() >= SSL::EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER )
 		{
-			player = static_cast<SSL::Player*>( it.second );
+			player = static_cast<SSL::BaseEntity::BaseEntityPtr>( it.second );
 			break;
 		}
 	}

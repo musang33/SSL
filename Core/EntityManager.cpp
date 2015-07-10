@@ -4,7 +4,7 @@
 
 namespace SSL
 {
-	bool EntityManager::RegisterEntity( BaseEntity* entity )
+	bool EntityManager::RegisterEntity( BaseEntity::BaseEntityPtr entity )
 	{
 		if ( nullptr == entity )
 		{
@@ -34,7 +34,7 @@ namespace SSL
 		return false;
 	}
 
-	const BaseEntity* EntityManager::GetEntity(INT32 id)
+	const BaseEntity::BaseEntityPtr EntityManager::GetEntity( INT32 id )
 	{
 		const auto it = m_entityMap.find(id);
 
@@ -44,6 +44,19 @@ namespace SSL
 		}
 
 		return nullptr;
+	}
+
+	void EntityManager::UpdateEntities()
+	{
+		const EntityManager::ENTITY_MAP& entityMap = EntityManager::GetInstance()->GetEntityMap();
+		for ( const auto &it : entityMap )
+		{
+			if ( it.second->GetEntityState() == SSL::EN_ENTITY_STATE::STATE_ALIVE )
+			{
+				// AI 업데이트
+				it.second->Update();
+			}
+		}
 	}
 
 }// namespace SSL

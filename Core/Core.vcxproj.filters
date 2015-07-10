@@ -43,11 +43,11 @@
     <Filter Include="AI\BehaviorTree">
       <UniqueIdentifier>{12f2084e-013c-444f-a72d-737976aadb6d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ThreadPool">
-      <UniqueIdentifier>{ee7cdc4f-b172-4bcd-8f3a-f8723864b6ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EventQueue">
       <UniqueIdentifier>{b44991b0-f6c4-452a-b66a-86f61234d580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{ee7cdc4f-b172-4bcd-8f3a-f8723864b6ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -190,10 +190,16 @@
       <Filter>TimerWorker</Filter>
     </ClInclude>
     <ClInclude Include="ThreadPool.h">
-      <Filter>ThreadPool</Filter>
+      <Filter>Thread</Filter>
     </ClInclude>
     <ClInclude Include="EventQueue.h">
       <Filter>EventQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadWorker.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadEventManager.h">
+      <Filter>Thread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -335,6 +341,12 @@
     </ClCompile>
     <ClCompile Include="EventQueue.cpp">
       <Filter>EventQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadWorker.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadEventManager.cpp">
+      <Filter>Thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

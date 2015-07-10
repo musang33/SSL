@@ -23,6 +23,12 @@ namespace SSL
 		std::string					m_npcAIIndex;
 		std::string					m_npcInstanceIndex;	
 
+	public:		
+		static BaseEntityPtr CreateNPC( INT32 id, State<NPC>* state )
+		{
+			return std::make_shared<NPC>( id, state );
+		}
+
 	private:
 		void initHFSMState();
 

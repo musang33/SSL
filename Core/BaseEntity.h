@@ -1,29 +1,34 @@
 #pragma once
 
 #include "CommonData.h"
-#include <concurrent_queue.h>
-#include "EventQueue.h"
+#include <memory>
 
 namespace SSL
 {		
-	class BaseEntity : public EventQueue
+	class BaseEntity
 	{
 	private:
 		INT32													m_ID;
 		ST_COORDINATE											m_currentLocation;
 		EN_ENTITY_DIRECTION										m_direction;
-		EN_ENTITY_STATE											m_entityState;
-		static INT32											m_iNextValidID;			
+		EN_ENTITY_STATE											m_entityState;		
+		std::atomic<UINT32>										currentProcessingThreadID;
 
 	public:
 		BaseEntity(INT32 id)
 			: m_ID(id), 
-			m_entityState( STATE_ALIVE )
+			m_entityState( STATE_ALIVE ),
+			currentProcessingThreadID(0)
 		{			
+			m_currentLocation.x = 0;
+			m_currentLocation.y = 0;
 		}
 
 		virtual ~BaseEntity() {};
-		
+
+	public:
+		typedef std::shared_ptr<BaseEntity> BaseEntityPtr;		
+
 	public:
 		// virtual function
 		virtual void Update() = 0;

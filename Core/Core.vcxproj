@@ -128,7 +128,9 @@
     <ClInclude Include="StatePlayer.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="StateNPC.h" />
+    <ClInclude Include="ThreadEventManager.h" />
     <ClInclude Include="ThreadPool.h" />
+    <ClInclude Include="ThreadWorker.h" />
     <ClInclude Include="TimerWorker.h" />
     <ClInclude Include="WorldManager.h" />
   </ItemGroup>
@@ -179,6 +181,8 @@
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="StatePlayer.cpp" />
     <ClCompile Include="StateNPC.cpp" />
+    <ClCompile Include="ThreadEventManager.cpp" />
+    <ClCompile Include="ThreadWorker.cpp" />
     <ClCompile Include="TimerWorker.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,12 @@ namespace SSL
 		INT32							m_maxHP;
 		INT32							m_currentHP;		
 
+	public:		
+		static BaseEntityPtr CreatePlayer( INT32 id, State<Player>* state )
+		{
+			return std::make_shared<Player>( id, state );
+		}
+
 	private:
 		void initHFSMState();
 

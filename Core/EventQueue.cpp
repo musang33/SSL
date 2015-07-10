@@ -2,30 +2,26 @@
 
 #include "EventQueue.h"
 
-EventQueue::EventQueue()
+namespace SSL
 {
-
-}
-
-EventQueue::~EventQueue()
-{
-
-}
-
-
-
-void EventQueue::UpdateQueue()
-{
-	while ( false == this->tasks.empty() )
+	EventQueue::EventQueue()
 	{
-		std::function<void()> task;
-		{
-			std::unique_lock<std::mutex> lock( this->queue_mutex );			
 
-			task = std::move( this->tasks.front() );
-			this->tasks.pop();
-		}
-
-		task();
 	}
+
+	EventQueue::~EventQueue()
+	{
+
+	}
+
+	void EventQueue::UpdateQueue()
+	{
+		while ( false == this->tasks.empty() )
+		{
+			std::function<void()> task;
+			this->tasks.try_pop( task );
+			task();
+		}
+	}
+
 }

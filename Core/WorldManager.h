@@ -43,11 +43,11 @@ namespace SSL
 			}
 
 			return 0;
-		}
+		}		
 
 	private:		
 		UINT32			m_xLength;
-		UINT32			m_yLength;
+		UINT32			m_yLength;		
 	};
 
 }
