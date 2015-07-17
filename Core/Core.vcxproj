@@ -115,7 +115,9 @@
     <ClInclude Include="BehaviorTree.h" />
     <ClInclude Include="BehaviorTreeManager.h" />
     <ClInclude Include="CommonData.h" />
+    <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="HFSM.h" />
     <ClInclude Include="LuaManager.h" />
@@ -128,6 +130,7 @@
     <ClInclude Include="StatePlayer.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="StateNPC.h" />
+    <ClInclude Include="Thread.h" />
     <ClInclude Include="ThreadEventManager.h" />
     <ClInclude Include="ThreadPool.h" />
     <ClInclude Include="ThreadWorker.h" />
@@ -181,6 +184,7 @@
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="StatePlayer.cpp" />
     <ClCompile Include="StateNPC.cpp" />
+    <ClCompile Include="Thread.cpp" />
     <ClCompile Include="ThreadEventManager.cpp" />
     <ClCompile Include="ThreadWorker.cpp" />
     <ClCompile Include="TimerWorker.cpp" />

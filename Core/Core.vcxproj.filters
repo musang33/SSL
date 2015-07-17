@@ -49,6 +49,12 @@
     <Filter Include="Thread">
       <UniqueIdentifier>{ee7cdc4f-b172-4bcd-8f3a-f8723864b6ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{18efdcc9-5d7f-44ad-9493-3630cc614adc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dispatcher">
+      <UniqueIdentifier>{45a7f398-aca8-4c6b-b6a2-2d9d359f7d41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -201,6 +207,15 @@
     <ClInclude Include="ThreadEventManager.h">
       <Filter>Thread</Filter>
     </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Dispatcher.h">
+      <Filter>Dispatcher</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -346,6 +361,9 @@
       <Filter>Thread</Filter>
     </ClCompile>
     <ClCompile Include="ThreadEventManager.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,6 +2,7 @@
 
 #include "CommonData.h"
 #include <memory>
+#include <atomic>
 
 namespace SSL
 {		
@@ -11,8 +12,7 @@ namespace SSL
 		INT32													m_ID;
 		ST_COORDINATE											m_currentLocation;
 		EN_ENTITY_DIRECTION										m_direction;
-		EN_ENTITY_STATE											m_entityState;		
-		std::atomic<UINT32>										currentProcessingThreadID;
+		EN_ENTITY_STATE											m_entityState;				
 
 	public:
 		BaseEntity(INT32 id)
@@ -27,6 +27,7 @@ namespace SSL
 		virtual ~BaseEntity() {};
 
 	public:
+		std::atomic<UINT32>										currentProcessingThreadID;
 		typedef std::shared_ptr<BaseEntity> BaseEntityPtr;		
 
 	public:

@@ -11,9 +11,12 @@
 #include <functional>
 #include <stdexcept>
 #include "Singleton.h"
+#include "ThreadEventManager.h"
 
 namespace SSL
 {	
+	__declspec( thread ) ThreadEventManager* threadEventManager;
+
 	class ThreadPool : public Singleton<ThreadPool>
 	{		
 	public:
@@ -41,6 +44,8 @@ namespace SSL
 		std::mutex queue_mutex;
 		std::condition_variable condition;
 		bool stop;		
+
+		std::vector< UINT32 > threadIds;		
 	};
 
 	// the constructor just launches some amount of workers
@@ -55,7 +60,8 @@ namespace SSL
 		for ( size_t i = 0; i < threads; ++i )
 			workers.emplace_back(
 			[this]
-		{			
+		{		
+			threadEventManager = new ThreadEventManager;
 			for ( ;; )
 			{
 				std::function<void()> task;

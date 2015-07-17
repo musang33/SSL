@@ -1,23 +1,28 @@
 #pragma once
 
+#include "Thread.h"
+#include "EventQueue.h"
+#include "Dispatcher.h"
+
 namespace SSL
 {
-
-	class EventQueue;
-
-	__declspec( thread ) EventQueue* eventQueue = nullptr;
-
-	class ThreadWorker
+	class ThreadWorker : public Thread, public EventQueue
 	{
 	public:
 		ThreadWorker();
-		~ThreadWorker();
-
-	private:
-		void initTLS();
+		~ThreadWorker();	
 
 	public:
-		void Run();
+		UINT32 run() override;
+		void ProcessEventQueue() override;
+
+	public:
+		void OnAddHP( EVENTPtr& ptr );
+
+	private:
+		Dispatcher<ThreadWorker> m_dispatcher;
+
+		
 	};
 
 }

@@ -13,8 +13,9 @@
 #include "..\Core\TimerWorker.h"
 #include "..\Core\MessageManager.h"
 #include "..\Core\EntityManager.h"
-#include "..\Core\ThreadPool.h"
+#include "..\Core\ThreadEventManager.h"
 #include "..\Core\NPC.h"
+#include "..\Core\Event.h"
 
 #define MAX_LOADSTRING 100
 
@@ -47,6 +48,15 @@ const static INT yCellCount = 15;
 const static INT cellSize = 25;
 const static INT spaceBetweenEdgeAndEntity = 2;
 
+//=============================================================
+
+class World
+{
+public:
+	World() {};
+	~World() {};
+};
+
 //==============================================================
 
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
@@ -67,7 +77,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	MyRegisterClass( hInstance );
 		
 	// Thread initialize
-	SSL::ThreadPool::GetInstance()->Init( 20 );
+	SSL::ThreadEventManager::GetInstance()->StartThreadWorker( 2 );
 	
 	// User와 NPC 설정
 	if ( !InitEntities() )
@@ -129,9 +139,16 @@ VOID CALLBACK MyTimerProc(
 	UINT message,     // WM_TIMER message 
 	UINT idTimer,     // timer identifier 
 	DWORD dwTime )     // current system time 
-{	
-	// WorldManager를 통해 Entity 들의 Update 함수를 돌린다.	
-	SSL::ThreadPool::GetInstance()->enqueue( &SSL::EntityManager::UpdateEntities, SSL::EntityManager::GetInstance() );
+{			
+	const SSL::EntityManager::ENTITY_MAP& entityMap = SSL::EntityManager::GetInstance()->GetEntityMap();
+	for ( const auto &it : entityMap )
+	{
+		if ( it.second->GetEntityState() == SSL::EN_ENTITY_STATE::STATE_ALIVE )
+		{			
+			auto sp = std::make_shared<SSL::ST_ENTITY_UPDATE>( it.second->ID() );
+			SSL::ThreadEventManager::GetInstance()->PushEvent( sp );
+		}
+	}
 	
 	DrawCell();
 	DrawEntity();
@@ -348,6 +365,10 @@ void Attack( INT keyType )
 		for ( int i = 0; i < 5; i++ )
 		{			
 			//it->second->PushEvent( std::bind( &SSL::NPC::AddHP, static_cast< SSL::NPC* >( it->second ), -1 ) );			
+			//auto sp = std::make_shared<SSL::EventQueue::EventStruct>( it->second, std::bind( &SSL::NPC::AddHP, static_cast< SSL::NPC* >( it->second ), -1 ) );
+			auto sp = std::make_shared<SSL::ST_ADD_HP>( it->second->ID(), -1 );
+			SSL::ThreadEventManager::GetInstance()->PushEvent( sp );
+
 		}
 		
 		/*auto& it = entityMap.find( attackedMonsterId );

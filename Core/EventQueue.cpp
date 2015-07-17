@@ -14,7 +14,7 @@ namespace SSL
 
 	}
 
-	void EventQueue::UpdateQueue()
+	void EventQueue::UpdateTaskQueue()
 	{
 		while ( false == this->tasks.empty() )
 		{
