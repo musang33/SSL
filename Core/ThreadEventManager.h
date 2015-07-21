@@ -14,8 +14,7 @@ namespace SSL
 {	
 	class ThreadEventManager : public Singleton<ThreadEventManager>, public EventQueue
 	{
-	private:
-		concurrency::concurrent_queue< EVENTPtr > events;
+	private:		
 		std::map<UINT32, ThreadWorker*> m_threadWorker; // < threadId, thread >
 		std::vector<ThreadWorker*> m_threadWorkerVector;
 
@@ -27,11 +26,9 @@ namespace SSL
 		void ProcessEventQueue() override 
 		{
 			static INT32 threadOrderIndex = 0;
-
-			while ( false == events.empty() )
-			{
-				EVENTPtr ptr = nullptr;
-				events.try_pop( ptr );
+			EVENTPtr ptr = nullptr;
+			while ( events.try_pop( ptr ) )
+			{						
 				const BaseEntity::BaseEntityPtr baseEntityPtr = EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
 				if ( baseEntityPtr->currentProcessingThreadID )
 				{
@@ -43,6 +40,7 @@ namespace SSL
 					}
 				}
 
+				baseEntityPtr->currentProcessingThreadID = threadOrderIndex;
 				m_threadWorkerVector[threadOrderIndex++]->PushEvent( ptr );				
 				if ( threadOrderIndex >= static_cast<INT32>(m_threadWorkerVector.size()) )
 				{
@@ -53,10 +51,13 @@ namespace SSL
 
 		void StartThreadWorker( UINT32 threadSize )
 		{
-			ThreadWorker *temp = new ThreadWorker;			
-			temp->Start();
-			m_threadWorker.insert( std::map<UINT32, ThreadWorker*>::value_type( temp->GetThreadId(), temp ));
-			m_threadWorkerVector.push_back( temp );
+			for ( UINT32 i = 0; i < threadSize; i++ )
+			{
+				ThreadWorker *temp = new ThreadWorker;
+				temp->Start();
+				m_threadWorker.insert( std::map<UINT32, ThreadWorker*>::value_type( temp->GetThreadId(), temp ) );
+				m_threadWorkerVector.push_back( temp );
+			}			
 		}
 	};
 

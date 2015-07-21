@@ -18,6 +18,7 @@ namespace SSL
 
 	public:
 		void OnAddHP( EVENTPtr& ptr );
+		void OnUpdateEntity( EVENTPtr& ptr );
 
 	private:
 		Dispatcher<ThreadWorker> m_dispatcher;

@@ -77,7 +77,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	MyRegisterClass( hInstance );
 		
 	// Thread initialize
-	SSL::ThreadEventManager::GetInstance()->StartThreadWorker( 2 );
+	SSL::ThreadEventManager::GetInstance()->StartThreadWorker( 5 );
 	
 	// User¿Í NPC ¼³Á¤
 	if ( !InitEntities() )
