@@ -55,6 +55,12 @@
     <Filter Include="Dispatcher">
       <UniqueIdentifier>{45a7f398-aca8-4c6b-b6a2-2d9d359f7d41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Action">
+      <UniqueIdentifier>{808cdb99-01f6-4bfc-86b2-f7dabc42d31b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{b7821e4a-d7eb-48a2-a92f-0fd4969b9fed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -68,9 +74,6 @@
     </ClInclude>
     <ClInclude Include="CommonData.h">
       <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseEntity.h">
-      <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="MessageManager.h">
       <Filter>Message</Filter>
@@ -159,12 +162,6 @@
     <ClInclude Include="HFSM.h">
       <Filter>AI\State\HFSM</Filter>
     </ClInclude>
-    <ClInclude Include="NPC.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="StateNPC.h">
       <Filter>AI\State\ConcreteStates</Filter>
     </ClInclude>
@@ -185,12 +182,6 @@
     </ClInclude>
     <ClInclude Include="BehaviorTree.h">
       <Filter>AI\BehaviorTree</Filter>
-    </ClInclude>
-    <ClInclude Include="BehaviorTreeManager.h">
-      <Filter>AI\BehaviorTree</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldManager.h">
-      <Filter>World</Filter>
     </ClInclude>
     <ClInclude Include="TimerWorker.h">
       <Filter>TimerWorker</Filter>
@@ -215,6 +206,46 @@
     </ClInclude>
     <ClInclude Include="Dispatcher.h">
       <Filter>Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Action.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionAI.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionState.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseFactoryImpl.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="FactoryNpcImpl.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BTM.h">
+      <Filter>AI\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionBT.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionMove.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionNpcFight.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionPlayerFight.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionLuaScript.h" />
+    <ClInclude Include="FactoryPlayerImpl.h">
+      <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -330,12 +361,6 @@
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\src\lzio.c">
       <Filter>Lua\Lua5.3</Filter>
     </ClCompile>
-    <ClCompile Include="NPC.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
     <ClCompile Include="StateNPC.cpp">
       <Filter>AI\State\ConcreteStates</Filter>
     </ClCompile>
@@ -365,6 +390,37 @@
     </ClCompile>
     <ClCompile Include="Thread.cpp">
       <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionAI.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionState.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="FactoryNpcImpl.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionBT.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionMove.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionNpcFight.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionPlayerFight.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionLuaScript.cpp" />
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="FactoryPlayerImpl.cpp">
+      <Filter>Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

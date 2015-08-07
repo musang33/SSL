@@ -4,167 +4,167 @@
 
 namespace SSL
 {
-	class Player;
+	class Entity;
 
-	class PlayerRoot final : public State<Player>, public Singleton < PlayerRoot >
+	class PlayerRoot final : public State, public Singleton < PlayerRoot >
 	{
 	public:
-		PlayerRoot() :State<Player>(ID){};
+		PlayerRoot() :State(ID){};
 		~PlayerRoot(){};
 
-		virtual void Enter(Player* npc){};
+		virtual void OnEnter( Entity* player ){ State::OnEnter( player ); };
 
-		virtual void OnTick(Player* npc){};
+		virtual void OnTick( Entity* player ){ State::OnTick( player ); };
 
-		virtual void Exit(Player* npc){};
+		virtual void OnExit( Entity* player ){ State::OnExit( player ); };
 
 	private:
 		static const UINT32 ID = STATE_NPC_ROOT;
 	};
 
-	class PlayerAlive final : public State<Player>, public Singleton < PlayerAlive >
+	class PlayerAlive final : public State, public Singleton < PlayerAlive >
 	{
 	public:
-		PlayerAlive() :State<Player>(ID){};
+		PlayerAlive() :State(ID){};
 		~PlayerAlive(){};
 
-		virtual void Enter(Player* player);
+		virtual void onEnter(Entity* player);
 
-		virtual void OnTick(Player* player);
+		virtual void OnTick(Entity* player);
 
-		virtual void Exit(Player* player);
+		virtual void onExit(Entity* player);
 
-		virtual void OnMessage(Player* player, const ST_MESSAGE_INFO& messageInfo) const;
+		virtual void OnMessage(Entity* player, const ST_MESSAGE_INFO& messageInfo) const;
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_ALIVE;
 	};
 
-	class PlayerDead final : public State<Player>, public Singleton < PlayerDead >
+	class PlayerDead final : public State, public Singleton < PlayerDead >
 	{
 	public:
-		PlayerDead() :State<Player>(ID){};
+		PlayerDead() :State(ID){};
 		~PlayerDead(){};
 
-		virtual void Enter(Player* player);
+		virtual void onEnter(Entity* player);
 
-		virtual void OnTick(Player* player);
+		virtual void OnTick(Entity* player);
 
-		virtual void Exit(Player* player);
+		virtual void onExit(Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_DEAD;
 	};
 
-	class PlayerPeace final : public State<Player>, public Singleton < PlayerPeace >
+	class PlayerPeace final : public State, public Singleton < PlayerPeace >
 	{
 	public:
-		PlayerPeace() :State<Player>(ID){};
+		PlayerPeace() :State(ID){};
 		~PlayerPeace(){};
 
-		virtual void Enter(Player* player);
+		virtual void onEnter(Entity* player);
 
-		virtual void OnTick(Player* player);
+		virtual void OnTick(Entity* player);
 
-		virtual void Exit(Player* player);
+		virtual void onExit(Entity* player);
 
-		virtual void OnMessage(Player* player, const ST_MESSAGE_INFO& messageInfo) const;
+		virtual void OnMessage(Entity* player, const ST_MESSAGE_INFO& messageInfo) const;
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_PEACE;
 	};
 
-	class PlayerEngage final : public State<Player>, public Singleton < PlayerEngage >
+	class PlayerEngage final : public State, public Singleton < PlayerEngage >
 	{
 	public:
-		PlayerEngage() :State<Player>(ID){};
+		PlayerEngage() :State(ID){};
 		~PlayerEngage(){};
 
-		virtual void Enter(Player* player);
+		virtual void onEnter(Entity* player);
 
-		virtual void OnTick(Player* player);
+		virtual void OnTick(Entity* player);
 
-		virtual void Exit(Player* player);
+		virtual void onExit(Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_ENGAGE;
 	};
 
-	class PlayerPatrol final : public State<Player>, public Singleton < PlayerPatrol >
+	class PlayerPatrol final : public State, public Singleton < PlayerPatrol >
 	{
 	public:
-		PlayerPatrol() :State<Player>(ID){};
+		PlayerPatrol() :State(ID){};
 		~PlayerPatrol(){};
 
-		virtual void Enter(Player* player);
+		virtual void onEnter(Entity* player);
 
-		virtual void OnTick(Player* player);
+		virtual void OnTick(Entity* player);
 
-		virtual void Exit(Player* player);
+		virtual void onExit(Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_PATROL;
 	};
 
-	class PlayerGuard final : public State<Player>, public Singleton < PlayerGuard >
+	class PlayerGuard final : public State, public Singleton < PlayerGuard >
 	{
 	public:
-		PlayerGuard() :State<Player>(ID){};
+		PlayerGuard() :State(ID){};
 		~PlayerGuard(){};
 
-		virtual void Enter(Player* player);
+		virtual void onEnter(Entity* player);
 
-		virtual void OnTick(Player* player);
+		virtual void OnTick(Entity* player);
 
-		virtual void Exit(Player* player);
+		virtual void onExit(Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_GUARD;
 	};
 
-	class PlayerThink final : public State<Player>, public Singleton < PlayerThink >
+	class PlayerThink final : public State, public Singleton < PlayerThink >
 	{
 	public:
-		PlayerThink() :State<Player>(ID){};
+		PlayerThink() :State(ID){};
 		~PlayerThink(){};
 
-		virtual void Enter(Player* player);
+		virtual void onEnter(Entity* player);
 
-		virtual void OnTick(Player* player);
+		virtual void OnTick(Entity* player);
 
-		virtual void Exit(Player* player);
+		virtual void onExit(Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_THINK;
 	};
 
-	class PlayerAttack final : public State<Player>, public Singleton < PlayerAttack >
+	class PlayerAttack final : public State, public Singleton < PlayerAttack >
 	{
 	public:
-		PlayerAttack() :State<Player>(ID){};
+		PlayerAttack() :State(ID){};
 		~PlayerAttack(){};
 
-		virtual void Enter(Player* player);
+		virtual void onEnter(Entity* player);
 
-		virtual void OnTick(Player* player);
+		virtual void OnTick(Entity* player);
 
-		virtual void Exit(Player* player);
+		virtual void onExit(Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_ATTACK;
 	};
 
-	class PlayerFlee final : public State<Player>, public Singleton < PlayerFlee >
+	class PlayerFlee final : public State, public Singleton < PlayerFlee >
 	{
 	public:
-		PlayerFlee() :State<Player>(ID){};
+		PlayerFlee() :State(ID){};
 		~PlayerFlee(){};
 
-		virtual void Enter(Player* player);
+		virtual void onEnter(Entity* player);
 
-		virtual void OnTick(Player* player);
+		virtual void OnTick(Entity* player);
 
-		virtual void Exit(Player* player);
+		virtual void onExit(Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_FLEE;

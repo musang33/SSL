@@ -1,9 +1,9 @@
 #include "LuaManager.h"
 #include "CommonData.h"
 
-#include "NPC.h"
-
 #include "..\ExternalLibrary\lua-5.3.0\lua_tinker\ScriptBase.hpp"
+
+#include "ActionLuaScript.h"
 
 namespace SSL
 {
@@ -73,15 +73,15 @@ namespace SSL
 
 	void LuaManager::registerNPCFunctions()
 	{		
-		ScriptBase::regClass<NPC>("NPC");
+		ScriptBase::regClass<ActionLuaScript>("NPC");
 		
-		ScriptBase::regClassFunc<NPC>("AddHPByRate", &NPC::AddHPByRate);
-		ScriptBase::regClassFunc<NPC>("GetCurrentHPRate", &NPC::GetCurrentHPRate);
-		ScriptBase::regClassFunc<NPC>("IsDead", &NPC::IsDead);
-		ScriptBase::regClassFunc<NPC>("HasFoundEnemy", &NPC::HasFoundEnemy);
-		ScriptBase::regClassFunc<NPC>("IsTargetInSkillDistance", &NPC::IsTargetInSkillDistance);
-		ScriptBase::regClassFunc<NPC>("HasEnemyInAggroList", &NPC::HasEnemyInAggroList);
-		ScriptBase::regClassFunc<NPC>("PrintLog", &NPC::PrintLog);
+		ScriptBase::regClassFunc<ActionLuaScript>("AddHPByRate", &ActionLuaScript::AddHPByRate);
+		ScriptBase::regClassFunc<ActionLuaScript>("GetCurrentHPRate", &ActionLuaScript::GetCurrentHPRate);
+		ScriptBase::regClassFunc<ActionLuaScript>("IsDead", &ActionLuaScript::IsDead);
+		ScriptBase::regClassFunc<ActionLuaScript>("HasFoundEnemy", &ActionLuaScript::HasFoundEnemy);
+		ScriptBase::regClassFunc<ActionLuaScript>("IsTargetInSkillDistance", &ActionLuaScript::IsTargetInSkillDistance);
+		ScriptBase::regClassFunc<ActionLuaScript>("HasEnemyInAggroList", &ActionLuaScript::HasEnemyInAggroList);
+		ScriptBase::regClassFunc<ActionLuaScript>("PrintLog", &ActionLuaScript::PrintLog);
 	}
 
 	bool LuaManager::CallLuaFunction(UINT32 stateId, const char* aiIndex, const char* instanceName, const char* function)

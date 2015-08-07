@@ -9,6 +9,13 @@ namespace SSL
 	const static int MAX_NUGGET_SIZE = 100;
 
 	const static int AIType = 2;
+	
+	enum EN_ENTITY_TYPE
+	{
+		ENTITY_NONE_TYPE = 0,
+		ENTITY_NPC_TYPE,
+		ENTITY_PLAYER_TYPE
+	};
 
 	enum EN_ENTITY_STATE
 	{
@@ -22,13 +29,6 @@ namespace SSL
 		AI_TYPE_HFSM,
 		AI_TYPE_BT,
 	};
-
-	enum EN_ENTITY_ID_RANGE
-	{
-		ID_RANGE_NONE,
-		ID_RANGE_NPC = 1,
-		ID_RANGE_PLAYER = 1000,
-	};	
 
 	enum EN_ENTITY_DIRECTION
 	{
@@ -90,7 +90,23 @@ namespace SSL
 		BH_SUCCESS,
 		BH_FAILURE,
 		BH_RUNNING,
-		BH_SUSPENED
+		BH_SUSPENED,
+		BH_ABORTED
+	};
+
+	enum EN_ACTION_TYPE
+	{
+		ACTION_NPC = 0,		
+		ACTION_PLAYER,
+		ACTION_AI,
+		ACTION_BT,
+		ACTION_MOVE,
+		ACTION_STATE,
+		ACTION_NPC_FIGHT,
+		ACTION_PLAYER_FIGHT,
+		ACTION_LUA_SCRIPT,
+
+		MAX_ACTION_COUNT,
 	};
 		
 	struct ST_MESSAGE_INFO
@@ -115,6 +131,6 @@ namespace SSL
 		int x;
 		int y;
 		ST_COORDINATE() :x( 0 ), y( 0 ) {}
-	};
+	};	
 }
 

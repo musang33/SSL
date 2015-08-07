@@ -4,18 +4,23 @@
 #include "stdafx.h"
 #include "VisualTool.h"
 
-#include "..\Core\NPC.h"
-#include "..\Core\Player.h"
+#include "..\Core\Entity.h"
 #include "..\Core\StateNPC.h"
 #include "..\Core\StatePlayer.h"
 #include "..\Core\LuaManager.h"
-#include "..\Core\WorldManager.h"
 #include "..\Core\TimerWorker.h"
 #include "..\Core\MessageManager.h"
 #include "..\Core\EntityManager.h"
 #include "..\Core\ThreadEventManager.h"
-#include "..\Core\NPC.h"
 #include "..\Core\Event.h"
+#include "..\Core\EntityFactory.h"
+
+#include "..\Core\ActionMove.h"
+#include "..\Core\ActionAI.h"
+#include "..\Core\ActionState.h"
+
+#include "..\Core\FactoryNpcImpl.h"
+#include "..\Core\FactoryPlayerImpl.h"
 
 #define MAX_LOADSTRING 100
 
@@ -78,6 +83,10 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 		
 	// Thread initialize
 	SSL::ThreadEventManager::GetInstance()->StartThreadWorker( 5 );
+
+	// Factory initialize
+	SSL::EntityFactory::GetInstance()->AddFactoryImpl( new SSL::FactoryNpcImpl );
+	SSL::EntityFactory::GetInstance()->AddFactoryImpl( new SSL::FactoryPlayerImpl );
 	
 	// User¿Í NPC ¼³Á¤
 	if ( !InitEntities() )
@@ -143,7 +152,9 @@ VOID CALLBACK MyTimerProc(
 	const SSL::EntityManager::ENTITY_MAP& entityMap = SSL::EntityManager::GetInstance()->GetEntityMap();
 	for ( const auto &it : entityMap )
 	{
-		if ( it.second->GetEntityState() == SSL::EN_ENTITY_STATE::STATE_ALIVE )
+		SSL::ActionState* as = SSL::GetEntityAction( it.second );
+
+		if ( false == as->IsDead() )
 		{			
 			auto sp = std::make_shared<SSL::ST_ENTITY_UPDATE>( it.second->ID() );
 			SSL::ThreadEventManager::GetInstance()->PushEvent( sp );
@@ -190,14 +201,17 @@ BOOL InitEntities()
 
 	for ( int i = 0; i < 10; i++ )
 	{		
-		SSL::BaseEntity::BaseEntityPtr ptr = SSL::NPC::CreateNPC( SSL::ID_RANGE_NPC + i, SSL::NPCPatrol::GetInstance() );
-		SSL::EntityManager::GetInstance()->RegisterEntity( ptr );
+		SSL::Entity* npc = SSL::EntityFactory::GetInstance()->CreateEntity( SSL::EN_ENTITY_TYPE::ENTITY_NPC_TYPE );		
+		SSL::EntityManager::GetInstance()->RegisterEntity( npc );
+		SSL::ActionMove* amNpc = SSL::GetEntityAction( npc );
+		amNpc->SetCurLocation( rand() % xCellCount , rand() & xCellCount );
 	}	
-	
-	//SSL::Player* player = new SSL::Player( SSL::ID_RANGE_PLAYER, SSL::PlayerPatrol::GetInstance() );
-	SSL::BaseEntity::BaseEntityPtr playerPtr = SSL::Player::CreatePlayer( SSL::ID_RANGE_PLAYER, SSL::PlayerPatrol::GetInstance() );
-	SSL::EntityManager::GetInstance()->RegisterEntity( playerPtr );
-	playerPtr->SetCurLocation( 7, 10 );
+		
+	SSL::Entity* player = SSL::EntityFactory::GetInstance()->CreateEntity( SSL::EN_ENTITY_TYPE::ENTITY_PLAYER_TYPE );	
+	SSL::EntityManager::GetInstance()->RegisterEntity( player );
+
+	SSL::ActionMove* am = SSL::GetEntityAction( player );
+	am->SetCurLocation( 7, 10 );
 
 	return TRUE;
 }
@@ -255,30 +269,34 @@ void DrawEntity()
 
 	for ( const auto& it : entityMap )
 	{
-		if ( it.second->ID() < SSL::EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER )
+		SSL::ActionMove* am = SSL::GetEntityAction( it.second );
+		SSL::ST_COORDINATE curLocation = am->GetCurLocation();
+
+		if ( it.second->Type() == SSL::EN_ENTITY_TYPE::ENTITY_NPC_TYPE )
 		{
-			SSL::ST_COORDINATE monsterCurLocation = it.second->GetCurLocation();
+			SSL::ActionAI* aa = SSL::GetEntityAction( it.second );
+			SSL::ActionState* as = SSL::GetEntityAction( it.second );
+			
 			INT bitMapIndex = IDB_MONSTER;
-			if ( SSL::EN_ENTITY_STATE::STATE_DEAD == it.second->GetEntityState() )
+			if ( as->IsDead() )
 			{
 				bitMapIndex = IDB_MONSTER_DEAD;
 			}
-			else if ( SSL::EN_STATE_ID::STATE_NPC_ATTACK == it.second->GetCurrentStateID() )
+			else if ( SSL::EN_STATE_ID::STATE_NPC_ATTACK == aa->GetCurrentStateID() )
 			{
 				bitMapIndex = IDB_MONSTER_ATTACK;
 			}
-			else if ( SSL::EN_STATE_ID::STATE_NPC_PATROL == it.second->GetCurrentStateID() )
+			else if ( SSL::EN_STATE_ID::STATE_NPC_PATROL == aa->GetCurrentStateID() )
 			{
 				bitMapIndex = IDB_MONSTER_FREEWALK;
 			}
 
-			DrawBitmap( mostLeftX + monsterCurLocation.x * cellSize, mostLeftY + monsterCurLocation.y * cellSize, bitMapIndex );
+			DrawBitmap( mostLeftX + curLocation.x * cellSize, mostLeftY + curLocation.y * cellSize, bitMapIndex );
 		}
 		else
-		{
-			SSL::ST_COORDINATE playerCurLocation = it.second->GetCurLocation();
+		{			
 			INT bitUserMapIndex = IDB_PC_UP;
-			SSL::EN_ENTITY_DIRECTION playerCurDirection = it.second->GetDirection();
+			SSL::EN_ENTITY_DIRECTION playerCurDirection = am->GetDirection();
 
 			switch ( playerCurDirection )
 			{
@@ -298,7 +316,7 @@ void DrawEntity()
 					bitUserMapIndex = IDB_PC_UP;
 			}
 
-			DrawBitmap( mostLeftX + playerCurLocation.x * cellSize, mostLeftY + playerCurLocation.y * cellSize, bitUserMapIndex );
+			DrawBitmap( mostLeftX + curLocation.x * cellSize, mostLeftY + curLocation.y * cellSize, bitUserMapIndex );
 		}
 	}	
 }
@@ -312,18 +330,20 @@ void Attack( INT keyType )
 		return;
 	}
 
-	SSL::BaseEntity::BaseEntityPtr player = nullptr;
+	SSL::Entity* player = nullptr;
 	for ( const auto& it : entityMap )
 	{
-		if ( it.second->ID() >= SSL::EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER )
+		if ( it.second->Type() == SSL::EN_ENTITY_TYPE::ENTITY_PLAYER_TYPE )
 		{
-			player = static_cast<SSL::BaseEntity::BaseEntityPtr>( it.second );
+			player = static_cast<SSL::Entity*>( it.second );
 			break;
 		}
 	}
 
-	SSL::ST_COORDINATE playerCurLocation = player->GetCurLocation();	
-	SSL::EN_ENTITY_DIRECTION playerCurDirection = player->GetDirection();
+	SSL::ActionMove* am = SSL::GetEntityAction( player );
+
+	SSL::ST_COORDINATE playerCurLocation = am->GetCurLocation();
+	SSL::EN_ENTITY_DIRECTION playerCurDirection = am->GetDirection();
 
 	SSL::ST_COORDINATE attackPosition = playerCurLocation;
 
@@ -357,7 +377,7 @@ void Attack( INT keyType )
 			break;
 	}
 
-	INT32 attackedMonsterId = SSL::WorldManager::GetInstance()->IsEntityAt( attackPosition.x, attackPosition.y );
+	INT32 attackedMonsterId = am->IsEntityAt( attackPosition.x, attackPosition.y );
 	if ( 0 != attackedMonsterId )
 	{
 		auto& it = entityMap.find( attackedMonsterId );
@@ -394,23 +414,25 @@ void Move( INT keyType )
 		return;
 	}
 
-	SSL::BaseEntity::BaseEntityPtr player = nullptr;
+	SSL::Entity* player = nullptr;
 	for ( const auto& it : entityMap )
 	{
-		if ( it.second->ID() >= SSL::EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER )
+		if ( it.second->Type() == SSL::EN_ENTITY_TYPE::ENTITY_PLAYER_TYPE )
 		{
-			player = static_cast<SSL::BaseEntity::BaseEntityPtr>( it.second );
+			player = static_cast<SSL::Entity*>( it.second );
 			break;
 		}
 	}
 
-	SSL::ST_COORDINATE playerCurLocation = player->GetCurLocation();
+	SSL::ActionMove* am = SSL::GetEntityAction( player );
+
+	SSL::ST_COORDINATE playerCurLocation = am->GetCurLocation();
 	DrawCell( playerCurLocation.x, playerCurLocation.y );
-	SSL::EN_ENTITY_DIRECTION playerCurDirection = player->GetDirection();
+	SSL::EN_ENTITY_DIRECTION playerCurDirection = am->GetDirection();
 
 	if ( keyType != playerCurDirection )
 	{
-		player->SetDirection( static_cast<SSL::EN_ENTITY_DIRECTION>( keyType ) );
+		am->SetDirection( static_cast<SSL::EN_ENTITY_DIRECTION>( keyType ) );
 		DrawEntity();
 		return;
 	}
@@ -444,13 +466,13 @@ void Move( INT keyType )
 		default:
 			break;
 	}	
-	INT32 attackedMonsterId = SSL::WorldManager::GetInstance()->IsEntityAt( playerCurLocation.x, playerCurLocation.y );
+	INT32 attackedMonsterId = am->IsEntityAt( playerCurLocation.x, playerCurLocation.y );
 	if ( 0 != attackedMonsterId )
 	{
 		return;
 	}
 
-	player->SetCurLocation( playerCurLocation.x, playerCurLocation.y );
+	am->SetCurLocation( playerCurLocation.x, playerCurLocation.y );
 
 	DrawEntity();
 }

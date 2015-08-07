@@ -3,7 +3,7 @@
 #include <functional>
 #include <future>
 #include <concurrent_queue.h>
-#include "BaseEntity.h"
+#include "Entity.h"
 #include "Event.h"
 
 namespace SSL
@@ -13,9 +13,9 @@ namespace SSL
 	public:
 		struct EventStruct
 		{
-			BaseEntity::BaseEntityPtr	baseEntity;
+			Entity::BaseEntityPtr	baseEntity;
 			std::function<void()>		func;
-			EventStruct( BaseEntity::BaseEntityPtr ptr, std::function<void()> _func )
+			EventStruct( Entity::BaseEntityPtr ptr, std::function<void()> _func )
 				: baseEntity(ptr)
 				, func(_func)
 			{				

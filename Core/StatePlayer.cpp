@@ -1,31 +1,38 @@
 #include <iostream>
 #include "CommonData.h"
 #include "StatePlayer.h"
-#include "Player.h"
-
+#include "Entity.h"
+#include "Action.h"
+#include "ActionAI.h"
+#include "ActionState.h"
+#include "ActionPlayerFight.h"
+#include "HFSM.h"
+#include "MessageManager.h"
 namespace SSL
 {
-	void PlayerAlive::Enter(Player* player)
+	void PlayerAlive::onEnter(Entity* player)
 	{
-		std::cout << "[INFO][Alive][Enter]" << std::endl;
+		std::cout << "[INFO][Alive][onEnter]" << std::endl;
 	}
 
-	void PlayerAlive::OnTick(Player* player)
+	void PlayerAlive::OnTick(Entity* player)
 	{
 		std::cout << "[INFO][Alive][OnTick]" << std::endl;
-		player->AddHPByRate(50);
-		if ( player->IsDead() )
+		ActionState* as = GetEntityAction( player );
+		as->AddHPByRate( 50 );
+		if ( as->IsDead() )
 		{
-			player->GetHFSM()->ChangeState(PlayerDead::GetInstance());
+			ActionAI* aa = GetEntityAction( player );
+			aa->GetHFSM()->ChangeState( PlayerDead::GetInstance() );
 		}
 	}
 
-	void PlayerAlive::Exit(Player* player)
+	void PlayerAlive::onExit(Entity* player)
 	{
-		std::cout << "[INFO][Alive][Exit]" << std::endl;
+		std::cout << "[INFO][Alive][onExit]" << std::endl;
 	}
 
-	void PlayerAlive::OnMessage(Player* player, const ST_MESSAGE_INFO& messageInfo) const
+	void PlayerAlive::OnMessage(Entity* player, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][Alive][OnMessage]" << std::endl;
 
@@ -34,8 +41,8 @@ namespace SSL
 		case EN_MESSAGE_TYPE::MSG_SUBTRACTION_HP:
 		{
 			INT32 subHP = reinterpret_cast<INT32>(messageInfo.extraInfo);
-
-			player->AddHPByRate(subHP);
+			ActionState* as = GetEntityAction( player );
+			as->AddHPByRate( subHP );
 
 			break;
 		}
@@ -44,42 +51,42 @@ namespace SSL
 
 	// Dead
 
-	void PlayerDead::Enter(Player* player)
+	void PlayerDead::onEnter(Entity* player)
 	{
-		std::cout << "[INFO][PlayerDead][Enter]" << std::endl;
+		std::cout << "[INFO][PlayerDead][onEnter]" << std::endl;
 
 	}
 
-	void PlayerDead::OnTick(Player* player)
+	void PlayerDead::OnTick(Entity* player)
 	{
 		std::cout << "[INFO][PlayerDead][OnTick]" << std::endl;
 
 		// player 메모리 해제
 	}
 
-	void PlayerDead::Exit(Player* player)
+	void PlayerDead::onExit(Entity* player)
 	{
-		std::cout << "[INFO][PlayerDead][Exit]" << std::endl;
+		std::cout << "[INFO][PlayerDead][onExit]" << std::endl;
 	}
 
 	// Peace
 
-	void PlayerPeace::Enter(Player* player)
+	void PlayerPeace::onEnter(Entity* player)
 	{
-		std::cout << "[INFO][PlayerPeace][Enter]" << std::endl;
+		std::cout << "[INFO][PlayerPeace][onEnter]" << std::endl;
 	}
 
-	void PlayerPeace::OnTick(Player* player)
+	void PlayerPeace::OnTick(Entity* player)
 	{
 		std::cout << "[INFO][PlayerPeace][OnTick]" << std::endl;
 	}
 
-	void PlayerPeace::Exit(Player* player)
+	void PlayerPeace::onExit(Entity* player)
 	{
-		std::cout << "[INFO][PlayerPeace][Exit]" << std::endl;
+		std::cout << "[INFO][PlayerPeace][onExit]" << std::endl;
 	}
 
-	void PlayerPeace::OnMessage(Player* player, const ST_MESSAGE_INFO& messageInfo) const
+	void PlayerPeace::OnMessage(Entity* player, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][PlayerPeace][OnMessage]" << std::endl;
 
@@ -87,7 +94,8 @@ namespace SSL
 		{
 			case EN_MESSAGE_TYPE::MSG_FIND_ENEMY:
 			{
-				player->GetHFSM()->ChangeState(PlayerThink::GetInstance());
+				ActionAI* aa = GetEntityAction( player );
+				aa->GetHFSM()->ChangeState( PlayerThink::GetInstance() );
 
 				break;
 			}
@@ -96,149 +104,159 @@ namespace SSL
 
 	// Engage
 
-	void PlayerEngage::Enter(Player* player)
+	void PlayerEngage::onEnter(Entity* player)
 	{
-		std::cout << "[INFO][PlayerEngage][Enter]" << std::endl;
+		std::cout << "[INFO][PlayerEngage][onEnter]" << std::endl;
 	}
 
-	void PlayerEngage::OnTick(Player* player)
+	void PlayerEngage::OnTick(Entity* player)
 	{
 		std::cout << "[INFO][PlayerEngage][OnTick]" << std::endl;
-
-		if ( false == player->HasEnemyInAggroList() )
+		ActionPlayerFight* apf = GetEntityAction( player );
+		if ( false == apf->HasEnemyInAggroList() )
 		{
-			player->GetHFSM()->ChangeState(PlayerGuard::GetInstance());
+			ActionAI* aa = GetEntityAction( player );
+			aa->GetHFSM()->ChangeState( PlayerGuard::GetInstance() );
 		}
 	}
 
-	void PlayerEngage::Exit(Player* player)
+	void PlayerEngage::onExit(Entity* player)
 	{
-		std::cout << "[INFO][PlayerEngage][Exit]" << std::endl;
+		std::cout << "[INFO][PlayerEngage][onExit]" << std::endl;
 	}
 
 	// Patrol
 
-	void PlayerPatrol::Enter(Player* player)
+	void PlayerPatrol::onEnter(Entity* player)
 	{
-		std::cout << "[INFO][PlayerPatrol][Enter]" << std::endl;
+		std::cout << "[INFO][PlayerPatrol][onEnter]" << std::endl;
 	}
 
-	void PlayerPatrol::OnTick(Player* player)
+	void PlayerPatrol::OnTick(Entity* player)
 	{
 		std::cout << "[INFO][PlayerPatrol][OnTick]" << std::endl;
-		if ( player->HasEnemyInAggroList() )
+		ActionPlayerFight* apf = GetEntityAction( player );
+		if ( apf->HasEnemyInAggroList() )
 		{
-			player->GetHFSM()->ChangeState( PlayerThink::GetInstance() );
+			ActionAI* aa = GetEntityAction( player );
+			aa->GetHFSM()->ChangeState( PlayerThink::GetInstance() );
 			return;
 		}
 	}
 
-	void PlayerPatrol::Exit(Player* player)
+	void PlayerPatrol::onExit(Entity* player)
 	{
-		std::cout << "[INFO][PlayerPatrol][Exit]" << std::endl;
+		std::cout << "[INFO][PlayerPatrol][onExit]" << std::endl;
 	}
 
 	// Guard
 
-	void PlayerGuard::Enter(Player* player)
+	void PlayerGuard::onEnter(Entity* player)
 	{
-		std::cout << "[INFO][PlayerGuard][Enter]" << std::endl;
+		std::cout << "[INFO][PlayerGuard][onEnter]" << std::endl;
 	}
 
-	void PlayerGuard::OnTick(Player* player)
+	void PlayerGuard::OnTick(Entity* player)
 	{
 		std::cout << "[INFO][PlayerGuard][OnTick]" << std::endl;
-		if ( player->HasEnemyInAggroList() )
+		ActionPlayerFight* apf = GetEntityAction( player );
+		if ( apf->HasEnemyInAggroList() )
 		{
-			player->GetHFSM()->ChangeState( PlayerThink::GetInstance() );
+			ActionAI* aa = GetEntityAction( player );
+			aa->GetHFSM()->ChangeState( PlayerThink::GetInstance() );
 			return;
 		}
 	}
 
-	void PlayerGuard::Exit(Player* player)
+	void PlayerGuard::onExit(Entity* player)
 	{
-		std::cout << "[INFO][PlayerGuard][Exit]" << std::endl;
+		std::cout << "[INFO][PlayerGuard][onExit]" << std::endl;
 	}
 
 	// Think
 
-	void PlayerThink::Enter(Player* player)
+	void PlayerThink::onEnter(Entity* player)
 	{
-		std::cout << "[INFO][PlayerThink][Enter]" << std::endl;
+		std::cout << "[INFO][PlayerThink][onEnter]" << std::endl;
 	}
 
-	void PlayerThink::OnTick(Player* player)
+	void PlayerThink::OnTick(Entity* player)
 	{
 		std::cout << "[INFO][PlayerThink][OnTick]" << std::endl;
-
-		if ( player->GetCurrentHPRate() < 3000 )
+		ActionAI* aa = GetEntityAction( player );
+		ActionState* as = GetEntityAction( player );
+		if ( as->GetCurrentHPRate() < 3000 )
 		{
-			player->GetHFSM()->ChangeState(PlayerFlee::GetInstance());
+			aa->GetHFSM()->ChangeState( PlayerFlee::GetInstance() );
 			return;
 		}
 
-		if ( player->IsTargetInSkillDistance() )
+		ActionPlayerFight* apf = GetEntityAction( player );
+		if ( apf->IsTargetInSkillDistance() )
 		{
-			player->GetHFSM()->ChangeState(PlayerAttack::GetInstance());
+			aa->GetHFSM()->ChangeState( PlayerAttack::GetInstance() );
 			return;
 		}
 	}
 
-	void PlayerThink::Exit(Player* player)
+	void PlayerThink::onExit(Entity* player)
 	{
-		std::cout << "[INFO][PlayerThink][Exit]" << std::endl;
+		std::cout << "[INFO][PlayerThink][onExit]" << std::endl;
 	}
 
 	// Attack
 
-	void PlayerAttack::Enter(Player* player)
+	void PlayerAttack::onEnter(Entity* player)
 	{
-		std::cout << "[INFO][PlayerAttack][Enter]" << std::endl;
+		std::cout << "[INFO][PlayerAttack][onEnter]" << std::endl;
 	}
 
-	void PlayerAttack::OnTick(Player* player)
+	void PlayerAttack::OnTick(Entity* player)
 	{
 		std::cout << "[INFO][PlayerAttack][OnTick]" << std::endl;
 
 		ST_MESSAGE_INFO messageInfo;
-		messageInfo.senderID = EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER;
-		messageInfo.receiverID = EN_ENTITY_ID_RANGE::ID_RANGE_NPC;
+		messageInfo.senderID = player->ID();;
+		messageInfo.receiverID = 0;
 		messageInfo.delayTime = 0;
 		messageInfo.messageType = EN_MESSAGE_TYPE::MSG_SUBTRACTION_HP;
 		messageInfo.extraInfo = reinterpret_cast<void*>(-5000);
 
 		MessageManager::GetInstance()->Dispatch(messageInfo);
 
-		player->GetHFSM()->ChangeState(PlayerThink::GetInstance());
+		ActionAI* aa = GetEntityAction( player );
+		aa->GetHFSM()->ChangeState( PlayerThink::GetInstance() );
 		return;
 	}
 
-	void PlayerAttack::Exit(Player* player)
+	void PlayerAttack::onExit(Entity* player)
 	{
-		std::cout << "[INFO][PlayerAttack][Exit]" << std::endl;
+		std::cout << "[INFO][PlayerAttack][onExit]" << std::endl;
 	}
 
 	// Flee
 
-	void PlayerFlee::Enter(Player* player)
+	void PlayerFlee::onEnter(Entity* player)
 	{
-		std::cout << "[INFO][PlayerFlee][Enter]" << std::endl;
+		std::cout << "[INFO][PlayerFlee][onEnter]" << std::endl;
 	}
 
-	void PlayerFlee::OnTick(Player* player)
+	void PlayerFlee::OnTick(Entity* player)
 	{
 		std::cout << "[INFO][PlayerFlee][OnTick]" << std::endl;
 
-		if ( player->GetCurrentHPRate() > 3000 )
+		ActionState* as = GetEntityAction( player );
+		if ( as->GetCurrentHPRate() > 3000 )
 		{
-			player->GetHFSM()->ChangeState(PlayerThink::GetInstance());
+			ActionAI* aa = GetEntityAction( player );
+			aa->GetHFSM()->ChangeState( PlayerThink::GetInstance() );
 			return;
 		}
 	}
 
-	void PlayerFlee::Exit(Player* player)
+	void PlayerFlee::onExit(Entity* player)
 	{
-		std::cout << "[INFO][PlayerFlee][Exit]" << std::endl;
+		std::cout << "[INFO][PlayerFlee][onExit]" << std::endl;
 	}
 
 }

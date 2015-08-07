@@ -32,7 +32,7 @@ namespace SSL
 		void Init( size_t threads );
 	private:
 		template<class... Args>
-		SSL::BaseEntity* getBaseEntity( int threadId, int id, Args&&... args );
+		SSL::Entity* getBaseEntity( int threadId, int id, Args&&... args );
 
 		// need to keep track of threads so we can join them
 		std::vector< std::thread > workers;

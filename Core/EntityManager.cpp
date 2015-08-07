@@ -1,10 +1,11 @@
 #include "EntityManager.h"
 
-#include "BaseEntity.h"
+#include "Entity.h"
+#include "ActionAI.h"
 
 namespace SSL
 {
-	bool EntityManager::RegisterEntity( BaseEntity::BaseEntityPtr entity )
+	bool EntityManager::RegisterEntity( Entity* entity )
 	{
 		if ( nullptr == entity )
 		{
@@ -34,7 +35,7 @@ namespace SSL
 		return false;
 	}
 
-	const BaseEntity::BaseEntityPtr EntityManager::GetEntity( INT32 id )
+	Entity* EntityManager::GetEntity( INT32 id )
 	{
 		const auto it = m_entityMap.find(id);
 
@@ -51,10 +52,12 @@ namespace SSL
 		const EntityManager::ENTITY_MAP& entityMap = EntityManager::GetInstance()->GetEntityMap();
 		for ( const auto &it : entityMap )
 		{
-			if ( it.second->GetEntityState() == SSL::EN_ENTITY_STATE::STATE_ALIVE )
+			ActionAI* aa = GetEntityAction( it.second );
+
+			if ( aa->GetCurrentState() == SSL::EN_ENTITY_STATE::STATE_ALIVE )
 			{
-				// AI 업데이트
-				it.second->Update();
+				// AI 업데이트				
+				aa->Update();
 			}
 		}
 	}

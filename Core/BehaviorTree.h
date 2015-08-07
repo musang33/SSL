@@ -10,6 +10,8 @@
 #include <vector>
 #include <iostream>
 
+#include "ActionBT.h"
+
 namespace SSL
 {
 	// ============================================================================
@@ -101,14 +103,14 @@ namespace SSL
 			}
 		}
 	};*/
-	template <typename EntityType>
+	
 	class Behavior
 		/**
 		* Base class for actions, conditions and composites.
 		*/
 	{
 	public:
-		virtual EN_BEHAVIOR_STATE update( EntityType* agent ) = 0;
+		virtual EN_BEHAVIOR_STATE update( Entity* agent ) = 0;
 
 		virtual void onInitialize()			{}
 		virtual void onTerminate( EN_BEHAVIOR_STATE )	{}
@@ -122,7 +124,7 @@ namespace SSL
 		{
 		}
 
-		EN_BEHAVIOR_STATE tick( EntityType* agent )
+		EN_BEHAVIOR_STATE tick( Entity* agent )
 		{
 			if ( m_eStatus == BH_INVALID )
 			{
@@ -170,21 +172,21 @@ namespace SSL
 	};
 
 	// ============================================================================
-	template <typename EntityType>
-	class Decorator : public Behavior<EntityType>
+	
+	class Decorator : public Behavior
 	{
 	protected:
-		Behavior<EntityType>* m_pChild;
+		Behavior* m_pChild;
 
 	public:
-		Decorator( Behavior<EntityType>* child ) : m_pChild( child ) {}
+		Decorator( Behavior* child ) : m_pChild( child ) {}
 	};
 
-	template <typename EntityType>
-	class Repeat : public Decorator<EntityType>
+	
+	class Repeat : public Decorator
 	{
 	public:
-		Repeat( Behavior<EntityType>* child )
+		Repeat( Behavior* child )
 			: Decorator( child )
 		{
 		}
@@ -199,7 +201,7 @@ namespace SSL
 			m_iCounter = 0;
 		}
 
-		EN_BEHAVIOR_STATE update( EntityType* agent )
+		EN_BEHAVIOR_STATE update( Entity* agent )
 		{
 			for ( ;; )
 			{
@@ -218,21 +220,21 @@ namespace SSL
 	};
 
 	// ============================================================================
-	template <typename EntityType>
-	class Composite : public Behavior<EntityType>
+	
+	class Composite : public Behavior
 	{
 	public:
-		void addChild( Behavior<EntityType>* child ) { m_Children.push_back( child ); }
-		void removeChild( Behavior<EntityType>* );
+		void addChild( Behavior* child ) { m_Children.push_back( child ); }
+		void removeChild( Behavior* );
 		void clearChildren();
 	protected:
-		typedef std::vector<Behavior<EntityType>*> Behaviors;
+		typedef std::vector<Behavior*> Behaviors;
 		
 		Behaviors m_Children;
 	};
 
-	template <typename EntityType>
-	class Sequence : public Composite<EntityType>
+	
+	class Sequence : public Composite
 	{
 	public:
 		virtual ~Sequence()
@@ -244,7 +246,7 @@ namespace SSL
 			m_CurrentChild = m_Children.begin();
 		}
 
-		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( Entity* agent )
 		{
 			// Keep going until a child behavior says it's running.
 			for ( ;; )
@@ -270,13 +272,13 @@ namespace SSL
 			reset();
 		}
 
-		typename Behaviors::iterator m_CurrentChild;
+		Behaviors::iterator m_CurrentChild;
 		
 	};
 
 	// ============================================================================
-	template <typename EntityType>
-	class Selector : public Composite<EntityType>
+	
+	class Selector : public Composite
 	{
 	public:
 		virtual ~Selector()
@@ -288,7 +290,7 @@ namespace SSL
 			m_Current = m_Children.begin();
 		}
 
-		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( Entity* agent )
 		{
 			// Keep going until a child behavior says its running.
 			for ( ;; )
@@ -314,11 +316,11 @@ namespace SSL
 			reset();
 		}
 
-		typename Behaviors::iterator m_Current;
+		Behaviors::iterator m_Current;
 	};
 
-	template <typename EntityType>
-	class Parallel : public Composite<EntityType>
+	
+	class Parallel : public Composite
 	{
 	public:
 		enum Policy
@@ -339,13 +341,13 @@ namespace SSL
 		Policy m_eSuccessPolicy;
 		Policy m_eFailurePolicy;
 
-		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( Entity* agent )
 		{
 			size_t iSuccessCount = 0, iFailureCount = 0;
 
 			for ( Behaviors::iterator it = m_Children.begin(); it != m_Children.end(); ++it )
 			{
-				Behavior<EntityType>& b = **it;
+				Behavior& b = **it;
 				if ( !b.isTerminated() )
 				{
 					b.tick( agent );
@@ -387,7 +389,7 @@ namespace SSL
 		{
 			for ( Behaviors::iterator it = m_Children.begin(); it != m_Children.end(); ++it )
 			{
-				Behavior<EntityType>& b = **it;
+				Behavior& b = **it;
 				if ( b.isRunning() )
 				{
 					b.abort();
@@ -396,8 +398,8 @@ namespace SSL
 		}
 	};
 
-	template <typename EntityType>
-	class Monitor : public Parallel<EntityType>
+	
+	class Monitor : public Parallel
 	{
 	public:
 		Monitor()
@@ -405,12 +407,12 @@ namespace SSL
 		{
 		}
 
-		void addCondition( Behavior<EntityType>* condition )
+		void addCondition( Behavior* condition )
 		{
 			m_Children.insert( m_Children.begin(), condition );
 		}
 
-		void addAction( Behavior<EntityType>* action )
+		void addAction( Behavior* action )
 		{
 			m_Children.push_back( action );
 		}
@@ -418,8 +420,8 @@ namespace SSL
 
 
 	// ============================================================================
-	template <typename EntityType>
-	class ActiveSelector : public Selector<EntityType>
+	
+	class ActiveSelector : public Selector
 	{
 	public:
 
@@ -428,7 +430,7 @@ namespace SSL
 			m_Current = m_Children.end();
 		}
 
-		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( Entity* agent )
 		{
 			Behaviors::iterator previous = m_Current;
 
@@ -444,8 +446,8 @@ namespace SSL
 	};
 
 	// ============================================================================
-	template <typename EntityType>
-	class ActionFreeWalk : public Behavior<EntityType>
+	
+	class ActionFreeWalk : public Behavior
 	{
 	public:
 		virtual ~ActionFreeWalk() {}
@@ -455,9 +457,10 @@ namespace SSL
 			std::cout << "[ActionFreeWalk][onInitialize]" << std::endl;
 		}
 
-		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( Entity* agent )
 		{
-			return agent->Patrol();
+			ActionBT* ab = GetEntityAction( agent );
+			return ab->Patrol();
 		}
 
 		virtual void onTerminate( EN_BEHAVIOR_STATE )
@@ -466,8 +469,8 @@ namespace SSL
 		}
 	};
 
-	template <typename EntityType>
-	class ActionFight : public Behavior<EntityType>
+	
+	class ActionFight : public Behavior
 	{
 	public:
 		virtual ~ActionFight() {}
@@ -477,9 +480,10 @@ namespace SSL
 			std::cout << "[ActionFight][onInitialize]" << std::endl;
 		}
 
-		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( Entity* agent )
 		{
-			return agent->AttackEnemy();
+			ActionBT* ab = GetEntityAction( agent );
+			return ab->AttackEnemy();
 		}
 
 		virtual void onTerminate( EN_BEHAVIOR_STATE )
@@ -488,8 +492,8 @@ namespace SSL
 		}
 	};
 
-	template <typename EntityType>
-	class ConditionCheckHP : public Behavior<EntityType>
+	
+	class ConditionCheckHP : public Behavior
 	{
 	public:
 		virtual ~ConditionCheckHP() {}
@@ -499,9 +503,10 @@ namespace SSL
 			std::cout << "[ConditionCheckHP][onInitialize]" << std::endl;
 		}
 
-		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( Entity* agent )
 		{
-			return agent->CheckHP();
+			ActionBT* ab = GetEntityAction( agent );
+			return ab->CheckHP();
 		}
 
 		virtual void onTerminate( EN_BEHAVIOR_STATE )
@@ -510,8 +515,8 @@ namespace SSL
 		}
 	};
 
-	template <typename EntityType>
-	class ConditionFindEnemy : public Behavior<EntityType>
+	
+	class ConditionFindEnemy : public Behavior
 	{
 	public:
 		virtual ~ConditionFindEnemy() {}
@@ -521,9 +526,10 @@ namespace SSL
 			std::cout << "[ConditionFindEnemy][onInitialize]" << std::endl;
 		}
 
-		virtual EN_BEHAVIOR_STATE update( EntityType* agent )
+		virtual EN_BEHAVIOR_STATE update( Entity* agent )
 		{
-			return agent->FindEnemy();
+			ActionBT* ab = GetEntityAction( agent );
+			return ab->FindEnemy();
 		}
 
 		virtual void onTerminate( EN_BEHAVIOR_STATE )

@@ -29,7 +29,7 @@ namespace SSL
 			EVENTPtr ptr = nullptr;
 			while ( events.try_pop( ptr ) )
 			{						
-				const BaseEntity::BaseEntityPtr baseEntityPtr = EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
+				Entity* baseEntityPtr = EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
 				if ( baseEntityPtr->currentProcessingThreadID )
 				{
 					auto it = m_threadWorker.find( baseEntityPtr->currentProcessingThreadID );

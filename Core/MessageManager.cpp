@@ -1,13 +1,14 @@
 #include "MessageManager.h"
-#include "BaseEntity.h"
+#include "Entity.h"
 #include "EntityManager.h"
+#include "ActionAI.h"
 
 namespace SSL
 {
 	bool MessageManager::Dispatch(ST_MESSAGE_INFO& messageInfo)
 	{		
-		const BaseEntity::BaseEntityPtr sender = EntityManager::GetInstance()->GetEntity( messageInfo.senderID );
-		const BaseEntity::BaseEntityPtr receiver = EntityManager::GetInstance()->GetEntity( messageInfo.receiverID );
+		const Entity* sender = EntityManager::GetInstance()->GetEntity( messageInfo.senderID );
+		const Entity* receiver = EntityManager::GetInstance()->GetEntity( messageInfo.receiverID );
 
 		if ( nullptr == sender || nullptr == receiver )
 		{
@@ -21,7 +22,8 @@ namespace SSL
 		}
 		else
 		{
-			receiver->DealWithMessage(messageInfo);
+			ActionAI* aa = GetEntityAction( receiver );
+			aa->DealWithMessage( messageInfo );
 		}	
 
 		return true;
@@ -42,8 +44,9 @@ namespace SSL
 		{
 			if ( it->delayTime < currentTickCount )
 			{
-				const BaseEntity::BaseEntityPtr receiver = EntityManager::GetInstance()->GetEntity( it->receiverID );
-				receiver->DealWithMessage(*it);
+				const Entity* receiver = EntityManager::GetInstance()->GetEntity( it->receiverID );
+				ActionAI* aa = GetEntityAction( receiver );
+				aa->DealWithMessage( *it );
 				it = m_delayedMessageList.erase(it);
 			}
 			else

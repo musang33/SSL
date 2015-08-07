@@ -7,7 +7,7 @@
 
 namespace SSL
 {
-	class BaseEntity;
+	class Entity;
 
 	class MessageManager : public Singleton<MessageManager>
 	{

@@ -4,17 +4,17 @@
 
 namespace SSL
 {
-	template <typename T>
+	class Entity;
 	class FSM
 	{
 	private:
-		T*				m_owner;
-		State<T>*		m_currentState;
-		State<T>*		m_GlobalState;
-		State<T>*		m_previousState;
+		Entity*		m_owner;
+		State*		m_currentState;
+		State*		m_GlobalState;
+		State*		m_previousState;
 
 	public:
-		FSM(T* owner)
+		FSM( Entity* owner )
 			: m_owner(owner)
 			, m_currentState(nullptr)
 			, m_GlobalState(nullptr)
@@ -23,9 +23,9 @@ namespace SSL
 		
 
 		EN_STATE_ID GetCurrentState() { return static_cast<EN_STATE_ID>(m_currentState->GetID()); }
-		void SetCurrentState(State<T>* state) {	m_currentState = state; }
-		void SetGlobalState(State<T>* state) { m_GlobalState = state; }
-		void SetPreviousState(State<T>* state) { m_previousState = state; }
+		void SetCurrentState(State* state) {	m_currentState = state; }
+		void SetGlobalState(State* state) { m_GlobalState = state; }
+		void SetPreviousState(State* state) { m_previousState = state; }
 
 		void RevertPreviousState() { ChangeState(m_previousState); }
 
@@ -55,7 +55,7 @@ namespace SSL
 			}
 		}
 
-		void ChangeState(State<T>* newState)
+		void ChangeState(State* newState)
 		{
 			if ( m_currentState == newState )
 			{
@@ -72,15 +72,15 @@ namespace SSL
 			if ( nullptr == m_currentState )
 			{
 				m_currentState = newState;
-				m_currentState->Enter(m_owner);
+				m_currentState->OnEnter(m_owner);
 				return;
 			}
 
 			m_previousState = m_currentState;
 
-			m_currentState->Exit(m_owner);
+			m_currentState->OnExit(m_owner);
 			m_currentState = newState;
-			m_currentState->Enter(m_owner);
+			m_currentState->OnEnter(m_owner);
 		}
 	};
 }

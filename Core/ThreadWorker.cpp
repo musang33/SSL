@@ -1,9 +1,12 @@
 #include "ThreadWorker.h"
-#include "BaseEntity.h"
+#include "Entity.h"
 #include "EntityManager.h"
 #include "EventQueue.h"
-#include "NPC.h"
-#include "Player.h"
+
+#include "Action.h"
+#include "ActionAI.h"
+#include "ActionState.h"
+#include "ActionPlayerFight.h"
 
 namespace SSL
 {
@@ -40,36 +43,19 @@ namespace SSL
 
 	void ThreadWorker::OnAddHP( EVENTPtr& ptr )
 	{
-		const SSL::BaseEntity::BaseEntityPtr entityPtr = SSL::EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
-		if ( ptr->entityIndex < EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER )
-		{
-			SSL::NPC *npc = static_cast<NPC*>( entityPtr.get() );
-			ST_ADD_HP *stAddHP = static_cast< ST_ADD_HP* >( ptr.get() );
-			npc->AddHP( stAddHP->addHP );			
-		}
-		else
-		{
-			SSL::Player *player = static_cast<Player*>( entityPtr.get() );
-			ST_ADD_HP *stAddHP = static_cast< ST_ADD_HP* >( ptr.get() );
-			player->AddHP( stAddHP->addHP );			
-		}
-
+		const SSL::Entity* entityPtr = SSL::EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
+			
+		ST_ADD_HP *stAddHP = static_cast< ST_ADD_HP* >( ptr.get() );
+		ActionState* as = GetEntityAction( entityPtr );
+		as->AddHP( stAddHP->addHP );
 	}
 
 	void ThreadWorker::OnUpdateEntity( EVENTPtr& ptr )
 	{
-		const SSL::BaseEntity::BaseEntityPtr entityPtr = SSL::EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
-		if ( ptr->entityIndex < EN_ENTITY_ID_RANGE::ID_RANGE_PLAYER )
-		{
-			SSL::NPC *npc = static_cast<NPC*>( entityPtr.get() );
-			npc->Update();			
-		}
-		else
-		{
-			SSL::Player *player = static_cast<Player*>( entityPtr.get() );
-			player->Update();
-		}
+		const SSL::Entity* entityPtr = SSL::EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
 		
+		ActionAI* aa = GetEntityAction( entityPtr );
+		aa->Update();		
 	}
 
 }

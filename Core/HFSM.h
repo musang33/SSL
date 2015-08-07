@@ -5,29 +5,27 @@
 #include <unordered_map>
 
 namespace SSL
-{
-	template <typename EntityType>
+{	
 	class State;
 
-	template <typename EntityType>
+	class Entity;
 	struct StateRelationInfo
 	{		
 		UINT32	parentStateID;
 		UINT32	currentStateID;
-		State<EntityType>*	parent;
-		State<EntityType>*	current;		
-		std::list<State<EntityType>*> children;
+		State*	parent;
+		State*	current;		
+		std::list<State*> children;
 
 		StateRelationInfo(UINT32 TparentId, 
 			UINT32 TcurrentId,
-			State<EntityType>*	Tparent,
-			State<EntityType>*	Tcurrent)
+			State*	Tparent,
+			State*	Tcurrent)
 			:parentStateID(TparentId), currentStateID(TcurrentId),
 			parent(Tparent), current(Tcurrent)
 		{};
 	};
-
-	template <typename EntityType>
+		
 	struct Node
 	{
 		enum Action
@@ -39,27 +37,26 @@ namespace SSL
 		};
 
 		Action action;
-		State<EntityType>*	state;
+		State*	state;
 		Node() :action(NONE), state(nullptr) {}
-		Node(Action Taction, State<EntityType>*	Tstate)
+		Node(Action Taction, State*	Tstate)
 			: action(Taction), state(Tstate) {}
 	};	
 
-	template <typename EntityType>
 	class HFSM
 	{
 	public:
-		HFSM(EntityType* owner) :m_owner(owner), m_currentState(nullptr){};
+		HFSM(const Entity* owner) :m_owner(owner), m_currentState(nullptr)  {};
 		~HFSM(){};
 
 	private:
-		EntityType* m_owner;
-		std::unordered_map<UINT32, StateRelationInfo<EntityType>> m_stateTree;	// < currentStateId, StateRelationInfo>
-		State<EntityType>*	m_currentState;
-		typedef std::list<Node<EntityType>> PATH;
+		const Entity* m_owner;
+		std::unordered_map<UINT32, StateRelationInfo> m_stateTree;	// < currentStateId, StateRelationInfo>
+		State*	m_currentState;
+		typedef std::list<Node> PATH;
 
 	private:
-		void makePath(PATH& path, State<EntityType>* currentState, State<EntityType>* targetState)
+		void makePath(PATH& path, State* currentState, State* targetState)
 		{
 			// 계층 관계에 따라 순서대로 상태를 입력한다. 
 			// EXIT, ENTER, TARGET 으로 각 상태의 Action을 설정한다. 
@@ -71,10 +68,10 @@ namespace SSL
 
 			auto itCurrent = m_stateTree.find(currentState->GetID());
 			
-			State<EntityType>* matchState = getMatchStateFromMeToChildren(path, currentState, targetState);
+			State* matchState = getMatchStateFromMeToChildren(path, currentState, targetState);
 			if ( nullptr == matchState )
 			{
-				path.emplace_back(Node<EntityType>::Action::EXIT, itCurrent->second.current);
+				path.emplace_back(Node::Action::EXIT, itCurrent->second.current);
 				return makePath(path, itCurrent->second.parent, targetState);
 			}
 			else
@@ -83,13 +80,13 @@ namespace SSL
 
 				if ( matchState->GetID() == currentState->GetID() )
 				{
-					path.emplace_back(Node<EntityType>::Action::TARGET, itCurrent->second.current);
+					path.emplace_back(Node::Action::TARGET, itCurrent->second.current);
 				}
 				else
 				{
 					// Enter하는 첫 State는 temp에 안 넣는다.
 					// 왜냐하면 target이며 현재 상태면 모두 첫 State의 하위에 있기 때문이다.
-					temp.emplace_back(Node<EntityType>::Action::TARGET, matchState);
+					temp.emplace_back(Node::Action::TARGET, matchState);
 
 					do
 					{	
@@ -101,7 +98,7 @@ namespace SSL
 							break;
 						}
 
-						temp.emplace_back(Node<EntityType>::Action::ENTER, matchState);												
+						temp.emplace_back(Node::Action::ENTER, matchState);												
 
 					} while ( true );				
 				}				
@@ -110,7 +107,7 @@ namespace SSL
 			}		
 		}
 
-		State<EntityType>* getMatchStateFromMeToRoot( State<EntityType>* checkState, State<EntityType>* currentState )
+		State* getMatchStateFromMeToRoot( State* checkState, State* currentState )
 		{
 			auto itCheck = m_stateTree.find( checkState->GetID() );
 			auto itCurrent = m_stateTree.find( currentState->GetID() );
@@ -144,7 +141,7 @@ namespace SSL
 			return nullptr;
 		};
 
-		State<EntityType>* getMatchStateFromMeToChildren( PATH& path, State<EntityType>* currentState, State<EntityType>* targetState )
+		State* getMatchStateFromMeToChildren( PATH& path, State* currentState, State* targetState )
 		{
 			auto it = m_stateTree.find( currentState->GetID() );
 			for ( auto & itChild : it->second.children )
@@ -162,7 +159,7 @@ namespace SSL
 					return itChild;
 				}
 
-				State<EntityType>* matchState = getMatchStateFromMeToChildren( path, itChild, targetState );
+				State* matchState = getMatchStateFromMeToChildren( path, itChild, targetState );
 				if ( nullptr != matchState )
 				{
 					return matchState;
@@ -229,7 +226,7 @@ namespace SSL
 			}
 		}
 
-		BOOL RegisterState(State<EntityType>* parent, State<EntityType>* child)
+		BOOL RegisterState(State* parent, State* child)
 		{
 			if ( nullptr == child )
 			{
@@ -274,7 +271,7 @@ namespace SSL
 			return true;		
 		}
 
-		bool IsHavingState(State<EntityType>* targetState)
+		bool IsHavingState(State* targetState)
 		{
 			auto it = m_stateTree.find(targetState->GetID());
 			if ( it != m_stateTree.end() )
@@ -285,7 +282,7 @@ namespace SSL
 			return false;
 		};		
 
-		bool ChangeState(State<EntityType>* targetState)
+		bool ChangeState(State* targetState)
 		{
 			if ( m_stateTree.empty() )
 			{
@@ -313,16 +310,16 @@ namespace SSL
 			{
 				switch ( itNode.action )
 				{
-				case Node<EntityType>::Action::ENTER:
+				case Node::Action::ENTER:
 					itNode.state->OnEnter(m_owner);
 					break;
 
-				case Node<EntityType>::Action::TARGET:
+				case Node::Action::TARGET:
 					m_currentState = itNode.state;		
 					m_currentState->OnEnter(m_owner);
 					break;
 
-				case Node<EntityType>::Action::EXIT:
+				case Node::Action::EXIT:
 					itNode.state->OnExit(m_owner);
 					break;
 
@@ -334,7 +331,7 @@ namespace SSL
 			return true;
 		};
 
-		void SetCurrentState(State<EntityType>* state)
+		void SetCurrentState(State* state)
 		{
 			m_currentState = state;
 		}		
