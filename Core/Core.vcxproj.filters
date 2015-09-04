@@ -61,6 +61,9 @@
     <Filter Include="Factory">
       <UniqueIdentifier>{b7821e4a-d7eb-48a2-a92f-0fd4969b9fed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NetWork">
+      <UniqueIdentifier>{fc682959-2f2f-4866-b2fd-5e4215268a83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -243,9 +246,27 @@
     <ClInclude Include="ActionPlayerFight.h">
       <Filter>Action</Filter>
     </ClInclude>
-    <ClInclude Include="ActionLuaScript.h" />
     <ClInclude Include="FactoryPlayerImpl.h">
       <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Act.h">
+      <Filter>NetWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>NetWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Proactor.h">
+      <Filter>NetWork</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketStream.h">
+      <Filter>NetWork</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionLuaScript.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryPool.h" />
+    <ClInclude Include="TcpSocket.h">
+      <Filter>NetWork</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -415,12 +436,23 @@
     <ClCompile Include="ActionPlayerFight.cpp">
       <Filter>Action</Filter>
     </ClCompile>
-    <ClCompile Include="ActionLuaScript.cpp" />
     <ClCompile Include="Entity.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="FactoryPlayerImpl.cpp">
       <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Proactor.cpp">
+      <Filter>NetWork</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketStream.cpp">
+      <Filter>NetWork</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionLuaScript.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpSocket.cpp">
+      <Filter>NetWork</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

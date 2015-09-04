@@ -384,25 +384,10 @@ void Attack( INT keyType )
 
 		for ( int i = 0; i < 5; i++ )
 		{			
-			//it->second->PushEvent( std::bind( &SSL::NPC::AddHP, static_cast< SSL::NPC* >( it->second ), -1 ) );			
-			//auto sp = std::make_shared<SSL::EventQueue::EventStruct>( it->second, std::bind( &SSL::NPC::AddHP, static_cast< SSL::NPC* >( it->second ), -1 ) );
 			auto sp = std::make_shared<SSL::ST_ADD_HP>( it->second->ID(), -1 );
 			SSL::ThreadEventManager::GetInstance()->PushEvent( sp );
 
-		}
-		
-		/*auto& it = entityMap.find( attackedMonsterId );
-		if ( it != entityMap.end() )
-		{
-			SSL::ST_MESSAGE_INFO messageInfo;
-			messageInfo.senderID = player->ID();
-			messageInfo.receiverID = it->first;
-			messageInfo.delayTime = 0;
-			messageInfo.messageType = SSL::EN_MESSAGE_TYPE::MSG_SUBTRACTION_HP;
-			messageInfo.extraInfo = reinterpret_cast<void*>( -1 );
-
-			SSL::MessageManager::GetInstance()->Dispatch( messageInfo );
-		}*/
+		}		
 	}	
 }
 

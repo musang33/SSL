@@ -2,13 +2,14 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <assert.h>
 
 namespace SSL
 {
 	const static int MAX_VALID_ENTITY_ID = 100000;
 	const static int MAX_NUGGET_SIZE = 100;
 
-	const static int AIType = 2;
+	const static int AIType = 1;
 	
 	enum EN_ENTITY_TYPE
 	{

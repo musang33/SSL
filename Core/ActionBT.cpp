@@ -28,43 +28,7 @@ namespace SSL
 	EN_BEHAVIOR_STATE ActionBT::Patrol()
 	{
 		ActionMove* am = GetEntityAction( GetOwner() );
-		SSL::ST_COORDINATE curLocation = am->GetCurLocation();
-		int loopCount = 0;
-		INT32 result = 1;
-		SSL::ST_COORDINATE tempLocation;
-		while ( result )
-		{
-			tempLocation = curLocation;
-			tempLocation.x += rand() % 3 - 1;
-			tempLocation.y += rand() % 3 - 1;
-			result = am->IsEntityAt( tempLocation.x, tempLocation.y );
-			if ( loopCount++ > 10 )
-			{
-				return BH_SUCCESS;
-			}
-		}
-
-		curLocation = tempLocation;
-
-		if ( curLocation.x < 0 )
-		{
-			curLocation.x = 0;
-		}
-		else if ( curLocation.x > 14 )
-		{
-			curLocation.x = 14;
-		}
-
-		if ( curLocation.y < 0 )
-		{
-			curLocation.y = 0;
-		}
-		else if ( curLocation.y > 14 )
-		{
-			curLocation.y = 14;
-		}
-
-		am->SetCurLocation( curLocation.x, curLocation.y );
+		am->RandomMove();
 
 		ActionAI* aa = GetEntityAction( GetOwner() );
 		aa->SetCurrentStateIDInBehaviorTree( EN_STATE_ID::STATE_NPC_PATROL );

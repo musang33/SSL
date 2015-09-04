@@ -50,11 +50,43 @@ namespace SSL
 
 	void ActionMove::RandomMove()
 	{
-		int move_x = rand() % 3 - 1;
-		int move_y = rand() % 3 - 1;
+		SSL::ST_COORDINATE curLocation = GetCurLocation();
+		int loopCount = 0;
+		INT32 result = 1;
+		SSL::ST_COORDINATE tempLocation;
+		while ( result )
+		{
+			tempLocation = curLocation;
+			tempLocation.x += rand() % 3 - 1;
+			tempLocation.y += rand() % 3 - 1;
+			result = IsEntityAt( tempLocation.x, tempLocation.y );
+			if ( loopCount++ > 10 )
+			{
+				return;
+			}
+		}
 
-		m_currentLocation.x += move_x;
-		m_currentLocation.y += move_y;		
+		curLocation = tempLocation;
+
+		if ( curLocation.x < 0 )
+		{
+			curLocation.x = 0;
+		}
+		else if ( curLocation.x > 14 )
+		{
+			curLocation.x = 14;
+		}
+
+		if ( curLocation.y < 0 )
+		{
+			curLocation.y = 0;
+		}
+		else if ( curLocation.y > 14 )
+		{
+			curLocation.y = 14;
+		}
+
+		SetCurLocation( curLocation.x, curLocation.y );
 	}
 
 }

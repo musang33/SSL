@@ -2,11 +2,10 @@
 #include "CommonData.h"
 #include "StateNPC.h"
 #include "Entity.h"
-#include "Action.h"
 #include "ActionAI.h"
 #include "ActionNpcFight.h"
 #include "ActionState.h"
-
+#include "ActionMove.h"
 #include "HFSM.h"
 #include "MessageManager.h"
 
@@ -181,6 +180,9 @@ namespace SSL
 			aa->GetHFSM()->ChangeState( NPCThink::GetInstance() );
 			return;
 		}
+
+		ActionMove* am = GetEntityAction( npc );
+		am->RandomMove();
 	}
 
 	void NPCPatrol::onExit(Entity* npc)

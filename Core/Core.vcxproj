@@ -111,6 +111,7 @@
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lundump.h" />
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lvm.h" />
     <ClInclude Include="..\ExternalLibrary\lua-5.3.0\src\lzio.h" />
+    <ClInclude Include="Act.h" />
     <ClInclude Include="Action.h" />
     <ClInclude Include="ActionAI.h" />
     <ClInclude Include="ActionBT.h" />
@@ -119,6 +120,7 @@
     <ClInclude Include="ActionNpcFight.h" />
     <ClInclude Include="ActionPlayerFight.h" />
     <ClInclude Include="ActionState.h" />
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="BaseFactoryImpl.h" />
     <ClInclude Include="BehaviorTree.h" />
@@ -135,16 +137,20 @@
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="MessageManager.h" />
     <ClInclude Include="NonCopyable.h" />
+    <ClInclude Include="PacketStream.h" />
+    <ClInclude Include="Proactor.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StatePlayer.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="StateNPC.h" />
+    <ClInclude Include="TcpSocket.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="ThreadEventManager.h" />
     <ClInclude Include="ThreadPool.h" />
     <ClInclude Include="ThreadWorker.h" />
     <ClInclude Include="TimerWorker.h" />
+    <ClInclude Include="MemoryPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ExternalLibrary\lua-5.3.0\lua_tinker\lua_tinker.cpp" />
@@ -200,8 +206,11 @@
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MessageManager.cpp" />
+    <ClCompile Include="PacketStream.cpp" />
+    <ClCompile Include="Proactor.cpp" />
     <ClCompile Include="StatePlayer.cpp" />
     <ClCompile Include="StateNPC.cpp" />
+    <ClCompile Include="TcpSocket.cpp" />
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="ThreadEventManager.cpp" />
     <ClCompile Include="ThreadWorker.cpp" />

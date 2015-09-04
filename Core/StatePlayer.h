@@ -89,55 +89,7 @@ namespace SSL
 	private:
 		static const UINT32 ID = STATE_PLAYER_ENGAGE;
 	};
-
-	class PlayerPatrol final : public State, public Singleton < PlayerPatrol >
-	{
-	public:
-		PlayerPatrol() :State(ID){};
-		~PlayerPatrol(){};
-
-		virtual void onEnter(Entity* player);
-
-		virtual void OnTick(Entity* player);
-
-		virtual void onExit(Entity* player);
-
-	private:
-		static const UINT32 ID = STATE_PLAYER_PATROL;
-	};
-
-	class PlayerGuard final : public State, public Singleton < PlayerGuard >
-	{
-	public:
-		PlayerGuard() :State(ID){};
-		~PlayerGuard(){};
-
-		virtual void onEnter(Entity* player);
-
-		virtual void OnTick(Entity* player);
-
-		virtual void onExit(Entity* player);
-
-	private:
-		static const UINT32 ID = STATE_PLAYER_GUARD;
-	};
-
-	class PlayerThink final : public State, public Singleton < PlayerThink >
-	{
-	public:
-		PlayerThink() :State(ID){};
-		~PlayerThink(){};
-
-		virtual void onEnter(Entity* player);
-
-		virtual void OnTick(Entity* player);
-
-		virtual void onExit(Entity* player);
-
-	private:
-		static const UINT32 ID = STATE_PLAYER_THINK;
-	};
-
+	
 	class PlayerAttack final : public State, public Singleton < PlayerAttack >
 	{
 	public:
@@ -153,21 +105,5 @@ namespace SSL
 	private:
 		static const UINT32 ID = STATE_PLAYER_ATTACK;
 	};
-
-	class PlayerFlee final : public State, public Singleton < PlayerFlee >
-	{
-	public:
-		PlayerFlee() :State(ID){};
-		~PlayerFlee(){};
-
-		virtual void onEnter(Entity* player);
-
-		virtual void OnTick(Entity* player);
-
-		virtual void onExit(Entity* player);
-
-	private:
-		static const UINT32 ID = STATE_PLAYER_FLEE;
-	};
-
+	
 } // namespace SSL
