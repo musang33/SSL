@@ -268,6 +268,22 @@
     <ClInclude Include="TcpSocket.h">
       <Filter>NetWork</Filter>
     </ClInclude>
+    <ClInclude Include="Sender.h">
+      <Filter>NetWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Receiver.h">
+      <Filter>NetWork</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerIOCP.h" />
+    <ClInclude Include="Connector.h">
+      <Filter>NetWork</Filter>
+    </ClInclude>
+    <ClInclude Include="EventCallBack.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageQueue.h">
+      <Filter>Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -452,6 +468,16 @@
       <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="TcpSocket.cpp">
+      <Filter>NetWork</Filter>
+    </ClCompile>
+    <ClCompile Include="Sender.cpp">
+      <Filter>NetWork</Filter>
+    </ClCompile>
+    <ClCompile Include="Receiver.cpp">
+      <Filter>NetWork</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerIOCP.cpp" />
+    <ClCompile Include="Connector.cpp">
       <Filter>NetWork</Filter>
     </ClCompile>
   </ItemGroup>

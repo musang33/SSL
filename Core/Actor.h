@@ -13,8 +13,8 @@ namespace SSL
 
 		~Actor(){};
 
-		virtual void Complete( Act* act, unsigned int trasferedBytes ) = 0;
-		virtual void Error( Act* act, unsigned int trasferedBytes ) = 0;
+		virtual void Complete( Act* act, unsigned int transferedBytes ) = 0;
+		virtual void Error( Act* act, unsigned int transferedBytes ) = 0;
 
 	protected:
 		Proactor* m_proactor;

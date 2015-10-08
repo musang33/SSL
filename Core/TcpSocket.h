@@ -1,13 +1,13 @@
 #pragma once
-#include <WinSock2.h>
+#include "Act.h"
 #include "CommonData.h"
 #include "PacketStream.h"
-#include "Act.h"
 #include "MemoryPool.h"
 #include "Event.h"
 
 namespace SSL
 {
+	class Proactor;
 	class TcpSocket
 	{
 		enum EN_ACT_TYPE
@@ -17,6 +17,24 @@ namespace SSL
 			ACT_RECV,
 			ACT_CONNECT,
 			ACT_TYPE_COUNT
+		};
+
+		struct SessionId
+		{
+			union
+			{
+				struct
+				{
+					USHORT	seq;
+					USHORT	sessionId : 15;
+					USHORT	external : 1;
+				};
+				UINT32	unique;
+			};
+
+			SessionId( )
+				:unique(0)
+			{ }
 		};
 	public:
 		TcpSocket( SOCKET listenSocket = INVALID_SOCKET );
@@ -29,8 +47,26 @@ namespace SSL
 		bool Send(const EventPtr& e );
 		INT32 OnRecvCompleted( Act* act, Proactor* proactor, UINT32 len );
 		void OnSendCompleted( SendAct* act );
+		void RequestResend( SendAct* act );
 		void SetReserve( bool reserve );		
 		bool GetReserve();
+		
+		UINT32 GetUniqueId( )
+		{
+			return m_sessionId.unique;
+		}
+		UINT32 GetSessionId( )
+		{
+			return m_sessionId.sessionId;
+		}
+		void Setseq( SHORT seq )
+		{
+			m_sessionId.seq = seq;
+		}
+		void SetSessionId( SHORT sessionId )
+		{
+			m_sessionId.sessionId = sessionId;
+		}
 
 	private:
 		bool requestSend();
@@ -52,6 +88,8 @@ namespace SSL
 
 		std::mutex		g_i_mutex;
 		bool			m_reserve;
+
+		SessionId		m_sessionId;
 
 	protected:
 		static MemoryPool<PacketStream> ms_sendBufferPool;

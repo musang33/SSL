@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -121,6 +121,7 @@
     <ClInclude Include="ActionPlayerFight.h" />
     <ClInclude Include="ActionState.h" />
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Connector.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="BaseFactoryImpl.h" />
     <ClInclude Include="BehaviorTree.h" />
@@ -130,15 +131,20 @@
     <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="EventCallBack.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="FactoryNpcImpl.h" />
     <ClInclude Include="FactoryPlayerImpl.h" />
     <ClInclude Include="HFSM.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="MessageManager.h" />
+    <ClInclude Include="MessageQueue.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="PacketStream.h" />
     <ClInclude Include="Proactor.h" />
+    <ClInclude Include="Receiver.h" />
+    <ClInclude Include="Sender.h" />
+    <ClInclude Include="ServerIOCP.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StatePlayer.h" />
@@ -197,6 +203,7 @@
     <ClCompile Include="ActionNpcFight.cpp" />
     <ClCompile Include="ActionPlayerFight.cpp" />
     <ClCompile Include="ActionState.cpp" />
+    <ClCompile Include="Connector.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityFactory.cpp" />
     <ClCompile Include="EntityManager.cpp" />
@@ -208,6 +215,9 @@
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="PacketStream.cpp" />
     <ClCompile Include="Proactor.cpp" />
+    <ClCompile Include="Receiver.cpp" />
+    <ClCompile Include="Sender.cpp" />
+    <ClCompile Include="ServerIOCP.cpp" />
     <ClCompile Include="StatePlayer.cpp" />
     <ClCompile Include="StateNPC.cpp" />
     <ClCompile Include="TcpSocket.cpp" />

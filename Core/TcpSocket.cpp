@@ -1,5 +1,4 @@
 #include "TcpSocket.h"
-#include <WinSock2.h>
 #include "Proactor.h"
 
 namespace SSL
@@ -108,7 +107,7 @@ namespace SSL
 
 		m_recvBuf.Write( m_recvActBuf.GetPtr(), len );
 
-		//packettize( proactor );
+		packetize( proactor );
 		bool result = RequestRecv();
 		if ( false == RequestRecv() )
 		{
@@ -131,7 +130,7 @@ namespace SSL
 		requestSend();
 	}
 
-	void TcpSocket::RequestRecv( SendAct* sendAct )
+	void TcpSocket::RequestResend( SendAct* sendAct )
 	{
 		UINT32 length = sendAct->wsabuf.len - sendAct->bytesRequested;
 
@@ -242,17 +241,6 @@ namespace SSL
 		{
 			std::lock_guard<std::mutex> lock( g_i_mutex );
 
-			if ( m_isSending || m_accSend )
-		}
-	}
-
-	bool TcpSocket::purgeSend( SendAct* sendAct )
-	{
-		SendAct* sendAct = nullptr;
-
-		{
-			std::lock_guard<std::mutex> lock( g_i_mutex );
-
 			if ( m_isSending || m_curSendAct->buffer.Size() == 0 )
 			{
 				return true;
@@ -273,6 +261,11 @@ namespace SSL
 			m_curSendAct->buffer.Reset();
 		}
 
+		return purgeSend( sendAct );
+	}
+
+	bool TcpSocket::purgeSend( SendAct* sendAct )
+	{	
 		UINT32 length = static_cast< UINT32 >( sendAct->buffer.Size() );
 
 		sendAct->m_actor = m_act[TcpSocket::ACT_SEND]->m_actor;

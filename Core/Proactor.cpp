@@ -1,9 +1,12 @@
+#include "Act.h"
 #include "Proactor.h"
 #include <process.h>
 
 #include "CommonData.h"
-#include "Act.h"
+#include "Event.h"
+#include "EventCallBack.h"
 #include "Actor.h"
+#include "TcpSocket.h"
 
 namespace SSL
 {
@@ -102,6 +105,44 @@ namespace SSL
 
 	bool Proactor::PostEvent( TcpSocket* tcpsocket, void* ptr, const INT32 ptrSize )
 	{
+		if (nullptr == tcpsocket || nullptr == ptr)
+		{
+			return false;
+		}
+
+		EventStream* stream = static_cast<EventStream*>(ptr);
+
+		EVENTMAP::const_iterator it;
+
+		it = m_eventMap.find(EVENTMAP::key_type(stream->eventCode));
+		if (it != m_eventMap.end())
+		{
+			if( false == it->second->Proc( tcpsocket->GetUniqueId(), ptr, ptrSize ) )
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		else
+		{
+			// Unregistered event
+			return false;
+		}
+
+		return true;
+	}
+
+	bool Proactor::SetEvent(USHORT type, CallBack* e)
+	{
+		auto result = m_eventMap.insert(Proactor::EVENTMAP::value_type(type, e));
+		if (result.second == false)
+		{
+			return false;		
+		}
+
 		return true;
 	}
 }

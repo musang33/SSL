@@ -233,7 +233,7 @@ namespace SSL
 		{
 			p = static_cast< pointer >( AllocType::allocate( allockSize * m_arraySize ) );
 
-		} while ( p != nullptr && ( ( allockSize = allockSize >> 1 ) > 1 );
+		} while ( p != nullptr && ( ( allockSize = allockSize >> 1 ) > 1 ) );
 
 		if ( p == nullptr )
 		{

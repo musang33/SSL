@@ -3,6 +3,7 @@
 #include "CommonData.h"
 #include <future>
 #include "PacketStream.h"
+#include "MessageQueue.h"
 
 namespace SSL
 {
@@ -47,17 +48,16 @@ namespace SSL
 	// =============================================================
 
 #define EVENT_DECL_BEGIN( event_class, super_class, protocol )\
-	struct event_calss : public super_class { \
+	struct event_class : public super_class { \
 	private: \
-		typedef super_class super: \
+		typedef super_class super; \
 	public:\
 		static const USHORT kProtocol = protocol; \
 		event_class() { \
 			SetHead(kProtocol); \
 			Reset(); \
 		}\
-		virtual ~event_calss() {}
-
+		virtual ~event_class() {};
 #define EVENT_DECL_END };
 
 	struct EventStream
@@ -94,6 +94,20 @@ namespace SSL
 
 	struct Event : public EventHead
 	{
+		enum
+		{
+			 eEventBegin = 0
+			,eEventStart
+			,eEventStop
+			,eEventAccept
+			,eEventServerLine
+
+			,eEventConnected
+			,eEventDisconnected
+			
+			,eEventMax = 100000
+		};
+
 		UINT32 entityIndex;
 
 		Event()			
@@ -128,4 +142,9 @@ namespace SSL
 	};
 
 	typedef std::shared_ptr<Event> EventPtr;
+	typedef MessageConcurrentQueue<EventPtr> EventConcurrentQueue;
+
+	EVENT_DECL_BEGIN( EventConnected, Event, Event::eEventConnected )
+
+	EVENT_DECL_END
 }
