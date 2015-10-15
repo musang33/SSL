@@ -27,7 +27,7 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="VisualTool.h">
+    <ClInclude Include="Client.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,12 +35,12 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="VisualTool.cpp">
+    <ClCompile Include="Client.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="VisualTool.rc">
+    <ResourceCompile Include="Client.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -48,40 +48,7 @@
     <Image Include="small.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="VisualTool.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Monster.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Monster_Attack.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Monster_Freewalk.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="User_down.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="User_left.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="User_right.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="User_up.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="bitmap1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="User.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Monster_dead.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Monster_Think.bmp">
+    <Image Include="Client.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

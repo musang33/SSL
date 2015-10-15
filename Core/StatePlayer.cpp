@@ -9,12 +9,12 @@
 #include "MessageManager.h"
 namespace SSL
 {
-	void PlayerAlive::onEnter(Entity* player)
+	void PlayerAlive::onEnter(const Entity* player)
 	{
 		std::cout << "[INFO][Alive][onEnter]" << std::endl;
 	}
 
-	void PlayerAlive::OnTick(Entity* player)
+	void PlayerAlive::OnTick(const Entity* player)
 	{
 		std::cout << "[INFO][Alive][OnTick]" << std::endl;
 		ActionState* as = GetEntityAction( player );
@@ -26,12 +26,12 @@ namespace SSL
 		}
 	}
 
-	void PlayerAlive::onExit(Entity* player)
+	void PlayerAlive::onExit(const Entity* player)
 	{
 		std::cout << "[INFO][Alive][onExit]" << std::endl;
 	}
 
-	void PlayerAlive::OnMessage(Entity* player, const ST_MESSAGE_INFO& messageInfo) const
+	void PlayerAlive::OnMessage(const Entity* player, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][Alive][OnMessage]" << std::endl;
 
@@ -50,76 +50,76 @@ namespace SSL
 
 	// Dead
 
-	void PlayerDead::onEnter(Entity* player)
+	void PlayerDead::onEnter(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerDead][onEnter]" << std::endl;
 
 	}
 
-	void PlayerDead::OnTick(Entity* player)
+	void PlayerDead::OnTick(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerDead][OnTick]" << std::endl;
 
 		// player 메모리 해제
 	}
 
-	void PlayerDead::onExit(Entity* player)
+	void PlayerDead::onExit(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerDead][onExit]" << std::endl;
 	}
 
 	// Peace
 
-	void PlayerPeace::onEnter(Entity* player)
+	void PlayerPeace::onEnter(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerPeace][onEnter]" << std::endl;
 	}
 
-	void PlayerPeace::OnTick(Entity* player)
+	void PlayerPeace::OnTick(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerPeace][OnTick]" << std::endl;
 	}
 
-	void PlayerPeace::onExit(Entity* player)
+	void PlayerPeace::onExit(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerPeace][onExit]" << std::endl;
 	}
 
-	void PlayerPeace::OnMessage(Entity* player, const ST_MESSAGE_INFO& messageInfo) const
+	void PlayerPeace::OnMessage(const Entity* player, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][PlayerPeace][OnMessage]" << std::endl;
 	}
 
 	// Engage
 
-	void PlayerEngage::onEnter(Entity* player)
+	void PlayerEngage::onEnter(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerEngage][onEnter]" << std::endl;
 	}
 
-	void PlayerEngage::OnTick(Entity* player)
+	void PlayerEngage::OnTick(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerEngage][OnTick]" << std::endl;		
 	}
 
-	void PlayerEngage::onExit(Entity* player)
+	void PlayerEngage::onExit(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerEngage][onExit]" << std::endl;
 	}
 
 	// Attack
 
-	void PlayerAttack::onEnter(Entity* player)
+	void PlayerAttack::onEnter(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerAttack][onEnter]" << std::endl;
 	}
 
-	void PlayerAttack::OnTick(Entity* player)
+	void PlayerAttack::OnTick(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerAttack][OnTick]" << std::endl;		
 	}
 
-	void PlayerAttack::onExit(Entity* player)
+	void PlayerAttack::onExit(const Entity* player)
 	{
 		std::cout << "[INFO][PlayerAttack][onExit]" << std::endl;
 	}	

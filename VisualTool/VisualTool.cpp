@@ -4,6 +4,11 @@
 #include "stdafx.h"
 #include "VisualTool.h"
 
+#include < Commctrl.h >
+#include <iostream>
+
+#include <stdio.h>
+
 #include "..\Core\Entity.h"
 #include "..\Core\StateNPC.h"
 #include "..\Core\StatePlayer.h"
@@ -35,8 +40,10 @@ BOOL				InitInstance( HINSTANCE, int );
 BOOL				InitEntities();
 LRESULT CALLBACK	WndProc( HWND, UINT, WPARAM, LPARAM );
 INT_PTR CALLBACK	About( HWND, UINT, WPARAM, LPARAM );
+INT_PTR CALLBACK	SettingServer( HWND, UINT, WPARAM, LPARAM );
 void				DrawEntity();
 void				DrawCell();
+void				StartServer( HWND );
 //==============================================================
 
 const static INT TIMER_ENTITY = 10000;
@@ -290,6 +297,14 @@ void DrawEntity()
 			{
 				bitMapIndex = IDB_MONSTER_FREEWALK;
 			}
+			else if( SSL::EN_STATE_ID::STATE_NPC_THINK == aa->GetCurrentStateID( ) )
+			{
+				bitMapIndex = IDB_MONSTER_THINK;
+			}
+			else
+			{
+				bitMapIndex = IDB_MONSTER_THINK;
+			}
 
 			DrawBitmap( mostLeftX + curLocation.x * cellSize, mostLeftY + curLocation.y * cellSize, bitMapIndex );
 		}
@@ -462,6 +477,23 @@ void Move( INT keyType )
 	DrawEntity();
 }
 
+void StartServer( HWND hDlg )
+{
+	DWORD ip_address;
+	DWORD port;
+
+	LRESULT SM = SendMessage( GetDlgItem( hDlg, IDC_IPADDRESS ), IPM_GETADDRESS, 0,
+							  ( LPARAM ) ( LPDWORD ) &ip_address );
+			
+	char t_IP[ 16 ] = { 0, };
+	sprintf( t_IP, "%d.%d.%d.%d",
+			  FIRST_IPADDRESS( ip_address ), SECOND_IPADDRESS( ip_address ),
+			  THIRD_IPADDRESS( ip_address ), FOURTH_IPADDRESS( ip_address ) );
+		
+	int	t_Port = GetDlgItemInt( hDlg, IDC_PORT, NULL, FALSE );
+
+}
+
 //
 //  ÇÔ¼ö: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -507,6 +539,9 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 				case IDM_EXIT:
 					DestroyWindow( hWnd );
 					break;
+				case IDM_SERVER_SETTING:
+					DialogBox( hInst, MAKEINTRESOURCE( IDD_SERVER_SETTING ), hWnd, SettingServer );
+					break;
 				default:
 					return DefWindowProc( hWnd, message, wParam, lParam );
 			}
@@ -543,6 +578,31 @@ INT_PTR CALLBACK About( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam )
 				return ( INT_PTR ) TRUE;
 			}
 			break;
+	}
+	return ( INT_PTR ) FALSE;
+}
+
+INT_PTR CALLBACK SettingServer( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam )
+{
+	UNREFERENCED_PARAMETER( lParam );
+	switch( message )
+	{
+		case WM_INITDIALOG:
+			return ( INT_PTR ) TRUE;
+
+		case WM_COMMAND:
+		{
+			switch( LOWORD( wParam ) )
+			{
+				case IDC_START_SERVER:
+					StartServer( hDlg );
+					break;
+				case IDC_END_SERVER:
+					EndDialog( hDlg, LOWORD( wParam ) );
+					return ( INT_PTR ) TRUE;
+					break;
+			}
+		}			
 	}
 	return ( INT_PTR ) FALSE;
 }

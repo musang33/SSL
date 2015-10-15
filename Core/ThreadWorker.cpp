@@ -52,9 +52,11 @@ namespace SSL
 	void ThreadWorker::OnUpdateEntity( EVENTPtr& ptr )
 	{
 		const SSL::Entity* entityPtr = SSL::EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
-		
-		ActionAI* aa = GetEntityAction( entityPtr );
-		aa->Update();		
+				
+		if( entityPtr->Type() == SSL::EN_ENTITY_TYPE::ENTITY_NPC_TYPE )
+		{
+			ActionAI* aa = GetEntityAction( entityPtr );
+			aa->Update( );
+		}		
 	}
-
 }

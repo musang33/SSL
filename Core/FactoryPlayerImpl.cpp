@@ -21,8 +21,7 @@ namespace SSL
 	Entity* FactoryPlayerImpl::Create( UINT32 entityId )
 	{
 		Entity* entity = new Entity( entityId, EN_ACTION_TYPE::MAX_ACTION_COUNT, GetFactoryType() );
-
-		entity->AddAction( new ActionAI( entity ) );
+		
 		entity->AddAction( new ActionState( entity ) );
 		entity->AddAction( new ActionBT( entity ) );
 		entity->AddAction( new ActionMove( entity ) );

@@ -38,7 +38,7 @@ namespace SSL
 		{
 			m_hfsm = new HFSM( GetOwner() );
 			initHFSMState();
-			m_hfsm->SetCurrentState( state );
+			m_hfsm->SetCurrentState( NPCPatrol::GetInstance( ) );
 		}
 		else if ( EN_AI_TYPE::AI_TYPE_BT == AIType )
 		{
@@ -141,16 +141,16 @@ namespace SSL
 
 	void ActionAI::ScriptEnter( UINT32 stateID )
 	{
-		LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Enter" );
+		//LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Enter" );
 	}
 
 	void ActionAI::ScriptOnTick( UINT32 stateID )
 	{
-		LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Decide" );
+		//LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Decide" );
 	}
 
 	void ActionAI::ScriptExit( UINT32 stateID )
 	{
-		LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Exit" );
+		//LuaManager::GetInstance()->CallLuaFunction( stateID, m_npcAIIndex.c_str(), m_npcInstanceIndex.c_str(), "Exit" );
 	}
 }

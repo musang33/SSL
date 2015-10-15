@@ -4,19 +4,17 @@
 
 namespace SSL
 {
-	class Entity;
-
 	class PlayerRoot final : public State, public Singleton < PlayerRoot >
 	{
 	public:
 		PlayerRoot() :State(ID){};
 		~PlayerRoot(){};
 
-		virtual void OnEnter( Entity* player ){ State::OnEnter( player ); };
+		virtual void OnEnter( const Entity* player ){ State::OnEnter( player ); };
 
-		virtual void OnTick( Entity* player ){ State::OnTick( player ); };
+		virtual void OnTick( const Entity* player ){ State::OnTick( player ); };
 
-		virtual void OnExit( Entity* player ){ State::OnExit( player ); };
+		virtual void OnExit( const Entity* player ){ State::OnExit( player ); };
 
 	private:
 		static const UINT32 ID = STATE_NPC_ROOT;
@@ -28,13 +26,13 @@ namespace SSL
 		PlayerAlive() :State(ID){};
 		~PlayerAlive(){};
 
-		virtual void onEnter(Entity* player);
+		virtual void onEnter(const Entity* player);
 
-		virtual void OnTick(Entity* player);
+		virtual void OnTick(const Entity* player);
 
-		virtual void onExit(Entity* player);
+		virtual void onExit(const Entity* player);
 
-		virtual void OnMessage(Entity* player, const ST_MESSAGE_INFO& messageInfo) const;
+		virtual void OnMessage(const Entity* player, const ST_MESSAGE_INFO& messageInfo) const;
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_ALIVE;
@@ -46,11 +44,11 @@ namespace SSL
 		PlayerDead() :State(ID){};
 		~PlayerDead(){};
 
-		virtual void onEnter(Entity* player);
+		virtual void onEnter(const Entity* player);
 
-		virtual void OnTick(Entity* player);
+		virtual void OnTick(const Entity* player);
 
-		virtual void onExit(Entity* player);
+		virtual void onExit(const Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_DEAD;
@@ -62,13 +60,13 @@ namespace SSL
 		PlayerPeace() :State(ID){};
 		~PlayerPeace(){};
 
-		virtual void onEnter(Entity* player);
+		virtual void onEnter(const Entity* player);
 
-		virtual void OnTick(Entity* player);
+		virtual void OnTick(const Entity* player);
 
-		virtual void onExit(Entity* player);
+		virtual void onExit(const Entity* player);
 
-		virtual void OnMessage(Entity* player, const ST_MESSAGE_INFO& messageInfo) const;
+		virtual void OnMessage(const Entity* player, const ST_MESSAGE_INFO& messageInfo) const;
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_PEACE;
@@ -80,11 +78,11 @@ namespace SSL
 		PlayerEngage() :State(ID){};
 		~PlayerEngage(){};
 
-		virtual void onEnter(Entity* player);
+		virtual void onEnter(const Entity* player);
 
-		virtual void OnTick(Entity* player);
+		virtual void OnTick(const Entity* player);
 
-		virtual void onExit(Entity* player);
+		virtual void onExit(const Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_ENGAGE;
@@ -96,11 +94,11 @@ namespace SSL
 		PlayerAttack() :State(ID){};
 		~PlayerAttack(){};
 
-		virtual void onEnter(Entity* player);
+		virtual void onEnter(const Entity* player);
 
-		virtual void OnTick(Entity* player);
+		virtual void OnTick(const Entity* player);
 
-		virtual void onExit(Entity* player);
+		virtual void onExit(const Entity* player);
 
 	private:
 		static const UINT32 ID = STATE_PLAYER_ATTACK;

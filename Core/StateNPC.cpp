@@ -11,7 +11,7 @@
 
 namespace SSL
 {	
-	void NPCBaseState::OnEnter(Entity* npc)
+	void NPCBaseState::OnEnter(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCBaseState][onEnter]" << std::endl;
 		ActionAI* aa = GetEntityAction(npc);
@@ -21,7 +21,7 @@ namespace SSL
 		State::OnEnter(npc);
 	}
 
-	void NPCBaseState::OnTick(Entity* npc)
+	void NPCBaseState::OnTick(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCBaseState][onTick]" << std::endl;
 		ActionAI* aa = GetEntityAction( npc );
@@ -30,7 +30,7 @@ namespace SSL
 		State::OnTick(npc);
 	}
 
-	void NPCBaseState::OnExit(Entity* npc)
+	void NPCBaseState::OnExit(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCBaseState][onExit]" << std::endl;
 		ActionAI* aa = GetEntityAction( npc );
@@ -39,7 +39,7 @@ namespace SSL
 		State::OnExit(npc);
 	}
 
-	void NPCBaseState::OnMessage( Entity* npc, const ST_MESSAGE_INFO& messageInfo )
+	void NPCBaseState::OnMessage( const Entity* npc, const ST_MESSAGE_INFO& messageInfo )
 	{
 		std::cout << "[INFO][NPCBaseState][OnMessage]" << std::endl;
 		ActionAI* aa = GetEntityAction( npc );
@@ -48,12 +48,12 @@ namespace SSL
 		State::OnMessage( npc, messageInfo );
 	}
 
-	void NPCAlive::onEnter(Entity* npc)
+	void NPCAlive::onEnter(const Entity* npc)
 	{
 		std::cout << "[INFO][Alive][onEnter]" << std::endl;		
 	}
 
-	void NPCAlive::onTick(Entity* npc)
+	void NPCAlive::onTick(const Entity* npc)
 	{
 		std::cout << "[INFO][Alive][onTick]" << std::endl;
 		ActionState* as = GetEntityAction( npc );
@@ -65,12 +65,12 @@ namespace SSL
 		}		
 	}
 
-	void NPCAlive::onExit(Entity* npc)
+	void NPCAlive::onExit(const Entity* npc)
 	{
 		std::cout << "[INFO][Alive][onExit]" << std::endl;
 	}
 
-	void NPCAlive::onMessage(Entity* npc, const ST_MESSAGE_INFO& messageInfo) const
+	void NPCAlive::onMessage(const Entity* npc, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][Alive][onMessage]" << std::endl;
 
@@ -89,42 +89,42 @@ namespace SSL
 
 	// Dead
 	
-	void NPCDead::onEnter(Entity* npc)
+	void NPCDead::onEnter(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCDead][onEnter]" << std::endl;
 		
 	}
 
-	void NPCDead::onTick(Entity* npc)
+	void NPCDead::onTick(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCDead][onTick]" << std::endl;
 		
 		// npc 메모리 해제
 	}
 
-	void NPCDead::onExit(Entity* npc)
+	void NPCDead::onExit(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCDead][onExit]" << std::endl;
 	}
 
 	// Peace
 
-	void NPCPeace::onEnter(Entity* npc)
+	void NPCPeace::onEnter(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCPeace][onEnter]" << std::endl;		
 	}
 
-	void NPCPeace::onTick(Entity* npc)
+	void NPCPeace::onTick(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCPeace][onTick]" << std::endl;		
 	}
 
-	void NPCPeace::onExit(Entity* npc)
+	void NPCPeace::onExit(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCPeace][onExit]" << std::endl;
 	}
 
-	void NPCPeace::onMessage(Entity* npc, const ST_MESSAGE_INFO& messageInfo) const
+	void NPCPeace::onMessage(const Entity* npc, const ST_MESSAGE_INFO& messageInfo) const
 	{
 		std::cout << "[INFO][NPCPeace][onMessage]" << std::endl;
 
@@ -142,35 +142,35 @@ namespace SSL
 
 	// Engage
 
-	void NPCEngage::onEnter(Entity* npc)
+	void NPCEngage::onEnter(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCEngage][onEnter]" << std::endl;		
 	}
 
-	void NPCEngage::onTick(Entity* npc)
+	void NPCEngage::onTick(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCEngage][onTick]" << std::endl;
 		ActionNpcFight* anf = GetEntityAction( npc );
 		if ( false == anf->HasEnemyInAggroList() )
 		{
 			ActionAI* aa = GetEntityAction( npc );
-			aa->GetHFSM()->ChangeState( NPCGuard::GetInstance() );
+			aa->GetHFSM()->ChangeState( NPCPatrol::GetInstance() );
 		}	
 	}
 
-	void NPCEngage::onExit(Entity* npc)
+	void NPCEngage::onExit(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCEngage][onExit]" << std::endl;
 	}	
 
 	// Patrol
 
-	void NPCPatrol::onEnter(Entity* npc)
+	void NPCPatrol::onEnter(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCPatrol][onEnter]" << std::endl;
 	}
 
-	void NPCPatrol::onTick(Entity* npc)
+	void NPCPatrol::onTick(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCPatrol][onTick]" << std::endl;	
 		ActionNpcFight* anf = GetEntityAction( npc );
@@ -185,19 +185,19 @@ namespace SSL
 		am->RandomMove();
 	}
 
-	void NPCPatrol::onExit(Entity* npc)
+	void NPCPatrol::onExit(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCPatrol][onExit]" << std::endl;
 	}
 
 	// Guard
 
-	void NPCGuard::onEnter(Entity* npc)
+	void NPCGuard::onEnter(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCGuard][onEnter]" << std::endl;
 	}
 
-	void NPCGuard::onTick(Entity* npc)
+	void NPCGuard::onTick(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCGuard][onTick]" << std::endl;		
 		ActionNpcFight* anf = GetEntityAction( npc );
@@ -209,19 +209,19 @@ namespace SSL
 		}
 	}
 
-	void NPCGuard::onExit(Entity* npc)
+	void NPCGuard::onExit(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCGuard][onExit]" << std::endl;
 	}
 
 	// Think
 
-	void NPCThink::onEnter(Entity* npc)
+	void NPCThink::onEnter(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCThink][onEnter]" << std::endl;
 	}
 
-	void NPCThink::onTick(Entity* npc)
+	void NPCThink::onTick(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCThink][onTick]" << std::endl;
 		ActionAI* aa = GetEntityAction( npc );
@@ -239,21 +239,24 @@ namespace SSL
 			aa->GetHFSM()->ChangeState( NPCAttack::GetInstance() );
 			return;
 		}
+
+		aa->GetHFSM( )->ChangeState( NPCPatrol::GetInstance( ) );
+		return;
 	}
 
-	void NPCThink::onExit(Entity* npc)
+	void NPCThink::onExit(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCThink][onExit]" << std::endl;
 	}
 
 	// Attack
 
-	void NPCAttack::onEnter(Entity* npc)
+	void NPCAttack::onEnter(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCAttack][onEnter]" << std::endl;
 	}
 
-	void NPCAttack::onTick(Entity* npc)
+	void NPCAttack::onTick(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCAttack][onTick]" << std::endl;
 		
@@ -271,19 +274,19 @@ namespace SSL
 		return;
 	}
 
-	void NPCAttack::onExit(Entity* npc)
+	void NPCAttack::onExit(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCAttack][onExit]" << std::endl;
 	}
 
 	// Flee
 
-	void NPCFlee::onEnter(Entity* npc)
+	void NPCFlee::onEnter(const Entity* npc)
 	{		
 		std::cout << "[INFO][NPCFlee][onEnter]" << std::endl;
 	}
 
-	void NPCFlee::onTick(Entity* npc)
+	void NPCFlee::onTick(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCFlee][onTick]" << std::endl;
 		ActionState* as = GetEntityAction( npc );
@@ -295,7 +298,7 @@ namespace SSL
 		}
 	}
 
-	void NPCFlee::onExit(Entity* npc)
+	void NPCFlee::onExit(const Entity* npc)
 	{
 		std::cout << "[INFO][NPCFlee][onExit]" << std::endl;
 	}

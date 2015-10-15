@@ -4,6 +4,9 @@
 #include <chrono>
 #include <functional>
 
+#include "ActionMove.h"
+#include "EntityManager.h"
+
 namespace SSL
 {
 
@@ -19,16 +22,23 @@ namespace SSL
 
 	bool ActionNpcFight::HasFoundEnemy()
 	{
-		auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-		auto dice_rand = std::bind( std::uniform_int_distribution<int>( 1, 100 ),
-									std::mt19937_64( seed ) );
+		ActionMove* am = GetEntityAction( GetOwner( ) );
 
-		if ( dice_rand() < 30 )
+		const EntityManager::ENTITY_MAP& entityMap = EntityManager::GetInstance( )->GetEntityMap( );
+		for( auto &it : entityMap )
 		{
-			return false;
+			if( it.first != GetOwner( )->ID( ) && it.second->Type( ) == EN_ENTITY_TYPE::ENTITY_PLAYER_TYPE )
+			{
+				ActionMove* amTarget = GetEntityAction( it.second );
+				SSL::ST_COORDINATE playerLocation = amTarget->GetCurLocation( );
+				if( am->IsNear( playerLocation.x, playerLocation.y ) )
+				{
+					return true;
+				}
+			}
 		}
 
-		return true;
+		return false;
 	}
 
 	bool ActionNpcFight::IsTargetInSkillDistance()
