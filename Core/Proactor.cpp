@@ -135,6 +135,19 @@ namespace SSL
 		return true;
 	}
 
+	bool Proactor::PostEvent( EventPtr& ep )
+	{
+		EVENTMAP::const_iterator it;
+		it = m_eventMap.find( EVENTMAP::key_type( ep->GetEvent( ) ) );
+		if( it != m_eventMap.end( ) )
+		{
+			it->second->Notify( ep );
+			return true;
+		}
+
+		return false;
+	}
+
 	bool Proactor::SetEvent(USHORT type, CallBack* e)
 	{
 		auto result = m_eventMap.insert(Proactor::EVENTMAP::value_type(type, e));

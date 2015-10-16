@@ -1,11 +1,15 @@
 #include "ServerIOCP.h"
 
-
-ServerIOCP::ServerIOCP()
+namespace SSL
 {
-}
+
+	ServerIOCP::ServerIOCP( )
+	{
+	}
 
 
-ServerIOCP::~ServerIOCP()
-{
+	ServerIOCP::~ServerIOCP( )
+	{
+	}
+
 }

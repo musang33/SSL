@@ -8,8 +8,10 @@ namespace SSL
 	const static UINT32 READ_SIZE_ONCE = 1024 * 32;
 
 	TcpSocket::TcpSocket( SOCKET listenSocket )
-		: m_socket( listenSocket )
+		: m_listenSocket( listenSocket)
+		, m_socket( listenSocket )
 		, m_isSending( false )
+		, m_type( 0 )
 	{
 	}
 
@@ -128,6 +130,43 @@ namespace SSL
 		}
 
 		requestSend();
+	}
+
+	void TcpSocket::OnAccepted( )
+	{
+		int localAddrLen, remoteAddrLen;
+		struct sockaddr_in* localAddr;
+		struct sockaddr_in* remoteAddr;
+
+		GetAcceptExSockaddrs( m_recvBuf.GetPtr( ), 0, sizeof( SOCKADDR_IN ) + 16, sizeof( SOCKADDR_IN ) + 16,
+							  ( sockaddr** ) &localAddr,
+							  &localAddrLen,
+							  ( sockaddr** ) &remoteAddr,
+							  &remoteAddrLen );			
+
+	}
+
+	void TcpSocket::RegisterAccept( )
+	{
+		DWORD byteTransferred = 0;
+		BOOL result = AcceptEx(
+			m_listenSocket,
+			m_socket,
+			m_recvBuf.GetPtr( ),
+			0,
+			sizeof( SOCKADDR_IN ) + 16,
+			sizeof( SOCKADDR_IN ) + 16,
+			&byteTransferred,
+			reinterpret_cast< LPOVERLAPPED >( GetAct( TcpSocket::ACT_ACCEPT ) )
+			);
+
+		int error = WSAGetLastError( );
+		if( result == FALSE && error != ERROR_IO_PENDING )
+		{
+			return;
+		}
+
+		SetState( SOCKET_ACCEPTWAIT );
 	}
 
 	void TcpSocket::RequestResend( SendAct* sendAct )

@@ -1,9 +1,12 @@
 #pragma once
 
 #include <WinSock2.h>
+#include <MSWSock.h>
 #include <Windows.h>
 
 #include <unordered_map>
+
+#include "Event.h"
 
 namespace SSL
 {
@@ -24,6 +27,7 @@ namespace SSL
 
 		void ProcEvent();
 		bool PostEvent( TcpSocket* tcpsocket, void* ptr, const INT32 ptrSize );
+		bool PostEvent( EventPtr& ep );
 
 		bool SetEvent(USHORT type, CallBack* e);
 		

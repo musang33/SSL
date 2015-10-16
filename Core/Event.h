@@ -144,7 +144,92 @@ namespace SSL
 	typedef std::shared_ptr<Event> EventPtr;
 	typedef MessageConcurrentQueue<EventPtr> EventConcurrentQueue;
 
-	EVENT_DECL_BEGIN( EventConnected, Event, Event::eEventConnected )
+EVENT_DECL_BEGIN( EventConnected, Event, Event::eEventConnected )
+	UINT32	socketIndex;
+	UINT32	result;	
+	
+	void Reset( )
+	{
+		result = 0;
+	}
 
-	EVENT_DECL_END
+	virtual bool Pack( PacketStream& bs )
+	{
+		super::Pack( bs );
+		bs.Write( socketIndex );
+		bs.Write( result );		
+
+		return bs.IsValid( );
+	}
+
+	virtual bool Unpack( PacketStream& bs )
+	{
+		super::Unpack( bs );
+		bs.Read( socketIndex );		
+		bs.Read( result );
+
+		return bs.IsValid( );
+	}
+
+EVENT_DECL_END
+
+EVENT_DECL_BEGIN( EventDisconnected, Event, Event::eEventDisconnected )
+	UINT32	socketIndex;
+	UINT32	result;	
+	
+	void Reset( )
+	{
+		result = 0;
+	}
+
+	virtual bool Pack( PacketStream& bs )
+	{
+		super::Pack( bs );
+		bs.Write( socketIndex );
+		bs.Write( result );		
+
+		return bs.IsValid( );
+	}
+
+	virtual bool Unpack( PacketStream& bs )
+	{
+		super::Unpack( bs );
+		bs.Read( socketIndex );		
+		bs.Read( result );
+
+		return bs.IsValid( );
+	}
+
+EVENT_DECL_END
+
+EVENT_DECL_BEGIN( EventAccept, Event, Event::eEventAccept )
+	UINT32	socketIndex;
+	UINT32	result;	
+	UINT32	type;
+
+	void Reset( )
+	{
+		result = 0;
+	}
+
+	virtual bool Pack( PacketStream& bs )
+	{
+		super::Pack( bs );
+		bs.Write( socketIndex );
+		bs.Write( result );		
+		bs.Write( type );
+
+		return bs.IsValid( );
+	}
+
+	virtual bool Unpack( PacketStream& bs )
+	{
+		super::Unpack( bs );
+		bs.Read( socketIndex );		
+		bs.Read( result );
+		bs.Read( type );
+
+		return bs.IsValid( );
+	}
+EVENT_DECL_END
 }

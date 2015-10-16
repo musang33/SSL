@@ -31,6 +31,10 @@ namespace SSL
 		BYTE* GetPtr() { return m_data; }
 		UINT32 Write( const CHAR* data, UINT32 size ) { return Write( (BYTE*)( data ), size ); };
 		void Pop( UINT32 size ) { m_pos -= size; }
+		bool IsValid( )
+		{
+			return m_isValid;
+		}
 	public:
 		template < class T >
 		UINT32 Write( const T& v )
