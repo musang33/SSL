@@ -1,6 +1,6 @@
-#pragma once
+#include "stdafx.h"
 
-#include "EventQueue.h"
+#include <Event/EventQueue.h>
 
 namespace SSL
 {

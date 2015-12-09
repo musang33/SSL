@@ -1,13 +1,15 @@
-#include "ServerIOCP.h"
+#include "stdafx.h"
 
-#include "Proactor.h"
-#include "Acceptor.h"
-#include "Connector.h"
-#include "Sender.h"
-#include "Receiver.h"
-#include "Proactor.h"
-#include "TcpListenSocket.h"
-#include "TcpSocket.h"
+#include <Network/NetworkServer/ServerIOCP.h>
+
+#include <Network/NetworkCommon/Proactor.h>
+#include <Network/NetworkServer/Acceptor.h>
+#include <Network/NetworkServer/Connector.h>
+#include <Network/NetworkServer/Sender.h>
+#include <Network/NetworkServer/Receiver.h>
+#include <Network/NetworkCommon/Proactor.h>
+#include <Network/NetworkCommon/TcpListenSocket.h>
+#include <Network/NetworkCommon/TcpSocket.h>
 
 
 
@@ -170,7 +172,7 @@ namespace SSL
 
 		m_proactor->RegisterSocket( tcp->GetSocket( ) );
 
-		bool result = lpfnConnectEx( tcp->GetSocket( ),
+		BOOL result = lpfnConnectEx( tcp->GetSocket( ),
 									 ( struct sockaddr * )&serv_addr,
 									 sizeof( struct sockaddr ),
 									 nullptr,
@@ -178,7 +180,7 @@ namespace SSL
 									 nullptr,
 									 ( LPOVERLAPPED ) tcp->GetAct( TcpSocket::ACT_ACCEPT ) );
 
-		if( false == result && ( WSAGetLastError( ) != WSA_IO_PENDING ) )
+		if( FALSE == result && ( WSAGetLastError( ) != WSA_IO_PENDING ) )
 		{
 			tcp->SetReserve( true );
 			return nullptr;

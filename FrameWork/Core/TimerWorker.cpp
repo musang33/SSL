@@ -1,6 +1,6 @@
+#include "stdafx.h"
 
-
-#include "TimerWorker.h"
+#include <Core/TimerWorker.h>
 #include <atltime.h>
 
 namespace SSL

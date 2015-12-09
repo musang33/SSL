@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 
-#include "Event.h"
+#include <Event/Event.h>
 
 namespace SSL
 {

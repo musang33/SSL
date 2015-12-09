@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Singleton.h"
-#include "CommonData.h"
+#include <Core/Singleton.h>
+#include <Common/CommonData.h>
 
 namespace SSL
 {	

@@ -1,6 +1,6 @@
-#include "Client.h"
+#include "stdafx.h"
 
-
+#include <Network/NetworkClient/Client.h>
 
 Client::Client( )
 {

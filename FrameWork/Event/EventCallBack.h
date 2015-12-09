@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Event.h"
-#include "MessageQueue.h"
+#include <Event/Event.h>
+#include <Core/MessageQueue.h>
 
 namespace SSL
 {

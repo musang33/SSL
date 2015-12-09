@@ -1,7 +1,9 @@
-#include "Receiver.h"
+#include "stdafx.h"
 
-#include "TcpSocket.h"
-#include "Act.h"
+#include <Network/NetworkServer/Receiver.h>
+
+#include <Network/NetworkCommon/TcpSocket.h>
+#include <Network/NetworkCommon/Act.h>
 
 namespace SSL
 {

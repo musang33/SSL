@@ -4,12 +4,12 @@
 #include <atomic>
 #include <functional>
 #include <concurrent_queue.h>
-#include "Singleton.h"
-#include "ThreadWorker.h"
-#include "EventQueue.h"
+#include <Core/Singleton.h>
+#include <Thread/ThreadWorker.h>
+#include <Event/EventQueue.h>
 #include <map>
 #include "EntityManager.h"
-#include "CommonData.h"
+#include <Common/CommonData.h>
 
 namespace SSL
 {	

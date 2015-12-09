@@ -3,8 +3,8 @@
 #include <functional>
 #include <future>
 #include <concurrent_queue.h>
-#include "Entity.h"
-#include "Event.h"
+#include <Entity/Entity.h>
+#include <Event/Event.h>
 
 namespace SSL
 {

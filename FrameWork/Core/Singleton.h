@@ -3,7 +3,7 @@
 #include <memory>
 #include <mutex>
 
-#include "NonCopyable.h"
+#include <Core/NonCopyable.h>
 
 namespace SSL
 {	

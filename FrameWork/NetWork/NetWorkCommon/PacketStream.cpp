@@ -1,4 +1,6 @@
-#include "PacketStream.h"
+#include "stdafx.h"
+
+#include <Network/NetWorkCommon/PacketStream.h>
 
 
 namespace SSL

@@ -10,8 +10,8 @@
 #include <future>
 #include <functional>
 #include <stdexcept>
-#include "Singleton.h"
-#include "ThreadEventManager.h"
+#include <Core/Singleton.h>
+#include <Thread/ThreadEventManager.h>
 
 namespace SSL
 {	

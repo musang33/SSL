@@ -1,11 +1,13 @@
 
-#include "Act.h"
-#include "Actor.h"
-#include "Proactor.h"
-#include <process.h>
-#include "EventCallback.h"
+#include "stdafx.h"
 
-#include "TcpSocket.h"
+#include <Network/NetworkCommon/Act.h>
+#include <Network/NetworkCommon/Actor.h>
+#include <Network/NetworkCommon/Proactor.h>
+#include <process.h>
+#include <Event/EventCallback.h>
+
+#include <Network/NetworkCommon/TcpSocket.h>
 
 
 namespace SSL

@@ -1,7 +1,9 @@
 
-#include "Proactor.h"
-#include "Act.h"
-#include "TcpSocket.h"
+#include "stdafx.h"
+
+#include <Network/NetworkCommon/Proactor.h>
+#include <Network/NetworkCommon/Act.h>
+#include <Network/NetworkCommon/TcpSocket.h>
 
 namespace SSL
 {

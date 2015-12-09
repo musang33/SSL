@@ -1,6 +1,8 @@
-#include "EntityFactory.h"
-#include "BaseFactoryImpl.h"
-#include "Entity.h"
+#include "stdafx.h"
+
+#include <Entity/EntityFactory.h>
+#include <Core/BaseFactoryImpl.h>
+#include <Entity/Entity.h>
 
 namespace SSL
 {

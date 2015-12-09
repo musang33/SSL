@@ -2,9 +2,9 @@
 
 #include <map>
 
-#include "CommonData.h"
-#include "Singleton.h"
-#include "Entity.h"
+#include <Common/CommonData.h>
+#include <Core/Singleton.h>
+#include <Entity/Entity.h>
 
 namespace SSL
 {

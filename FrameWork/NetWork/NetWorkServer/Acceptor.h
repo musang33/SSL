@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Actor.h"
+#include <Network/NetworkCommon/Actor.h>
 
 namespace SSL
 {

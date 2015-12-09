@@ -1,5 +1,7 @@
-#include "Entity.h"
-#include "Action.h"
+#include "stdafx.h"
+
+#include <Entity/Entity.h>
+#include <Core/Action.h>
 
 namespace SSL
 {

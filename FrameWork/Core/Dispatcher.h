@@ -3,8 +3,8 @@
 #include <map>
 #include <functional>
 
-#include "Event.h"
-#include "CommonData.h"
+#include <Event/Event.h>
+#include <Common/CommonData.h>
 
 namespace SSL
 {

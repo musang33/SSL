@@ -1,7 +1,7 @@
-#include "ThreadWorker.h"
-#include "Entity.h"
+#include <Thread/ThreadWorker.h>
+#include <Entity/Entity.h>
 #include "EntityManager.h"
-#include "EventQueue.h"
+#include <Event/EventQueue.h>
 
 #include "ActionAI.h"
 #include "ActionState.h"

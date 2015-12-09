@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CommonData.h"
+#include <Common/CommonData.h>
 #include <memory>
 #include <atomic>
 

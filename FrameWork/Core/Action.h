@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CommonData.h"
-#include "Entity.h"
+#include <Common/CommonData.h>
+#include <Entity/Entity.h>
 
 namespace SSL
 {

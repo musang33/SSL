@@ -1,7 +1,6 @@
 #pragma once
 
-#include "PacketStream.h"
-
+#include <Network/NetWorkCommon/PacketStream.h>
 
 namespace SSL
 {

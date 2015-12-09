@@ -1,8 +1,8 @@
 #pragma once
 #include <map>
 
-#include "CommonData.h"
-#include "Singleton.h"
+#include <Common/CommonData.h>
+#include <Core/Singleton.h>
 #include <atomic>
 
 namespace SSL

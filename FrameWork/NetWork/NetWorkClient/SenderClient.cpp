@@ -1,7 +1,9 @@
-#include <NetWorkClient/SenderClient.h>
+#include "stdafx.h"
 
-#include <TcpSocket.h>
-#include <Act.h>
+#include <Network/NetWorkClient/SenderClient.h>
+
+#include <Network/NetworkCommon/TcpSocket.h>
+#include <Network/NetworkCommon/Act.h>
 
 namespace SSL
 {

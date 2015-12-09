@@ -1,4 +1,6 @@
-#include "Thread.h"
+#include "stdafx.h"
+
+#include <Thread/Thread.h>
 #include <process.h>
 
 namespace SSL

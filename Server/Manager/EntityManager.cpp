@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 
-#include "Entity.h"
+#include <Entity/Entity.h>
 #include "ActionAI.h"
 
 namespace SSL

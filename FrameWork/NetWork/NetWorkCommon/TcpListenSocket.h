@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Proactor.h"
-#include "Act.h"
+#include <Network/NetworkCommon/Proactor.h>
+#include <Network/NetworkCommon/Act.h>
 
 namespace SSL
 {

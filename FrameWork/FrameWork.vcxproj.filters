@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{99ebbe61-c678-43ff-87b6-e3672ceeccbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{b0793d3d-4067-40f0-94f1-17345d882841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{3bf506a6-b035-4058-aedf-3c79e35f041b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{8ff0f552-ac21-4163-af89-3eb3b08573ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{9b2295b0-4538-483b-b317-9b06f01f9f1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{f4b5006e-394a-4a0f-92e7-a88add41415c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{84e9347d-990a-4b97-85f0-68e48a1e2b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\NetworkServer">
+      <UniqueIdentifier>{4f741593-37d9-453c-8dcb-8da3206c9b89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\NetworkClient">
+      <UniqueIdentifier>{6a55175e-d7a8-4dab-bc72-86dcaee32bcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\NetworkCommon">
+      <UniqueIdentifier>{f90a3a59-b9ab-45e7-af0d-d5ee86ff61c4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\FSM.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\HFSM.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\State.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Action.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\BaseFactoryImpl.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Dispatcher.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MemoryPool.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\NonCopyable.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Singleton.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\TimerWorker.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\CommonData.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Entity.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Event\Event.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Event\EventCallBack.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Event\EventQueue.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkServer\Acceptor.h">
+      <Filter>Network\NetworkServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkServer\Connector.h">
+      <Filter>Network\NetworkServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkServer\Receiver.h">
+      <Filter>Network\NetworkServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkServer\Sender.h">
+      <Filter>Network\NetworkServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkServer\ServerIOCP.h">
+      <Filter>Network\NetworkServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkClient\Client.h">
+      <Filter>Network\NetworkClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkClient\ClientIOCP.h">
+      <Filter>Network\NetworkClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkClient\ConnectorClient.h">
+      <Filter>Network\NetworkClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkClient\ReceiverClient.h">
+      <Filter>Network\NetworkClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkClient\SenderClient.h">
+      <Filter>Network\NetworkClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkCommon\Act.h">
+      <Filter>Network\NetworkCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkCommon\Actor.h">
+      <Filter>Network\NetworkCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkCommon\PacketStream.h">
+      <Filter>Network\NetworkCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkCommon\Proactor.h">
+      <Filter>Network\NetworkCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkCommon\TcpListenSocket.h">
+      <Filter>Network\NetworkCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="NetWork\NetWorkCommon\TcpSocket.h">
+      <Filter>Network\NetworkCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\Thread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\EntityFactory.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MessageQueue.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\TimerWorker.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Entity.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Event\EventQueue.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkServer\Acceptor.cpp">
+      <Filter>Network\NetworkServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkServer\Connector.cpp">
+      <Filter>Network\NetworkServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkServer\Receiver.cpp">
+      <Filter>Network\NetworkServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkServer\Sender.cpp">
+      <Filter>Network\NetworkServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkServer\ServerIOCP.cpp">
+      <Filter>Network\NetworkServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkClient\Client.cpp">
+      <Filter>Network\NetworkClient</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkClient\ClientIOCP.cpp">
+      <Filter>Network\NetworkClient</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkClient\ConnectorClient.cpp">
+      <Filter>Network\NetworkClient</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkClient\ReceiverClient.cpp">
+      <Filter>Network\NetworkClient</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkClient\SenderClient.cpp">
+      <Filter>Network\NetworkClient</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkCommon\PacketStream.cpp">
+      <Filter>Network\NetworkCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkCommon\Proactor.cpp">
+      <Filter>Network\NetworkCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="NetWork\NetWorkCommon\TcpSocket.cpp">
+      <Filter>Network\NetworkCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\Thread.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\EntityFactory.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

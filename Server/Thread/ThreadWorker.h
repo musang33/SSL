@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include "EventQueue.h"
+#include <Event/EventQueue.h>
 #include "Dispatcher.h"
-#include "Thread.h"
+#include <Thread/Thread.h>
 
 namespace SSL
 {

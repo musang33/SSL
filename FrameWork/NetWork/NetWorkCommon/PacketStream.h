@@ -1,7 +1,6 @@
 #pragma once
 
-#include <WinSock2.h>
-#include "CommonData.h"
+#include <Common/CommonData.h>
 
 namespace SSL
 {

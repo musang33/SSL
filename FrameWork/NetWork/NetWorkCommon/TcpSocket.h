@@ -1,12 +1,11 @@
 #pragma once
 
-#include <WinSock2.h>
 #include <MSWSock.h>
-#include "MemoryPool.h"
-#include "Event.h"
+#include <Core/MemoryPool.h>
+#include <Event/Event.h>
 #include <atomic>
-#include "CommonData.h"
-#include "Act.h"
+#include <Common/CommonData.h>
+#include <Network/NetworkCommon/Act.h>
 
 namespace SSL
 {	
