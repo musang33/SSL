@@ -4,7 +4,6 @@
 #include <Core/MemoryPool.h>
 #include <Event/Event.h>
 #include <atomic>
-#include <Common/CommonData.h>
 #include <Network/NetworkCommon/Act.h>
 
 namespace SSL

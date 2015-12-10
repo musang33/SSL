@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Visual">
+      <UniqueIdentifier>{df091f22-37ac-496d-8ee9-275aa1bda262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{24894386-8b9e-4f73-b85e-d2084bd6796e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Action">
+      <UniqueIdentifier>{9c6ec8e0-b6f1-4a05-a8ca-87117755acd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\AI">
+      <UniqueIdentifier>{0cbc2f42-d3bf-408e-b7cc-70ac9adf1db3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Factory">
+      <UniqueIdentifier>{52ebbb2f-3421-40c2-927e-34ec44e6e1fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Manager">
+      <UniqueIdentifier>{7e3b1f4e-43f9-48f8-b32d-e9599869c6c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\State">
+      <UniqueIdentifier>{b697129e-e409-4f9a-b22e-892837338b45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Thread">
+      <UniqueIdentifier>{7bb2c31c-417a-454b-a86d-156e92d74692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Lua">
+      <UniqueIdentifier>{4c5fd6bb-821e-454c-8c9e-75431a617d7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Lua\Lua_5_3">
+      <UniqueIdentifier>{88e7cdd2-2a0a-4343-a7f9-66bd7b16c3af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Lua\Lua_Thinker">
+      <UniqueIdentifier>{a055cd15-7fce-4c57-b14a-e097f7b9c566}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualToolServer.h">
+      <Filter>Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Action\ActionAI.h">
+      <Filter>Server\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Action\ActionBT.h">
+      <Filter>Server\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Action\ActionLuaScript.h">
+      <Filter>Server\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Action\ActionMove.h">
+      <Filter>Server\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Action\ActionNpcFight.h">
+      <Filter>Server\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Action\ActionPlayerFight.h">
+      <Filter>Server\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Action\ActionState.h">
+      <Filter>Server\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\AI\BehaviorTree.h">
+      <Filter>Server\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\AI\BTM.h">
+      <Filter>Server\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Factory\FactoryNpcImpl.h">
+      <Filter>Server\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Factory\FactoryPlayerImpl.h">
+      <Filter>Server\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Manager\EntityManager.h">
+      <Filter>Server\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Manager\LuaManager.h">
+      <Filter>Server\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Manager\MessageManager.h">
+      <Filter>Server\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\State\StateNPC.h">
+      <Filter>Server\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\State\StatePlayer.h">
+      <Filter>Server\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Thread\ThreadEventManager.h">
+      <Filter>Server\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Thread\ThreadPool.h">
+      <Filter>Server\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Thread\ThreadWorker.h">
+      <Filter>Server\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExternalLibrary\lua_tinker\lua_tinker.hpp">
+      <Filter>Server\Lua\Lua_Thinker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExternalLibrary\lua_tinker\ScriptBase.hpp">
+      <Filter>Server\Lua\Lua_Thinker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\lauxlib.h">
+      <Filter>Server\Lua\Lua_5_3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\lua.h">
+      <Filter>Server\Lua\Lua_5_3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\lua.hpp">
+      <Filter>Server\Lua\Lua_5_3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\luaconf.h">
+      <Filter>Server\Lua\Lua_5_3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\lualib.h">
+      <Filter>Server\Lua\Lua_5_3</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualToolServer.cpp">
+      <Filter>Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Action\ActionAI.cpp">
+      <Filter>Server\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Action\ActionBT.cpp">
+      <Filter>Server\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Action\ActionLuaScript.cpp">
+      <Filter>Server\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Action\ActionMove.cpp">
+      <Filter>Server\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Action\ActionNpcFight.cpp">
+      <Filter>Server\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Action\ActionPlayerFight.cpp">
+      <Filter>Server\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Action\ActionState.cpp">
+      <Filter>Server\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Factory\FactoryNpcImpl.cpp">
+      <Filter>Server\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Factory\FactoryPlayerImpl.cpp">
+      <Filter>Server\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Manager\EntityManager.cpp">
+      <Filter>Server\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Manager\LuaManager.cpp">
+      <Filter>Server\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Manager\MessageManager.cpp">
+      <Filter>Server\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\State\StateNPC.cpp">
+      <Filter>Server\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\State\StatePlayer.cpp">
+      <Filter>Server\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Thread\ThreadEventManager.cpp">
+      <Filter>Server\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Thread\ThreadWorker.cpp">
+      <Filter>Server\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\main.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ExternalLibrary\lua_tinker\lua_tinker.cpp">
+      <Filter>Server\Lua\Lua_Thinker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ExternalLibrary\lua_tinker\ScriptBase.cpp">
+      <Filter>Server\Lua\Lua_Thinker</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VisualToolServer.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Monster.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Monster_Attack.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Monster_Freewalk.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="User_down.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="User_left.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="User_right.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="User_up.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="User.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Monster_dead.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Monster_Think.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="VisualToolServer.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

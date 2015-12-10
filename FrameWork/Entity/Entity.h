@@ -1,9 +1,7 @@
 #pragma once
 
-#include <Common/CommonData.h>
 #include <memory>
 #include <atomic>
-
 
 namespace SSL
 {		

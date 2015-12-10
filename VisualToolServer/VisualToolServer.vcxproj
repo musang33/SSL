@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{811455CB-2283-4F15-BF46-D5720F8CFD4E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>VisualToolServer</RootNamespace>
+    <ProjectName>VisualToolServer</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)Server;$(IncludePath);$(SolutionDir);$(SolutionDir)..\FrameWork</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(SolutionDir)..\Lib</LibraryPath>
+    <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)Server;$(IncludePath);$(SolutionDir);$(SolutionDir)..\FrameWork</IncludePath>
+    <LibraryPath>$(VCInstallDir)lib\amd64;$(VCInstallDir)atlmfc\lib\amd64;$(WindowsSdkDir)lib\x64;$(SolutionDir)..\Lib</LibraryPath>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\GitHub\SSL\ExternalLibrary;D:\GitHub\SSL\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\GitHub\SSL\Core\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);FrameWork.lib;lua53.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>D:\GitHub\SSL\Core\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);FrameWork.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\lauxlib.h" />
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\lua.h" />
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\lua.hpp" />
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\luaconf.h" />
+    <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\lualib.h" />
+    <ClInclude Include="..\ExternalLibrary\lua_tinker\lua_tinker.hpp" />
+    <ClInclude Include="..\ExternalLibrary\lua_tinker\ScriptBase.hpp" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="Server\Action\ActionAI.h" />
+    <ClInclude Include="Server\Action\ActionBT.h" />
+    <ClInclude Include="Server\Action\ActionLuaScript.h" />
+    <ClInclude Include="Server\Action\ActionMove.h" />
+    <ClInclude Include="Server\Action\ActionNpcFight.h" />
+    <ClInclude Include="Server\Action\ActionPlayerFight.h" />
+    <ClInclude Include="Server\Action\ActionState.h" />
+    <ClInclude Include="Server\AI\BehaviorTree.h" />
+    <ClInclude Include="Server\AI\BTM.h" />
+    <ClInclude Include="Server\Factory\FactoryNpcImpl.h" />
+    <ClInclude Include="Server\Factory\FactoryPlayerImpl.h" />
+    <ClInclude Include="Server\Manager\EntityManager.h" />
+    <ClInclude Include="Server\Manager\LuaManager.h" />
+    <ClInclude Include="Server\Manager\MessageManager.h" />
+    <ClInclude Include="Server\State\StateNPC.h" />
+    <ClInclude Include="Server\State\StatePlayer.h" />
+    <ClInclude Include="Server\Thread\ThreadEventManager.h" />
+    <ClInclude Include="Server\Thread\ThreadPool.h" />
+    <ClInclude Include="Server\Thread\ThreadWorker.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="VisualToolServer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ExternalLibrary\lua_tinker\lua_tinker.cpp" />
+    <ClCompile Include="..\ExternalLibrary\lua_tinker\ScriptBase.cpp" />
+    <ClCompile Include="Server\Action\ActionAI.cpp" />
+    <ClCompile Include="Server\Action\ActionBT.cpp" />
+    <ClCompile Include="Server\Action\ActionLuaScript.cpp" />
+    <ClCompile Include="Server\Action\ActionMove.cpp" />
+    <ClCompile Include="Server\Action\ActionNpcFight.cpp" />
+    <ClCompile Include="Server\Action\ActionPlayerFight.cpp" />
+    <ClCompile Include="Server\Action\ActionState.cpp" />
+    <ClCompile Include="Server\Factory\FactoryNpcImpl.cpp" />
+    <ClCompile Include="Server\Factory\FactoryPlayerImpl.cpp" />
+    <ClCompile Include="Server\main.cpp" />
+    <ClCompile Include="Server\Manager\EntityManager.cpp" />
+    <ClCompile Include="Server\Manager\LuaManager.cpp" />
+    <ClCompile Include="Server\Manager\MessageManager.cpp" />
+    <ClCompile Include="Server\State\StateNPC.cpp" />
+    <ClCompile Include="Server\State\StatePlayer.cpp" />
+    <ClCompile Include="Server\Thread\ThreadEventManager.cpp" />
+    <ClCompile Include="Server\Thread\ThreadWorker.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="VisualToolServer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VisualToolServer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bitmap1.bmp" />
+    <Image Include="Monster.bmp" />
+    <Image Include="Monster_Attack.bmp" />
+    <Image Include="Monster_dead.bmp" />
+    <Image Include="Monster_Freewalk.bmp" />
+    <Image Include="Monster_Think.bmp" />
+    <Image Include="small.ico" />
+    <Image Include="User.bmp" />
+    <Image Include="User_down.bmp" />
+    <Image Include="User_left.bmp" />
+    <Image Include="User_right.bmp" />
+    <Image Include="User_up.bmp" />
+    <Image Include="VisualToolServer.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

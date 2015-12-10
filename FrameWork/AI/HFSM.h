@@ -3,10 +3,10 @@
 #include <list>
 #include <unordered_map>
 
+#include <AI/State.h>
+
 namespace SSL
 {	
-	class State;
-
 	class Entity;
 	struct StateRelationInfo
 	{		

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Common/CommonData.h>
-
 namespace SSL
 {
 	class Entity;

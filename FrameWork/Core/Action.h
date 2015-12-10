@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Common/CommonData.h>
+
 #include <Entity/Entity.h>
 
 namespace SSL

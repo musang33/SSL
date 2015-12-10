@@ -4,7 +4,6 @@
 #include <functional>
 
 #include <Event/Event.h>
-#include <Common/CommonData.h>
 
 namespace SSL
 {
