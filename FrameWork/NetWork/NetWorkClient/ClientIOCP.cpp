@@ -171,4 +171,21 @@ namespace SSL
 
 		return -1;
 	}
+
+	bool ClientIOCP::Send( UINT32 index, EventPtr& e )
+	{
+		TcpSocket::SessionId id( index );
+
+		if( id.sessionId > m_tcpSockets.size() )
+		{
+			return false;
+		}
+
+		return m_tcpSockets[ id.sessionId ]->Send( e );
+	}
+
+	void ClientIOCP::SetRecvCallback( UINT16 type, CallBack* e )
+	{
+		m_proactor->SetEvent( type, e );
+	}
 }

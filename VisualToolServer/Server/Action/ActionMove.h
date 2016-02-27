@@ -36,6 +36,7 @@ namespace SSL
 		INT32 IsEntityAt( int x, int y );
 		bool IsNear( int x, int y );
 		void RandomMove();
+		bool Move( int x, int y );
 	};
 
 }

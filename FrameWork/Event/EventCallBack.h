@@ -46,7 +46,7 @@ namespace SSL
 	class EventCallBack : public CallBack
 	{
 	public:
-		EventCallBack( EventListener* listener );
+		EventCallBack( EventListener* listener, const char* desc = "");
 		~EventCallBack( )
 		{
 		};
@@ -57,11 +57,13 @@ namespace SSL
 
 	private:
 		EventListener*	m_listener;
+		std::string		m_desc;
 	};
 
 	template <typename EVENT>
-	inline EventCallBack<EVENT>::EventCallBack( EventListener* listener )
+	inline EventCallBack<EVENT>::EventCallBack( EventListener* listener, const char* desc )
 		:m_listener( listener )
+		, m_desc( desc )
 	{
 	}
 
@@ -81,7 +83,7 @@ namespace SSL
 			return false;
 		}
 
-		ntr->idx = idx;
+		ntr->SetSocketIndex(idx);
 		Notify( EventPtr(ntr) );
 
 		return true;	

@@ -17,8 +17,8 @@ namespace SSL
 		void ProcessEventQueue() override;
 
 	public:
-		void OnAddHP( EVENTPtr& ptr );
-		void OnUpdateEntity( EVENTPtr& ptr );
+		void OnAddHP( EventPtr& ptr );
+		void OnUpdateEntity( EventPtr& ptr );
 
 	private:
 		Dispatcher<ThreadWorker> m_dispatcher;

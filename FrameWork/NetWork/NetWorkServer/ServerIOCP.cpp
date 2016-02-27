@@ -100,11 +100,11 @@ namespace SSL
 			tcp->SetType( type );
 			tcp->SetServerMode( true );
 
-			tcp->RegisterAccept( );
-
 			tcp->SetAct( TcpSocket::EN_ACT_TYPE::ACT_ACCEPT, new Act( ( Actor* ) m_acceptor ));
 			tcp->SetAct( TcpSocket::EN_ACT_TYPE::ACT_SEND, new Act( ( Actor* ) m_sender ));
 			tcp->SetAct( TcpSocket::EN_ACT_TYPE::ACT_RECV, new Act( ( Actor* ) m_receiver ));
+
+			tcp->RegisterAccept( );
 
 			tcp->SetReserve( true );
 			tcp->SetReserve( false );
@@ -189,6 +189,33 @@ namespace SSL
 		return tcp;
 	}
 
+	void ServerIOCP::SetRecvCallback( USHORT type, CallBack* e )
+	{
+		m_proactor->SetEvent( type, e );
+	}
+
+	UINT32 ServerIOCP::run( )
+	{
+		while( isActive( ) )
+		{
+			{
+				std::lock_guard<std::mutex> lock( g_i_mutex );				
+
+				for( auto iter : m_clientPool )
+				{
+					TcpSocket* socket = iter;
+
+					if( socket->GetState( ) >= TcpSocket::EN_SOCKET_STATE::SOCKET_ALIVE )
+					{
+						socket->KickSend( );
+					}					
+				}
+			}
+		}
+
+		return 0;
+	}
+
 	TcpSocket* ServerIOCP::getsockFromConnectPool( )
 	{
 		std::lock_guard<std::mutex> lock( g_i_mutex );
@@ -206,5 +233,17 @@ namespace SSL
 		}
 
 		return nullptr;
+	}
+
+	bool ServerIOCP::Send( UINT32 index, EventPtr& e )
+	{
+		TcpSocket::SessionId id( index );		
+
+		if( id.sessionId > m_poolIndex )
+		{
+			return false;
+		}
+
+		return m_clientPool[ id.sessionId ]->Send( e );
 	}
 }

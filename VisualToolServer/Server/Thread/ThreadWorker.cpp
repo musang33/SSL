@@ -37,23 +37,23 @@ namespace SSL
 
 	void ThreadWorker::ProcessEventQueue()
 	{
-		EVENTPtr ptr;
+		EventPtr ptr;
 		while ( events.try_pop( ptr ) )
 		{
 			m_dispatcher.Dispatch( ptr );
 		}
 	}
 
-	void ThreadWorker::OnAddHP( EVENTPtr& ptr )
+	void ThreadWorker::OnAddHP( EventPtr& /*ptr*/ )
 	{
-		const SSL::Entity* entityPtr = SSL::EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
+		/*const SSL::Entity* entityPtr = SSL::EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
 			
 		ST_ADD_HP *stAddHP = static_cast< ST_ADD_HP* >( ptr.get() );
 		ActionState* as = GetEntityAction( entityPtr );
-		as->AddHP( stAddHP->addHP );
+		as->AddHP( stAddHP->addHP );*/
 	}
 
-	void ThreadWorker::OnUpdateEntity( EVENTPtr& ptr )
+	void ThreadWorker::OnUpdateEntity( EventPtr& ptr )
 	{
 		const SSL::Entity* entityPtr = SSL::EntityManager::GetInstance()->GetEntity( ptr->entityIndex );
 				

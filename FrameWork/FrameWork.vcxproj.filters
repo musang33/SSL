@@ -110,9 +110,6 @@
     <ClInclude Include="NetWork\NetWorkServer\ServerIOCP.h">
       <Filter>Network\NetworkServer</Filter>
     </ClInclude>
-    <ClInclude Include="NetWork\NetWorkClient\Client.h">
-      <Filter>Network\NetworkClient</Filter>
-    </ClInclude>
     <ClInclude Include="NetWork\NetWorkClient\ClientIOCP.h">
       <Filter>Network\NetworkClient</Filter>
     </ClInclude>
@@ -152,6 +149,9 @@
     <ClInclude Include="Core\MessageQueue.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Event\EventGame.h">
+      <Filter>Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -180,9 +180,6 @@
     </ClCompile>
     <ClCompile Include="NetWork\NetWorkServer\ServerIOCP.cpp">
       <Filter>Network\NetworkServer</Filter>
-    </ClCompile>
-    <ClCompile Include="NetWork\NetWorkClient\Client.cpp">
-      <Filter>Network\NetworkClient</Filter>
     </ClCompile>
     <ClCompile Include="NetWork\NetWorkClient\ClientIOCP.cpp">
       <Filter>Network\NetworkClient</Filter>

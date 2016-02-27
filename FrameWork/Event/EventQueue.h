@@ -33,7 +33,7 @@ namespace SSL
 		auto PushTask( F&& f, Args&&... args )
 			->std::future < typename std::result_of<F( Args... )>::type > ;
 
-		void PushEvent( EVENTPtr _event )
+		void PushEvent( EventPtr _event )
 		{
 			events.push( _event );
 			ProcessEventQueue();
@@ -46,7 +46,7 @@ namespace SSL
 	protected:
 		// the task queue
 		concurrency::concurrent_queue< std::function<void()> > tasks;
-		concurrency::concurrent_queue< EVENTPtr > events;
+		concurrency::concurrent_queue< EventPtr > events;
 	};
 
 	// add new work item to the pool

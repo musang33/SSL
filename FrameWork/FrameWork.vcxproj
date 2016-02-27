@@ -97,6 +97,7 @@ xcopy /s /y /R "$(Outdir)$(ProjectName).pdb" "$(SolutionDir)../Lib"</Command>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -106,6 +107,9 @@ xcopy /s /y /R "$(Outdir)$(ProjectName).pdb" "$(SolutionDir)../Lib"</Command>
       <Command>xcopy /s /y /R "$(Outdir)$(ProjectName).lib" "$(SolutionDir)../Lib"
 xcopy /s /y /R "$(Outdir)$(ProjectName).pdb" "$(SolutionDir)../Lib"</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>Mswsock.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -159,8 +163,8 @@ xcopy /s /y /R "$(Outdir)$(ProjectName).pdb" "$(SolutionDir)../Lib"</Command>
     <ClInclude Include="Entity\EntityFactory.h" />
     <ClInclude Include="Event\Event.h" />
     <ClInclude Include="Event\EventCallBack.h" />
+    <ClInclude Include="Event\EventGame.h" />
     <ClInclude Include="Event\EventQueue.h" />
-    <ClInclude Include="NetWork\NetWorkClient\Client.h" />
     <ClInclude Include="NetWork\NetWorkClient\ClientIOCP.h" />
     <ClInclude Include="NetWork\NetWorkClient\ConnectorClient.h" />
     <ClInclude Include="NetWork\NetWorkClient\ReceiverClient.h" />
@@ -185,7 +189,6 @@ xcopy /s /y /R "$(Outdir)$(ProjectName).pdb" "$(SolutionDir)../Lib"</Command>
     <ClCompile Include="Entity\Entity.cpp" />
     <ClCompile Include="Entity\EntityFactory.cpp" />
     <ClCompile Include="Event\EventQueue.cpp" />
-    <ClCompile Include="NetWork\NetWorkClient\Client.cpp" />
     <ClCompile Include="NetWork\NetWorkClient\ClientIOCP.cpp" />
     <ClCompile Include="NetWork\NetWorkClient\ConnectorClient.cpp" />
     <ClCompile Include="NetWork\NetWorkClient\ReceiverClient.cpp" />

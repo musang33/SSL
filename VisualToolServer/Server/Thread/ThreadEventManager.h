@@ -29,7 +29,7 @@ namespace SSL
 		void ProcessEventQueue() override 
 		{
 			static INT32 threadOrderIndex = 0;
-			EVENTPtr ptr = nullptr;
+			EventPtr ptr = nullptr;
 			while ( events.try_pop( ptr ) )
 			{						
 				Entity* baseEntityPtr = EntityManager::GetInstance()->GetEntity( ptr->entityIndex );

@@ -13,7 +13,7 @@ namespace SSL
 
 	TcpSocket::TcpSocket( SOCKET listenSocket )
 		: m_listenSocket( listenSocket)
-		, m_socket( listenSocket )
+		, m_socket( INVALID_SOCKET )
 		, m_isSending( false )
 		, m_type( 0 )		
 		, m_isServerMode(false )

@@ -65,7 +65,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)Server;$(IncludePath);$(SolutionDir);$(SolutionDir)..\FrameWork</IncludePath>
-    <LibraryPath>$(VCInstallDir)lib\amd64;$(VCInstallDir)atlmfc\lib\amd64;$(WindowsSdkDir)lib\x64;$(SolutionDir)..\Lib</LibraryPath>
+    <LibraryPath>$(VCInstallDir)lib\amd64;$(VCInstallDir)atlmfc\lib\amd64;$(WindowsSdkDir)lib\x64;$(SolutionDir)..\Lib;$(LibraryPath);</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -104,10 +104,13 @@
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>D:\GitHub\SSL\Core\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);FrameWork.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);FrameWork.lib;lua53_x64.lib</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -127,12 +130,14 @@
     <ClInclude Include="Server\Action\ActionLuaScript.h" />
     <ClInclude Include="Server\Action\ActionMove.h" />
     <ClInclude Include="Server\Action\ActionNpcFight.h" />
+    <ClInclude Include="Server\Action\ActionPlayer.h" />
     <ClInclude Include="Server\Action\ActionPlayerFight.h" />
     <ClInclude Include="Server\Action\ActionState.h" />
     <ClInclude Include="Server\AI\BehaviorTree.h" />
     <ClInclude Include="Server\AI\BTM.h" />
     <ClInclude Include="Server\Factory\FactoryNpcImpl.h" />
     <ClInclude Include="Server\Factory\FactoryPlayerImpl.h" />
+    <ClInclude Include="Server\GameEvent.h" />
     <ClInclude Include="Server\Manager\EntityManager.h" />
     <ClInclude Include="Server\Manager\LuaManager.h" />
     <ClInclude Include="Server\Manager\MessageManager.h" />
@@ -143,7 +148,7 @@
     <ClInclude Include="Server\Thread\ThreadWorker.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="VisualToolServer.h" />
+    <ClInclude Include="TestServer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ExternalLibrary\lua_tinker\lua_tinker.cpp" />
@@ -153,6 +158,7 @@
     <ClCompile Include="Server\Action\ActionLuaScript.cpp" />
     <ClCompile Include="Server\Action\ActionMove.cpp" />
     <ClCompile Include="Server\Action\ActionNpcFight.cpp" />
+    <ClCompile Include="Server\Action\ActionPlayer.cpp" />
     <ClCompile Include="Server\Action\ActionPlayerFight.cpp" />
     <ClCompile Include="Server\Action\ActionState.cpp" />
     <ClCompile Include="Server\Factory\FactoryNpcImpl.cpp" />
@@ -169,7 +175,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="VisualToolServer.cpp" />
+    <ClCompile Include="TestServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VisualToolServer.rc" />

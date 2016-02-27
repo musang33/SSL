@@ -25,6 +25,11 @@ namespace SSL
 			return m_queue.unsafe_size();
 		}
 
+		bool IsEmpty( )
+		{
+			return m_queue.empty( );
+		}
+
 	private:
 		Concurrency::concurrent_queue<T>	m_queue;
 	};

@@ -5,9 +5,9 @@
 
 namespace SSL
 {
-	PacketStream::PacketStream()
+	PacketStream::PacketStream( )
 	{
-		m_data = new BYTE[EN_DEFAULT_BUFFER_SIZE];
+		m_data = new BYTE[ EN_DEFAULT_BUFFER_SIZE ];
 		m_pos = m_data;
 		m_end = m_data + EN_DEFAULT_BUFFER_SIZE;
 		m_dataLength = EN_DEFAULT_BUFFER_SIZE;
@@ -17,21 +17,38 @@ namespace SSL
 		::ZeroMemory( m_data, sizeof( BYTE ) * EN_DEFAULT_BUFFER_SIZE );
 	}
 
-	PacketStream::PacketStream(UINT32 bufferSize)
+	PacketStream::PacketStream( UINT32 bufferSize )
 	{
-		if ( bufferSize < EN_DEFAULT_BUFFER_SIZE )
+		if( bufferSize < EN_DEFAULT_BUFFER_SIZE )
 		{
 			bufferSize = EN_DEFAULT_BUFFER_SIZE;
 		}
 
-		m_data = new BYTE[bufferSize];
+		m_data = new BYTE[ bufferSize ];
 		m_pos = m_data;
 		m_end = m_data + bufferSize;
 		m_dataLength = bufferSize;
 		m_increaseSize = EN_DEFAULT_INCREASE_SIZE;
 		m_isValid = true;
+		m_isOwnerBuffer = true;
 
 		::ZeroMemory( m_data, sizeof( BYTE ) * bufferSize );
+	}
+
+	PacketStream::PacketStream( BYTE* data, UINT32 bufferSize )
+	{
+		if( bufferSize < EN_DEFAULT_BUFFER_SIZE )
+		{
+			bufferSize = EN_DEFAULT_BUFFER_SIZE;
+		}
+
+		m_data = data;
+		m_pos = m_data;
+		m_end = m_data + bufferSize;
+		m_dataLength = bufferSize;
+		m_increaseSize = EN_DEFAULT_INCREASE_SIZE;
+		m_isValid = true;
+		m_isOwnerBuffer = false;		
 	}
 
 

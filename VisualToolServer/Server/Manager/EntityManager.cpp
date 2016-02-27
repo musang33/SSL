@@ -54,13 +54,12 @@ namespace SSL
 		const EntityManager::ENTITY_MAP& entityMap = EntityManager::GetInstance()->GetEntityMap();
 		for ( const auto &it : entityMap )
 		{
-			ActionAI* aa = GetEntityAction( it.second );
-
-			if ( aa->GetCurrentState() == SSL::EN_ENTITY_STATE::STATE_ALIVE )
+			ActionAI* aa = GetEntityAction( it.second );			
+			if( aa != nullptr )
 			{
 				// AI 업데이트				
-				aa->Update();
-			}
+				aa->Update( );
+			}			
 		}
 	}
 

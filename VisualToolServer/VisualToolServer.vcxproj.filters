@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Visual">
-      <UniqueIdentifier>{df091f22-37ac-496d-8ee9-275aa1bda262}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Server">
       <UniqueIdentifier>{24894386-8b9e-4f73-b85e-d2084bd6796e}</UniqueIdentifier>
     </Filter>
@@ -59,9 +56,6 @@
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="VisualToolServer.h">
-      <Filter>Visual</Filter>
     </ClInclude>
     <ClInclude Include="Server\Action\ActionAI.h">
       <Filter>Server\Action</Filter>
@@ -141,14 +135,17 @@
     <ClInclude Include="..\ExternalLibrary\lua_5_3_dll\include\lualib.h">
       <Filter>Server\Lua\Lua_5_3</Filter>
     </ClInclude>
+    <ClInclude Include="TestServer.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameEvent.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Action\ActionPlayer.h">
+      <Filter>Server\Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="VisualToolServer.cpp">
-      <Filter>Visual</Filter>
-    </ClCompile>
     <ClCompile Include="Server\Action\ActionAI.cpp">
       <Filter>Server\Action</Filter>
     </ClCompile>
@@ -205,6 +202,15 @@
     </ClCompile>
     <ClCompile Include="..\ExternalLibrary\lua_tinker\ScriptBase.cpp">
       <Filter>Server\Lua\Lua_Thinker</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="TestServer.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Action\ActionPlayer.cpp">
+      <Filter>Server\Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

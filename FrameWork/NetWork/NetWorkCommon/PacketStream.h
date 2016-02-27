@@ -13,6 +13,7 @@ namespace SSL
 	public:
 		PacketStream();
 		PacketStream( UINT32 bufferSize );
+		PacketStream( BYTE* data, UINT32 bufferSize );
 		~PacketStream();
 
 	public:
@@ -54,5 +55,6 @@ namespace SSL
 		UINT32		m_increaseSize;	
 
 		bool		m_isValid;
+		bool		m_isOwnerBuffer;
 	};
 }

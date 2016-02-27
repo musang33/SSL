@@ -3,6 +3,7 @@
 #include <mutex>
 #include <vector>
 #include <Thread/Thread.h>
+#include <Event\Event.h>
 
 
 namespace SSL
@@ -15,6 +16,7 @@ namespace SSL
 	class TcpListenSocket;
 	class TcpSocket;
 	class Proactor;
+	class CallBack;
 
 
 	class ServerIOCP : public Thread
@@ -27,10 +29,13 @@ namespace SSL
 		bool Create( UINT32 numIoThread );
 		void Destroy( );
 		bool CreateListen( USHORT port, UINT32 backlog, UINT32 maxConnect, const INT32& type );
-		TcpSocket* Connect( USHORT idx, const char* ipAddress, const SHORT& port );
+		TcpSocket* Connect( USHORT idx, const char* ipAddress, const SHORT& port );		
+		void SetRecvCallback( USHORT type, CallBack* e );
+		bool Send( UINT32 index, EventPtr& e );
 
 	private:
-		TcpSocket* getsockFromConnectPool( );
+		UINT32 run( ) override;
+		TcpSocket* getsockFromConnectPool( );		
 
 	private:
 		Proactor*		m_proactor;

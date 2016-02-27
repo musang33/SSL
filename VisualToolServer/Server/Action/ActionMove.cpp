@@ -89,6 +89,57 @@ namespace SSL
 		}
 
 		SetCurLocation( curLocation.x, curLocation.y );
+
+		NtfMoveEntity* ntf = new NtfMoveEntity;
+		ntf->entityId = GetOwner( )->ID( );
+		ntf->x = curLocation.x;
+		ntf->y = curLocation.y;
+
+		TestServer::GetInstance( )->SendAll( EventPtr( ntf ) );
+	}
+
+	bool ActionMove::Move( int x, int y )
+	{
+		if( x > 1 || x < -1 )
+		{
+			return false;
+		}
+
+		if( y > 1 || y < -1 )
+		{
+			return false;
+		}
+
+		SSL::ST_COORDINATE curLocation = GetCurLocation( );		
+		curLocation.x += x;
+		curLocation.y += y;
+
+		if( curLocation.x < 0 )
+		{
+			curLocation.x = 0;
+		}
+		else if( curLocation.x > 14 )
+		{
+			curLocation.x = 14;
+		}
+
+		if( curLocation.y < 0 )
+		{
+			curLocation.y = 0;
+		}
+		else if( curLocation.y > 14 )
+		{
+			curLocation.y = 14;
+		}
+
+		SetCurLocation( curLocation.x, curLocation.y );
+
+		NtfMoveEntity* ntf = new NtfMoveEntity;
+		ntf->entityId = GetOwner( )->ID( );
+		ntf->x = curLocation.x;
+		ntf->y = curLocation.y;
+
+		TestServer::GetInstance( )->SendAll( EventPtr( ntf ) );
 	}
 
 }

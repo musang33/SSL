@@ -17,11 +17,11 @@ namespace SSL
 		~Dispatcher() {}
 
 	public:
-		typedef void ( T::*func )( EVENTPtr& e );
+		typedef void ( T::*func )( EventPtr& e );
 
 	public:
 		void RegisterFunction( UINT32 eventIndex, func f );
-		bool Dispatch( EVENTPtr& e );
+		bool Dispatch( EventPtr& e );
 
 	private:
 		T* funcInstance;
@@ -40,9 +40,9 @@ namespace SSL
 	}
 
 	template< typename T >
-	bool Dispatcher<T>::Dispatch( EVENTPtr& e )
+	bool Dispatcher<T>::Dispatch( EventPtr& e )
 	{
-		auto it = mapFunction.find( e->eventIndex );
+		auto it = mapFunction.find( e->GetEvent() );
 		if ( it == mapFunction.end() )
 		{
 			return false;

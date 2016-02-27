@@ -38,6 +38,11 @@ namespace SSL
 				:unique( 0 )
 			{
 			}
+
+			SessionId( UINT32 id )
+				:unique( id )
+			{
+			}
 		};
 	public:
 		enum EN_SOCKET_STATE
@@ -88,6 +93,10 @@ namespace SSL
 		{
 			m_state = state;
 		}
+		INT32 GetState( )
+		{
+			return m_state;
+		}
 
 		void SetType( INT32 type )
 		{
@@ -127,6 +136,11 @@ namespace SSL
 		{
 			m_remoteAddr = ipAddress;
 			m_remotePort = port;
+		}
+
+		void KickSend( )
+		{
+			requestSend( );
 		}
 
 	private:

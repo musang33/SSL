@@ -73,21 +73,33 @@ namespace SSL
 	{
 	public:
 		EventHead( const USHORT eventType = 0 )
-			:m_eventType(eventType)
+			:m_eventCode(eventType)
 		{}
 
 		USHORT GetEvent() const
 		{
-			return m_eventType;
+			return m_eventCode;
 		}
 
 		void SetHead( USHORT eventType )
 		{
-			m_eventType = eventType;
+			m_eventCode = eventType;
+		}
+
+		void SetSocketIndex( UINT32 socketIndex )
+		{
+			m_socketIndex = socketIndex;
+		}
+
+		UINT32 GetSocketIndex( )
+		{
+			return m_socketIndex;
 		}
 
 	private:
-		USHORT m_eventType;
+		USHORT m_eventCode;
+		UINT32 m_entityIndex;
+		UINT32 m_socketIndex;
 	};
 
 	struct Event : public EventHead
@@ -97,6 +109,7 @@ namespace SSL
 			 eEventBegin = 0
 			,eEventStart
 			,eEventStop
+			,eEventRawAccept
 			,eEventAccept
 			,eEventServerLine
 
@@ -104,7 +117,7 @@ namespace SSL
 			,eEventRawConnected
 			,eEventDisconnected
 			
-			,eEventMax = 100000
+			,eEventBaseMax = 1000
 		};
 
 		UINT32 entityIndex;
@@ -141,6 +154,7 @@ namespace SSL
 	};
 
 	typedef std::shared_ptr<Event> EventPtr;
+
 	typedef MessageConcurrentQueue<EventPtr> EventConcurrentQueue;
 
 EVENT_DECL_BEGIN( EventConnected, Event, Event::eEventConnected )

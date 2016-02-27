@@ -82,7 +82,7 @@ namespace SSL
 
 			BOOL result = ::GetQueuedCompletionStatus(
 				m_iocp, &trasferedBytes
-				, reinterpret_cast<PULONG_PTR>(completionKey)
+				, reinterpret_cast<PULONG_PTR>(&completionKey)
 				, (LPOVERLAPPED*)&act
 				, INFINITE );
 								
