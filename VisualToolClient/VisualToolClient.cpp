@@ -2,27 +2,19 @@
 //
 
 #include "stdafx.h"
-#include "VisualToolClient.h"
-
-#include "Client.h"
-#include "ActionEntity.h"
-
-#include <..\FrameWork\Event\EventGame.h>
-#include <..\FrameWork\Entity\Entity.h>
-#include <..\FrameWork\Entity\EntityFactory.h>
-#include <..\VisualToolServer\Server\Manager\EntityManager.h>
-#include <..\VisualToolServer\Server\Action\ActionMove.h>
-
-#include "..\VisualToolServer\Server\Action\ActionMove.h"
-#include <..\VisualToolServer\Server\Action\ActionPlayer.h>
-
-#include <..\VisualToolServer\Server\Factory\FactoryNpcImpl.h>
-#include <..\VisualToolServer\Server\Factory\FactoryPlayerImpl.h>
 
 #include < Commctrl.h >
 #include <iostream>
 
-#include <stdio.h>
+#include <..\FrameWork\Event\EventGame.h>
+
+#include <..\VisualToolServer\Server\Manager\EntityManager.h>
+
+#include "VisualToolClient.h"
+
+#include "Client.h"
+#include "Player.h"
+#include "Npc.h"
 
 #define MAX_LOADSTRING 100
 
@@ -34,7 +26,6 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// 기본 창 클래스 이름입니다.
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM				MyRegisterClass( HINSTANCE hInstance );
 BOOL				InitInstance( HINSTANCE, int );
-BOOL				InitEntities();
 LRESULT CALLBACK	WndProc( HWND, UINT, WPARAM, LPARAM );
 INT_PTR CALLBACK	About( HWND, UINT, WPARAM, LPARAM );
 INT_PTR CALLBACK	SettingServer( HWND, UINT, WPARAM, LPARAM );
@@ -49,7 +40,6 @@ const static INT TIMER_ENTITY = 10000;
 
 HWND hWnd;
 SSL::Client* client;
-SSL::Entity* cliententity;
 
 const static INT mostLeftX = 8;
 const static INT mostLeftY = 8;
@@ -60,15 +50,6 @@ const static INT cellSize = 25;
 const static INT spaceBetweenEdgeAndEntity = 2;
 
 //=============================================================
-
-class World
-{
-public:
-	World() {};
-	~World() {};
-};
-
-//==============================================================
 
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,
@@ -85,13 +66,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	// 전역 문자열을 초기화합니다.
 	LoadString( hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING );
 	LoadString( hInstance, IDC_VISUALTOOL, szWindowClass, MAX_LOADSTRING );
-	MyRegisterClass( hInstance );		
-	
-	// User와 NPC 설정
-	if ( !InitEntities() )
-	{
-		return FALSE;
-	}
+	MyRegisterClass( hInstance );			
 
 	// 응용 프로그램 초기화를 수행합니다.
 	if ( !InitInstance( hInstance, nCmdShow ) )
@@ -174,10 +149,6 @@ BOOL InitInstance( HINSTANCE hInstance, int nCmdShow )
 		return FALSE;
 	}	
 
-	SSL::EntityFactory::GetInstance( )->AddFactoryImpl( new SSL::FactoryNpcImpl );
-	SSL::EntityFactory::GetInstance( )->AddFactoryImpl( new SSL::FactoryPlayerImpl );
-
-	cliententity = SSL::EntityFactory::GetInstance( )->CreateEntity( SSL::EN_ENTITY_TYPE::ENTITY_PLAYER_TYPE );	
 	client = new SSL::Client( );
 
 	SetTimer( hWnd, TIMER_ENTITY, 1000, ( TIMERPROC ) MyTimerProc );
@@ -240,29 +211,25 @@ void DrawEntity()
 	}
 
 	for ( const auto& it : entityMap )
-	{
-		SSL::ActionMove* am = SSL::GetEntityAction( it.second );
-		SSL::ST_COORDINATE curLocation = am->GetCurLocation();
-
+	{	
 		if ( it.second->Type() == SSL::EN_ENTITY_TYPE::ENTITY_NPC_TYPE )
 		{
-			SSL::ActionAI* aa = SSL::GetEntityAction( it.second );
-			SSL::ActionState* as = SSL::GetEntityAction( it.second );
+			SSL::Npc* npc = static_cast< SSL::Npc* >( it.second );			
 			
 			INT bitMapIndex = IDB_MONSTER;
-			if ( as->IsDead() )
+			if ( npc->IsDead() )
 			{
 				bitMapIndex = IDB_MONSTER_DEAD;
 			}
-			else if ( SSL::EN_STATE_ID::STATE_NPC_ATTACK == aa->GetCurrentStateID() )
+			else if ( SSL::EN_STATE_ID::STATE_NPC_ATTACK == npc->GetCurState() )
 			{
 				bitMapIndex = IDB_MONSTER_ATTACK;
 			}
-			else if ( SSL::EN_STATE_ID::STATE_NPC_PATROL == aa->GetCurrentStateID() )
+			else if ( SSL::EN_STATE_ID::STATE_NPC_PATROL == npc->GetCurState() )
 			{
 				bitMapIndex = IDB_MONSTER_FREEWALK;
 			}
-			else if( SSL::EN_STATE_ID::STATE_NPC_THINK == aa->GetCurrentStateID( ) )
+			else if( SSL::EN_STATE_ID::STATE_NPC_THINK == npc->GetCurState( ) )
 			{
 				bitMapIndex = IDB_MONSTER_THINK;
 			}
@@ -271,12 +238,15 @@ void DrawEntity()
 				bitMapIndex = IDB_MONSTER_THINK;
 			}
 
+			SSL::ST_COORDINATE curLocation = npc->GetLocation( );
 			DrawBitmap( mostLeftX + curLocation.x * cellSize, mostLeftY + curLocation.y * cellSize, bitMapIndex );
 		}
 		else
 		{			
+			SSL::Player* player = static_cast< SSL::Player* >( it.second );
+
 			INT bitUserMapIndex = IDB_PC_UP;
-			SSL::EN_ENTITY_DIRECTION playerCurDirection = am->GetDirection();
+			SSL::EN_ENTITY_DIRECTION playerCurDirection = player->GetDirection();
 
 			switch ( playerCurDirection )
 			{
@@ -296,6 +266,7 @@ void DrawEntity()
 					bitUserMapIndex = IDB_PC_UP;
 			}
 
+			SSL::ST_COORDINATE curLocation = player->GetLocation( );
 			DrawBitmap( mostLeftX + curLocation.x * cellSize, mostLeftY + curLocation.y * cellSize, bitUserMapIndex );
 		}
 	}	
@@ -304,12 +275,14 @@ void DrawEntity()
 
 void Attack( INT keyType )
 {
-	
+	SSL::Player* clientEntity = client->GetPlayerEntity( );
+	if( nullptr == clientEntity )
+	{
+		return;
+	}
 
-	SSL::ActionMove* am = SSL::GetEntityAction( cliententity );
-
-	SSL::ST_COORDINATE playerCurLocation = am->GetCurLocation();
-	SSL::EN_ENTITY_DIRECTION playerCurDirection = am->GetDirection();
+	SSL::ST_COORDINATE playerCurLocation = clientEntity->GetLocation();
+	SSL::EN_ENTITY_DIRECTION playerCurDirection = clientEntity->GetDirection();
 
 	SSL::ST_COORDINATE attackPosition = playerCurLocation;
 
@@ -343,15 +316,22 @@ void Attack( INT keyType )
 			break;
 	}
 
-	INT32 attackedMonsterId = am->IsEntityAt( attackPosition.x, attackPosition.y );
-	if ( 0 != attackedMonsterId )
-	{
-		// 공격 패킷
-	}	
+	SSL::ReqSkillFire *req = new SSL::ReqSkillFire;
+	req->entityId = clientEntity->ID( );
+	req->x = attackPosition.x;
+	req->y = attackPosition.y;
+
+	client->Send( SSL::EventPtr( req ) );
 }
 
 void Move( INT keyType )
 {	
+	SSL::Player* clientEntity = client->GetPlayerEntity( );
+	if( nullptr == clientEntity )
+	{
+		return;
+	}
+
 	INT32 x = 0, y = 0;
 
 	switch ( keyType )
@@ -372,8 +352,7 @@ void Move( INT keyType )
 			break;
 	}	
 
-	SSL::ActionMove* am = SSL::GetEntityAction( cliententity );
-	am->SetCurLocation( x, y );
+	clientEntity->SetLocation( x, y );
 
 	DrawEntity();
 }

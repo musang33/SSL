@@ -138,9 +138,6 @@
     <ClInclude Include="TestServer.h">
       <Filter>Server</Filter>
     </ClInclude>
-    <ClInclude Include="Server\GameEvent.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Server\Action\ActionPlayer.h">
       <Filter>Server\Action</Filter>
     </ClInclude>

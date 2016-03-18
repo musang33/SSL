@@ -1,8 +1,12 @@
 #include "stdafx.h"
 #include "Client.h"
+#include "Npc.h"
+#include "Player.h"
 
 #include "..\FrameWork\Network\NetworkClient\ClientIOCP.h"
 #include "..\FrameWork\Event\EventGame.h"
+
+#include <..\VisualToolServer\Server\Manager\EntityManager.h>
 
 namespace SSL
 {
@@ -17,11 +21,14 @@ namespace SSL
 		}
 		
 		m_network->SetRecvCallback( SSL::EventGame::eResAddPlayer, new EventCallBack<ResAddPlayer>( this, "ResAddPlayer" ) );
+		m_network->SetRecvCallback( SSL::EventGame::eNtfAddNpc, new EventCallBack<NtfAddNpc>( this, "NtfAddNpc" ) );
+		m_network->SetRecvCallback( SSL::EventGame::eNtfRemoveNpc, new EventCallBack<NtfRemoveNpc>( this, "NtfRemoveNpc" ) );
 		m_network->SetRecvCallback( SSL::EventGame::eNtfMoveEntity, new EventCallBack<NtfMoveEntity>( this, "NtfMoveEntity" ) );
 
-		m_dispatcher.RegisterFunction( SSL::EventGame::eResAddPlayer, Client::onResAddPlayer );
-		m_dispatcher.RegisterFunction( SSL::EventGame::eNtfMoveEntity, Client::onNtfMoveEntity );
-
+		m_dispatcher.RegisterFunction( SSL::EventGame::eResAddPlayer, &Client::onResAddPlayer );
+		m_dispatcher.RegisterFunction( SSL::EventGame::eNtfAddNpc, &Client::onNtfAddNpc );
+		m_dispatcher.RegisterFunction( SSL::EventGame::eNtfRemoveNpc, &Client::onNtfRemoveNpc );
+		m_dispatcher.RegisterFunction( SSL::EventGame::eNtfMoveEntity, &Client::onNtfMoveEntity );
 	}
 
 	Client::~Client( )
@@ -40,7 +47,22 @@ namespace SSL
 
 	void Client::onResAddPlayer( EventPtr& ptr )
 	{ 
+		ResAddPlayer* ntf = static_cast< ResAddPlayer* >( ptr.get( ) );
+		m_cliententity = new Player( ntf->entityId );
 
+		SSL::EntityManager::GetInstance( )->RegisterEntity( m_cliententity );
+	}
+
+	void Client::onNtfAddNpc( EventPtr& ptr )
+	{
+		NtfAddNpc* ntf = static_cast< NtfAddNpc* >( ptr.get( ) );
+		Entity* npc = new Npc( ntf->entityId );
+
+		SSL::EntityManager::GetInstance( )->RegisterEntity( npc );
+	}
+
+	void Client::onNtfRemoveNpc( EventPtr& ptr )
+	{		
 	}
 
 	void Client::onNtfMoveEntity( EventPtr& ptr )
