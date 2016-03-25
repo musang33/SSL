@@ -3,8 +3,8 @@
 #include "Npc.h"
 #include "Player.h"
 
-#include "..\FrameWork\Network\NetworkClient\ClientIOCP.h"
-#include "..\FrameWork\Event\EventGame.h"
+#include <Network\NetworkClient\ClientIOCP.h>
+#include <Event\EventGame.h>
 
 #include <..\VisualToolServer\Server\Manager\EntityManager.h>
 
@@ -14,6 +14,14 @@ namespace SSL
 		:m_dispatcher(this )		
 		, m_network( nullptr )
 	{
+		WORD wVersionRequesed = MAKEWORD( 2, 2 );
+		WSADATA wsaData;
+		int nErrorStatus = WSAStartup( wVersionRequesed, &wsaData );
+		if( nErrorStatus != 0 )
+		{
+			return;
+		}
+
 		m_network = new ClientIOCP;
 		if( false == m_network->Initialize( 1, 1 ) )
 		{

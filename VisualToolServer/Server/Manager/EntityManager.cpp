@@ -1,9 +1,9 @@
 #include "stdafx.h"
 
-#include <Manager/EntityManager.h>
+#include "EntityManager.h"
 
 #include <../FrameWork/Entity/Entity.h>
-#include <Action/ActionAI.h>
+#include "../Action/ActionAI.h"
 
 namespace SSL
 {

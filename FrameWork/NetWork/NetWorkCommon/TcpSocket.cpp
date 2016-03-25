@@ -87,7 +87,7 @@ namespace SSL
 	bool TcpSocket::Send( const EventPtr& e )
 	{
 		PacketStream* psp = ms_sendBufferPool.Acquire();
-		if ( psp != nullptr )
+		if ( psp == nullptr )
 		{
 			return false;
 		}

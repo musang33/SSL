@@ -62,7 +62,7 @@ namespace SSL
 
 	bool ClientIOCP::Connect( USHORT idx, const char* ipAddress, const SHORT& port )
 	{
-		if( idx < m_tcpSockets.size( ) )
+		if( idx > m_tcpSockets.size( ) )
 		{
 			return false;
 		}
@@ -94,7 +94,7 @@ namespace SSL
 			);
 
 		if( ret == SOCKET_ERROR )
-		{			
+		{				
 			return false;
 		}
 
@@ -123,10 +123,11 @@ namespace SSL
 									 nullptr,
 									 0,
 									 nullptr,
-									 ( LPOVERLAPPED ) tcp->GetAct( TcpSocket::ACT_ACCEPT ) );
+									 ( LPOVERLAPPED ) tcp->GetAct( TcpSocket::ACT_CONNECT ) );
 
 		if( FALSE == result && ( WSAGetLastError( ) != WSA_IO_PENDING ) )
 		{
+			DWORD lastError = WSAGetLastError( );
 			tcp->SetReserve( true );
 			return false;
 		}

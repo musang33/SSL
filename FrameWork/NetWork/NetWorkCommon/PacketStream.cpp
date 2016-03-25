@@ -13,6 +13,7 @@ namespace SSL
 		m_dataLength = EN_DEFAULT_BUFFER_SIZE;
 		m_increaseSize = EN_DEFAULT_INCREASE_SIZE;
 		m_isValid = true;
+		m_isOwnerBuffer = true;
 
 		::ZeroMemory( m_data, sizeof( BYTE ) * EN_DEFAULT_BUFFER_SIZE );
 	}
@@ -54,7 +55,7 @@ namespace SSL
 
 	PacketStream::~PacketStream()
 	{
-		if ( nullptr != m_data )
+		if ( m_isOwnerBuffer )
 		{
 			delete[] m_data;
 			m_data = nullptr;
@@ -112,7 +113,7 @@ namespace SSL
 			ResetBufferSize( m_dataLength + resize );
 		}
 
-		memcpy( m_data, data, size );
+		memcpy( m_pos, data, size );
 		m_pos += size;
 
 		return size;
