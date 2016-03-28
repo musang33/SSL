@@ -133,6 +133,11 @@ namespace SSL
 
 		SSL::ActionPlayer *ap = GetEntityAction( player );
 		ap->SetSocketIndex( req->GetSocketIndex( ) );
+
+		ResAddPlayer* res = new ResAddPlayer;
+		res->entityId = player->ID( );
+
+		Send( player, EventPtr( res ) );		
 	}
 
 	void TestServer::onReqMoveEntity( EventPtr& ep )

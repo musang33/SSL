@@ -5,6 +5,7 @@
 #include <Action/ActionMove.h>
 #include <Action/ActionPlayerFight.h>
 #include <Action/ActionBT.h>
+#include <Action/ActionPlayer.h>
 
 #include <Factory/FactoryPlayerImpl.h>
 
@@ -29,6 +30,7 @@ namespace SSL
 		entity->AddAction( new ActionState( entity ) );
 		entity->AddAction( new ActionBT( entity ) );
 		entity->AddAction( new ActionMove( entity ) );
+		entity->AddAction( new ActionPlayer( entity ) );
 		entity->AddAction( new ActionPlayerFight( entity ) );
 
 		return entity;

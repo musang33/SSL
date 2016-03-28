@@ -5,6 +5,7 @@
 
 #include < Commctrl.h >
 #include <iostream>
+#include <process.h>
 
 #include <..\FrameWork\Event\EventGame.h>
 
@@ -51,6 +52,14 @@ const static INT spaceBetweenEdgeAndEntity = 2;
 
 //=============================================================
 
+
+UINT ThreadFunc( void* param )
+{
+	client->Update( );
+
+	return 0;
+}
+
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,
 						_In_ LPTSTR    lpCmdLine,
@@ -73,6 +82,11 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	{
 		return FALSE;
 	}	
+
+	if( 0 == _beginthreadex( nullptr, 0, &ThreadFunc, nullptr, 0, nullptr ) )
+	{
+		return FALSE;
+	}
 
 	hAccelTable = LoadAccelerators( hInstance, MAKEINTRESOURCE( IDC_VISUALTOOL ) );
 
@@ -353,6 +367,13 @@ void Move( INT keyType )
 	}	
 
 	clientEntity->SetLocation( x, y );
+	
+	SSL::NtfMoveEntity *ntf = new SSL::NtfMoveEntity;
+	ntf->entityId = clientEntity->ID( );
+	ntf->x = x;
+	ntf->y = y;
+
+	client->Send( SSL::EventPtr( ntf ) );
 
 	DrawEntity();
 }

@@ -23,6 +23,8 @@ namespace SSL
 			return m_cliententity;
 		}
 
+		void Update( );
+
 	public:
 		ClientIOCP				*m_network;
 		Dispatcher<Client>		m_dispatcher;		

@@ -5,15 +5,14 @@
 using namespace SSL;
 
 int main( )
-{
-	TestServer testServer;
-	if( testServer.Initialize( ) )
+{	
+	if( TestServer::GetInstance( )->Initialize( ) )
 	{
-		if( testServer.CreateListen( 10000, 100, 100, 10 ) )
+		if( TestServer::GetInstance( )->CreateListen( 10000, 100, 100, 10 ) )
 		{
 			while( 1 )
 			{
-				testServer.Update( );
+				TestServer::GetInstance( )->Update( );
 			}			
 		}
 	}

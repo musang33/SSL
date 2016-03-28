@@ -43,6 +43,8 @@ namespace SSL
 	{
 	}
 
+
+
 	bool Client::Connect( const char* ip, short port )
 	{
 		return m_network->Connect( 0, ip, port );
@@ -51,6 +53,23 @@ namespace SSL
 	bool Client::Send( EventPtr& ptr )
 	{
 		return m_network->Send( 0, ptr );
+	}
+
+	void Client::Update( )
+	{
+		while( 1 )
+		{
+			if( false == m_queue.IsEmpty( ) )
+			{
+				EventPtr ptr;
+				while( m_queue.Pop( ptr ) )
+				{
+					m_dispatcher.Dispatch( ptr );
+				}				
+			}
+
+			Sleep( 10 );
+		}		
 	}
 
 	void Client::onResAddPlayer( EventPtr& ptr )
@@ -75,6 +94,20 @@ namespace SSL
 
 	void Client::onNtfMoveEntity( EventPtr& ptr )
 	{
+		NtfMoveEntity* ntf = static_cast< NtfMoveEntity* >( ptr.get( ) );
+
+		Entity* entity = SSL::EntityManager::GetInstance( )->GetEntity( ntf->entityId );
+		if( entity->Type() == SSL::EN_ENTITY_TYPE::ENTITY_NPC_TYPE )
+		{
+			Npc* npc = static_cast< Npc* >( entity );
+			npc->SetLocation( ntf->x, ntf->y );
+		}
+		else
+		{
+			Player* player = static_cast< Player* >( entity );
+			player->SetLocation( ntf->x, ntf->y );
+		}
+
 	}
 
 }
