@@ -158,7 +158,7 @@ namespace SSL
 		PacketStream	m_recvActBuf;		// WSARecv에 사용 되는 버퍼 ( complete이 되면 m_recvBuf에 카피한다. )
 		PacketStream	m_recvBuf;			// 실제로 처리되는 데이터가 담긴 버퍼 ( receive, accept 등 )
 
-		SendAct*		m_sendBuf[2];
+		SendAct			m_sendBuf[2];
 		SendAct*		m_curSendAct;
 		bool			m_isSending;
 

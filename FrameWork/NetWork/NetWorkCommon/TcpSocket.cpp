@@ -35,9 +35,7 @@ namespace SSL
 			m_socket = INVALID_SOCKET;
 		}
 
-		m_socket = WSASocket( AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED );		
-		m_sendBuf[ 0 ] = new SendAct;
-		m_sendBuf[ 1 ] = new SendAct;
+		m_socket = WSASocket( AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED );				
 
 		reset( );
 	}
@@ -304,13 +302,13 @@ namespace SSL
 
 			sendAct = m_curSendAct;
 
-			if ( sendAct == m_sendBuf[0] )
+			if ( sendAct == &m_sendBuf[0] )
 			{
-				m_curSendAct = m_sendBuf[1];
+				m_curSendAct = &m_sendBuf[1];
 			}
 			else
 			{
-				m_curSendAct = m_sendBuf[0];
+				m_curSendAct = &m_sendBuf[0];
 			}
 
 			m_isSending = true;
@@ -367,13 +365,13 @@ namespace SSL
 		m_recvActBuf.Reset( );
 		m_recvBuf.Reset( );
 
-		m_sendBuf[ 0 ]->buffer.ResetBufferSize( 0 );
-		m_sendBuf[ 0 ]->buffer.ResetIncreaseSize( 0 );
+		m_sendBuf[ 0 ].buffer.ResetBufferSize( 0 );
+		m_sendBuf[ 0 ].buffer.ResetIncreaseSize( 0 );
 
-		m_sendBuf[ 1 ]->buffer.ResetBufferSize( 0 );
-		m_sendBuf[ 1 ]->buffer.ResetIncreaseSize( 0 );
+		m_sendBuf[ 1 ].buffer.ResetBufferSize( 0 );
+		m_sendBuf[ 1 ].buffer.ResetIncreaseSize( 0 );
 
-		m_curSendAct = m_sendBuf[ 0 ];
+		m_curSendAct = &m_sendBuf[ 0 ];
 
 		m_isSending = false;
 		m_reserve = false;

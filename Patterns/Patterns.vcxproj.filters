@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ConditionAndAction">
+      <UniqueIdentifier>{ec2b8c68-d4b4-40ca-9bd6-6207d33948ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StructuresOfCondition.h">
+      <Filter>ConditionAndAction</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionGroup.h">
+      <Filter>ConditionAndAction</Filter>
+    </ClInclude>
+    <ClInclude Include="StructuresOfEvent.h">
+      <Filter>ConditionAndAction</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ConditionGroup.cpp">
+      <Filter>ConditionAndAction</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

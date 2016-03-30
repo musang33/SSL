@@ -97,6 +97,14 @@ namespace SSL
 		NtfMoveEntity* ntf = static_cast< NtfMoveEntity* >( ptr.get( ) );
 
 		Entity* entity = SSL::EntityManager::GetInstance( )->GetEntity( ntf->entityId );
+		if( nullptr == entity )
+		{
+			NtfAddNpc* ntf = static_cast< NtfAddNpc* >( ptr.get( ) );
+			entity = new Npc( ntf->entityId );
+
+			SSL::EntityManager::GetInstance( )->RegisterEntity( entity );
+		}
+
 		if( entity->Type() == SSL::EN_ENTITY_TYPE::ENTITY_NPC_TYPE )
 		{
 			Npc* npc = static_cast< Npc* >( entity );
