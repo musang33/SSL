@@ -18,12 +18,21 @@ ConditionGroup::~ConditionGroup( )
 
 bool			ConditionGroup::Check( const Event* event ) const
 {
-	return ( event->GetEventType() == 
+	auto condition = m_conditionUnit->conditions.front( );
+	return ( event->GetEventType( ) == condition->GetConditionType( ) );
 }
 
 bool			ConditionGroup::Process( const Event* event )
 {
-
+	for( auto& i : m_conditionUnit->conditions )
+	{
+		if( !(this->*m_handler[ i->GetConditionType( ) ])( event, i.get( ) ) )
+		{
+			return false;
+		}
+	}
+	
+	return true;
 }
 
 bool			ConditionGroup::checkLevelUp( const Event* event, const Condition* condition )

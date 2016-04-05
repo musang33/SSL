@@ -143,11 +143,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ConditionGroup.h" />
+    <ClInclude Include="OperateEvent.h" />
+    <ClInclude Include="OperateEventGoldenTimeBuff.h" />
     <ClInclude Include="StructuresOfCondition.h" />
     <ClInclude Include="StructuresOfEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConditionGroup.cpp" />
+    <ClCompile Include="OperateEvent.cpp" />
+    <ClCompile Include="OperateEventGoldenTimeBuff.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,24 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ConditionAndAction">
+    <Filter Include="Event/Handler/Manager/Notifier">
+      <UniqueIdentifier>{90eba882-e28a-48e3-b87e-03fe6c1c7b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event/Condition">
       <UniqueIdentifier>{ec2b8c68-d4b4-40ca-9bd6-6207d33948ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StructuresOfCondition.h">
-      <Filter>ConditionAndAction</Filter>
+      <Filter>Event/Condition</Filter>
     </ClInclude>
     <ClInclude Include="ConditionGroup.h">
-      <Filter>ConditionAndAction</Filter>
+      <Filter>Event/Condition</Filter>
     </ClInclude>
     <ClInclude Include="StructuresOfEvent.h">
-      <Filter>ConditionAndAction</Filter>
+      <Filter>Event/Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="OperateEvent.h">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
+    </ClInclude>
+    <ClInclude Include="OperateEventGoldenTimeBuff.h">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConditionGroup.cpp">
-      <Filter>ConditionAndAction</Filter>
+      <Filter>Event/Condition</Filter>
     </ClCompile>
+    <ClCompile Include="OperateEvent.cpp">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
+    </ClCompile>
+    <ClCompile Include="OperateEventGoldenTimeBuff.cpp">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Readme.txt">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
+    </None>
   </ItemGroup>
 </Project>
