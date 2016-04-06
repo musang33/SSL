@@ -8,7 +8,7 @@ struct OperateEventGoldenTimeBuffImpl
 	unsigned __int32	dropRate	= 0;	// 아이템 드랍 확률 증가량
 };
 
-OperateEventGoldenTimeBuff::OperateEventGoldenTimeBuff( )
+OperateEventGoldenTimeBuff::OperateEventGoldenTimeBuff( OperateEventType tyep )
 {
 }
 

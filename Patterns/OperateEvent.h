@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 enum OperateEventType
 {
@@ -79,3 +80,4 @@ private:
 	unsigned __int64	m_id	= 0;	
 };
 
+using OperateEventPtr = std::shared_ptr<OperateEvent>;

@@ -24,6 +24,9 @@
     <ClInclude Include="OperateEventGoldenTimeBuff.h">
       <Filter>Event/Handler/Manager/Notifier</Filter>
     </ClInclude>
+    <ClInclude Include="OperateEventNotifier.h">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConditionGroup.cpp">
@@ -35,15 +38,13 @@
     <ClCompile Include="OperateEventGoldenTimeBuff.cpp">
       <Filter>Event/Handler/Manager/Notifier</Filter>
     </ClCompile>
+    <ClCompile Include="OperateEventNotifier.cpp">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt">
       <Filter>Event/Handler/Manager/Notifier</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd">
-      <Filter>Event/Handler/Manager/Notifier</Filter>
-    </None>
   </ItemGroup>
 </Project>
