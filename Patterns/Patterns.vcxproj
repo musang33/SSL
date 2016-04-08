@@ -145,6 +145,7 @@
     <ClInclude Include="ConditionGroup.h" />
     <ClInclude Include="OperateEvent.h" />
     <ClInclude Include="OperateEventGoldenTimeBuff.h" />
+    <ClInclude Include="OperateEventManager.h" />
     <ClInclude Include="OperateEventNotifier.h" />
     <ClInclude Include="StructuresOfCondition.h" />
     <ClInclude Include="StructuresOfEvent.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="ConditionGroup.cpp" />
     <ClCompile Include="OperateEvent.cpp" />
     <ClCompile Include="OperateEventGoldenTimeBuff.cpp" />
+    <ClCompile Include="OperateEventManager.cpp" />
     <ClCompile Include="OperateEventNotifier.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -27,6 +27,9 @@
     <ClInclude Include="OperateEventNotifier.h">
       <Filter>Event/Handler/Manager/Notifier</Filter>
     </ClInclude>
+    <ClInclude Include="OperateEventManager.h">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConditionGroup.cpp">
@@ -39,6 +42,9 @@
       <Filter>Event/Handler/Manager/Notifier</Filter>
     </ClCompile>
     <ClCompile Include="OperateEventNotifier.cpp">
+      <Filter>Event/Handler/Manager/Notifier</Filter>
+    </ClCompile>
+    <ClCompile Include="OperateEventManager.cpp">
       <Filter>Event/Handler/Manager/Notifier</Filter>
     </ClCompile>
   </ItemGroup>

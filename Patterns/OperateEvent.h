@@ -43,6 +43,7 @@ public:
 	// bool Unpack( PacketStream& bs )
 };
 
+using OperateCommandList = std::vector<OperateCommand>;
 
 class OperateEvent
 {

@@ -27,6 +27,7 @@ public:
 	void		Apply( OperateEventPtr& eventPtr );
 	void		Release( OperateEventPtr& eventPtr );
 	void		UpdateNotifyPacket( );
+	void		OnEnter( unsigned __int64 entityId );
 	
 private:
 	void		apply( OperateEventPtr& eventPtr );

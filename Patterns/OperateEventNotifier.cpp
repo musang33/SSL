@@ -37,12 +37,22 @@ void		OperateEventNotifier::Release( OperateEventPtr& eventPtr )
 
 void		OperateEventNotifier::UpdateNotifyPacket( )
 {
+	// 새로 입장하는 녀석들에게 보낼 패킷을 먼저 만들어 놓는다. 
+
 	for( unsigned __int16 i = 0; i < m_impl->m_packetMakers.max_size( ); i++ )
 	{
 		auto& packetPtr = m_impl->m_packetList[ i ];
 		auto& list = m_impl->m_eventTypeList[ i ];
 
 		( this->*m_impl->m_packetMakers[ i ] )( packetPtr, list );
+	}
+}
+
+void	OperateEventNotifier::OnEnter( unsigned __int64 entityId )
+{
+	for( auto& it : m_impl->m_packetList )
+	{
+		// Send( entityId, it) ;
 	}
 }
 
@@ -55,7 +65,7 @@ void		OperateEventNotifier::apply( OperateEventPtr& eventPtr )
 void		OperateEventNotifier::release( OperateEventPtr& eventPtr )
 {
 	( this->*m_impl->m_releaseNotifiers[ eventPtr->GetType( ) ] )( eventPtr );
-	release( eventPtr );
+	remove( eventPtr );
 }
 
 void		OperateEventNotifier::applyDummy( OperateEventPtr& /*eventPtr*/ ) const
